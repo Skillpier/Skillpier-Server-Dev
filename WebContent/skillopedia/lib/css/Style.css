@@ -1,0 +1,44 @@
+
+/*清浮动*/
+.clearfix {
+	display: block;
+}
+.clearfix::before{
+	content:"";
+	display: table;
+	clear: both;
+}
+.clearfix::after{
+	content:"";
+	display: table;
+	clear: both;
+}
+
+
+
+.wrap{position: relative;width:100%;padding: 15px;margin: auto;box-sizing: border-box;-webkit-box-sizing:border-box;}
+.nav, .wrap{max-width: 1160px;}
+.header{padding: 15px;background-color: #000000;}
+
+.pull-left{float: left;}
+.pull-right{float: right;}
+
+.header .logo{width: 250px;vertical-align: middle;}
+.signin-btn{border: 1px solid #fff;border-radius:4px;color: #fff;}
+.signup-btn{border: 1px solid #ffb342;border-radius:4px;background-color:#f3e7d9;}
+.signin-btn,.signup-btn{padding: 8px 25px;margin: 8px;vertical-align: middle;display: inline-block;}
+
+
+.item{
+	margin:10px 0 0 0;
+	display: block;
+	position: relative;
+	padding-left: 110px;
+	overflow: hidden;
+	text-decoration: none;
+	color: inherit;
+
+}
+.item {margin-bottom: 15px}
+
+

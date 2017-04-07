@@ -1,0 +1,147 @@
+<!-- header -->
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<myresource cs-resource="{'account_css':'/skillopedia/lib/css/account.css','media_css':'/skillopedia/lib/css/media.css'}"></myresource>
+<div class="wrap">
+    <div class="section account-section">
+        <!-- sidebar -->
+        <sidebar active="" class="sidebar-wrap" user="user" go="go"></sidebar>
+        <div class="content-wrap">
+            <div class="tabs clearfix">
+                <a class="tab-item pull-left active">Authentication</a>
+            </div>
+            <form class="authen-step" ng-submit="ajaxForm()" name="authenForm" ng-show="user.authen_status == '0'">
+            <!-- <form class="authen-step" ng-submit="ajaxForm()" name="authenForm"> -->
+                <div class="title-input">
+                    <div class="m-session pull-left">
+                        <span>Name<em class="text-danger text-sm">*</em></span>
+                        <div class="course-input">
+                            <input type="text" name="realname" ng-model="input.realname" ng-required="true" placeholder="Enter Your Full name" class="full-width text-transform" />
+                        </div>
+                    </div>
+                    <div class="m-session pull-left">
+                        <span>Phone Number<em class="text-danger text-sm">*</em> <em class="text-danger text-sm" ng-show="authenForm.telephone.$dirty && authenForm.telephone.$invalid">Enter Correct Telephone(xxx-xxx-xxxx)</em></span>
+                        <div class="course-input">
+                            <!-- /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/ -->
+                            <input type="text" name="telephone" ng-model="input.telephone" ng-required="true" ng-keydown="parse_telephone($event)" mark placeholder="Enter Your Phone Number,eg: xxx-xxx-xxxx" class="full-width" />
+                        </div>
+                    </div>
+                </div>
+                <div class="title-input">
+                    <div class="m-session pull-left">
+                        <span>Gender<em class="text-danger text-sm">*</em></span>
+                        <div class="input-select">
+                            <select ng-model="input.gender" ng-required="true">
+                                <option value="1">Male</option>
+                                <option value="0">Female</option>
+                            </select>
+                            <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="m-session pull-left">
+                        <span>Date of Birth<em class="text-danger text-sm">*</em></span>
+                        <datepicker class="course-input" date-format="MMM dd, yyyy">
+                            <input type="text" name="birthday" ng-model="input.date" class="full-width" placeholder="Date of Birth" readonly/>
+                        </datepicker>
+                    </div>
+                </div>
+                <div class="title-input">
+                    <div class="m-session pull-left">
+                        <span>Category<em class="text-danger text-sm">*</em></span>
+                        <div class="input-select">
+                            <select name="category" ng-model="input.category" ng-options="c1.category_02_name for c1 in categorys">
+                                <option value="">Select Option</option>
+                            </select>
+                            <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="m-session pull-left">
+                        <span>Experience (Year)<em class="text-danger text-sm">*</em></span>
+                        <div class="input-select">
+                            <select name="experience" ng-model="input.experience" required>
+                                <option value="">Select Option</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                                <option value="13">13</option>
+                                <option value="14">14</option>
+                                <option value="15">15</option>
+                                <option value="15+">15+</option>
+                            </select>
+                            <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="title-input"><span>Official ID - suggested size : 370*240</span></div>
+                <div class="title-input">
+                    <div class="m-session pull-left">
+                        <img ng-src="/skillopedia/images/example_11.png" class="full-width full-height" alt="">
+                    </div>
+                    <div class="m-session pull-left">
+                        <img ng-src="/skillopedia/images/example_12.png" class="full-width full-height" alt="">
+                    </div>
+                    <div class="m-session pull-left" flow-init="{singleFile:true}" ng-repeat="card in input.idcards" ng-controller="uploadIdcardController" ng-form="uploadIdcarForm" style="position: relative;">
+                        <input type="hidden" name="card_url" ng-model="card.url">
+                        <img ng-src="/skillopedia/images/example_13.png" flow-btn flow-img="$flow.files[0]" class="full-width full-height" alt="" style="max-width:367px;max-height:243px">
+                        <div class="progress progress-striped" ng-if="$flow.files[0].isUploading()">
+                            <div class="progress-bar" ng-style="{width: ($flow.files[0].progress() * 100) + '%'}">
+                                <span>{{progress($flow.files[0].progress())+"%"}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <label>
+                    Take a photo or select one to upload your official ID, such as driver license or passport. This information will not be shared with others. Your picture should appear like the example above.
+                </label>
+                <div class="nextbtn-addr">
+                    <button type="submit" class="btn btn-second btn-lg">Authentication</button>
+                </div>
+            </form>
+            <!-- 教练认证中 -->
+            <div class="authen-step" ng-show="user.authen_status == '1'">
+                <div class="authening">
+                    <div class="authening-content">
+                        <span><img ng-src="/skillopedia/images/notyet.png" alt=""></span>
+                        <span>We have received your application at {{user.authen_time}},</span>
+                        <span>Skillpier is reviewing your application, you will receive our decision within 48 hours.</span>
+                    </div>
+                    <div class="nextbtn-addr">
+                        <div class="authen-number">customer service：714-213-9873</div>
+                        <div class="authen-recertification" style="background-color: #ffb342;border:none" ng-if="user.course_id =='0' && user.authen_num !='0'" ><a ng-href="#/create_course?flag=_t" style="color:white;border:none;" target="_blank">Publish My Course</a></div>
+                        <div class="authen-recertification" ng-if="user.course_id !='0'" style="border:none;background-color: #d4d4d4;    cursor: inherit;border:none">Publish My Course</div>
+                    </div>
+                    <!-- <div class="anthen-tips">You have {{user.authen_num}} times to reapply, if you have any question, please contact us</div> -->
+                </div>
+            </div>
+            <!-- 教练认证失败 -->
+            <div class="authen-step" ng-show="user.authen_status == '3'">
+                <div class="authening">
+                    <div class="authening-content">
+                        <span><img ng-src="/skillopedia/images/notyet.png" alt=""></span>
+                        <span>We are sorry to inform you that your application has not been approved.</span>
+                    </div>
+                    <div class="nextbtn-addr">
+                        <div class="authen-number">customer service：714-213-9873</div>
+                        <div class="authen-recertification" ng-click="reauthen()" ng-if="user.authen_num !='0'">Reapply</div>
+                        <div class="authen-recertification" ng-if="user.course_id =='0' && user.authen_num !='0'" style="background-color: #ffb342;border:none"><a ng-href="#/create_course?flag=_t" style="color:white;border:none;" target="_blank">Publish My Course</a></div>
+                        <div class="authen-recertification" ng-if="user.course_id !='0'" style="border:none;background-color: #d4d4d4;    cursor: inherit;border:none">Publish My Course</div>
+                    </div>
+                    <div class="anthen-tips">You can reapply {{user.authen_num}}  more times. If you have any questions, please contact us.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- confirm -->
+<confirm confirm="confirm" class="hide"></confirm>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

@@ -1,0 +1,64 @@
+<!-- header -->
+<myresource cs-resource="{'account_css':'/skillopedia/lib/css/account.css','media_css':'/skillopedia/lib/css/media.css'}"></myresource>
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap">
+    <div class="section account-section">
+        <!-- sidebar -->
+        <sidebar active="" class="sidebar-wrap" user="user" go="go"></sidebar>
+        <div class="content-wrap">
+            <div class="tabs clearfix">
+                <a class="tab-item pull-left active">Refund</a>
+            </div>
+            <div class="order-header">
+                <div class="text-h2">Successful appointment</div>
+                <p>{{refund_meta.can_refund_num}} Sessons to refund</p>
+            </div>
+            <div class="list-group">
+                <div class="list-group-item clearfix" ng-class="{'text-success':refund.status == '1','text-primary':refund.status=='20' && refund.refund_status=='10','text-danger':refund.status=='3' && refund.refund_status=='10'}" ng-repeat="refund in refunds track by $index">
+                    <!-- 退款完成 -->
+                    <div ng-if="refund.refund_status=='31'" ng-class="{'text-success':refund.refund_status=='31'}">
+                        <div class="col-xs-3">
+                            <i class="fa hover" ng-class="{' fa-check-square-o':refund.selected,' fa-square-o':!refund.selected}" ng-click="select(refund)" ng-if="refund.refund_status=='10'"></i>
+                            <span class="">Session {{$index+1}}</span>
+                        </div>
+                        <div class="col-xs-6"><span class="">{{refund.schedule_data}} {{refund.schedule_hours}}</span></div>
+                        <div class="col-xs-3 text-right"><span class="">Finish</span></div>
+                    </div>
+                    <!-- 退款中 -->
+                    <div ng-if="refund.refund_status=='2'" ng-class="{'text-primary':refund.refund_status=='2'}">
+                        <div class="col-xs-3">
+                            <i class="fa hover" ng-class="{' fa-check-square-o':refund.selected,' fa-square-o':!refund.selected}" ng-click="select(refund)" ng-if="refund.refund_status=='10'"></i>
+                            <span class=""> Session {{$index+1}}</span>
+                        </div>
+                        <div class="col-xs-6"><span class="">{{refund.schedule_data}} {{refund.schedule_hours}}</span></div>
+                        <div class="col-xs-3 text-right"><span class="">Refund pending</span></div>
+                    </div>
+                    <!-- 可以退款 -->
+                    <div ng-if="refund.refund_status=='10'" ng-class="{'text-danger':refund.refund_status=='10'}">
+                        <div class="col-xs-3">
+                            <i class="fa hover" ng-class="{' fa-check-square-o':refund.selected,' fa-square-o':!refund.selected}" ng-click="select(refund)" ng-if="refund.refund_status=='10'"></i>
+                            <span class=""> Session {{$index+1}}</span>
+                        </div>
+                        <div class="col-xs-6"><span class="">{{refund.schedule_data}} {{refund.schedule_hours}}</span></div>
+                        <div class="col-xs-3 text-right"><span class="">Eligible for refund</span></div>
+                    </div>
+                </div>
+            </div>
+            <div class="drawback">
+                <div class="refund-btn clearfix">
+                    <div class="items-refund pull-left hover" ng-click="refund()" ng-if="refund_meta.can_refund_num>0">
+                        Refund <!-- {{total_refund_money|currency:"$"}} -->
+                    </div>
+                    <a class="lab" ng-href="#/order?id={{order.orders_id}}">Click here for detail</a>
+                </div>
+                <div class="tips clearfix">
+                    <span>warning tips</span>
+                    <p>Choose the sessions to be refunded.</p>
+                    Completed sessions and session begin in 8 hours are unavailable to be refunded
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

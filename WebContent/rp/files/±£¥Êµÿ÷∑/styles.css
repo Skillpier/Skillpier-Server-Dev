@@ -1,0 +1,153 @@
+﻿body {
+  margin:0px;
+  background-image:none;
+  position:static;
+  left:auto;
+  width:1432px;
+  margin-left:0;
+  margin-right:0;
+  text-align:left;
+}
+#base {
+  position:absolute;
+  z-index:0;
+}
+#u0 {
+  position:absolute;
+  left:-60px;
+  top:-100px;
+  width:1552px;
+  height:970px;
+}
+#u0_img {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:1552px;
+  height:970px;
+}
+#u1 {
+  position:absolute;
+  left:2px;
+  top:477px;
+  width:1548px;
+  word-wrap:break-word;
+}
+#u2 {
+  position:absolute;
+  left:58px;
+  top:91px;
+  width:1308px;
+  height:2549px;
+}
+#u2_img {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:1308px;
+  height:2549px;
+}
+#u3 {
+  position:absolute;
+  left:2px;
+  top:1266px;
+  width:1304px;
+  visibility:hidden;
+  word-wrap:break-word;
+}
+#u4 {
+  position:absolute;
+  left:121px;
+  top:318px;
+  width:929px;
+  height:812px;
+}
+#u4_img {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:929px;
+  height:812px;
+}
+#u5 {
+  position:absolute;
+  left:2px;
+  top:398px;
+  width:925px;
+  visibility:hidden;
+  word-wrap:break-word;
+}
+#u6 {
+  position:absolute;
+  left:366px;
+  top:1210px;
+  width:374px;
+  height:90px;
+}
+#u6_img {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:374px;
+  height:90px;
+}
+#u7 {
+  position:absolute;
+  left:2px;
+  top:37px;
+  width:370px;
+  visibility:hidden;
+  word-wrap:break-word;
+}
+#u8 {
+  position:absolute;
+  left:470px;
+  top:1230px;
+  width:180px;
+  height:30px;
+  font-family:'Myriad Hebrew Regular', 'Myriad Hebrew';
+  font-weight:400;
+  font-style:normal;
+  font-size:16px;
+  color:#FFFFFF;
+}
+#u8_img {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:180px;
+  height:30px;
+}
+#u9 {
+  position:absolute;
+  left:2px;
+  top:6px;
+  width:176px;
+  word-wrap:break-word;
+}
+#u10 {
+  position:absolute;
+  left:453px;
+  top:258px;
+  width:197px;
+  height:30px;
+  font-family:'Myriad Hebrew Regular', 'Myriad Hebrew';
+  font-weight:400;
+  font-style:normal;
+  font-size:18px;
+  color:#D7D7D7;
+}
+#u10_img {
+  position:absolute;
+  left:0px;
+  top:0px;
+  width:197px;
+  height:30px;
+}
+#u11 {
+  position:absolute;
+  left:2px;
+  top:4px;
+  width:193px;
+  word-wrap:break-word;
+}

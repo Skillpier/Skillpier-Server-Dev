@@ -1,0 +1,60 @@
+.project {
+	display: block;
+	position: relative;
+	overflow: hidden;
+	min-height: 84px;
+	background-color:white;
+}
+.project.red {
+	background-color: #C84444;
+}
+.project .project-image {
+	position: absolute;
+	width: 50%;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	overflow: hidden;
+
+}
+.project-image img {
+	position: absolute;
+	display: block;
+	/* left: 50%;
+	margin-left: -320px; */
+	width: 100%;
+	min-height: 105px;
+}
+.project .project-content {
+	margin-left: 50%;
+	padding: 10px;
+	font-weight: 100;
+}
+.project .p_title {
+	color: black;
+	padding: 6px 0 10px 0;
+}
+.project .p_time {
+	color: #d0d0d0;
+}
+.project.red .p_title,.project.red .p_time {
+	color: white;
+}
+.carset {
+	display: inline-block;
+	border-right: 10px solid white;
+	border-left: 10px solid transparent;
+	border-top: 5px solid transparent;
+	border-bottom: 5px solid transparent;
+}
+.project-image .carset {
+	position: absolute;
+	right: 0;
+	bottom: 10px;
+}
+.gongyi {
+	width: 100%;
+	overflow: hidden;
+	max-width: 640px;
+	margin: auto auto;
+}

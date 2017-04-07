@@ -1,0 +1,155 @@
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap">
+    <div class="payment-section" ng-cloak ng-if="payment">
+        <!-- payment right -->
+        <div class="payment-right">
+            <div class="payment-amount">
+                <div class="step-title">Payment amount</div>
+                <span class="text-primary text-big">{{payment.total_total_session_rate|currency:"$"}}</span><span class="text-line-through">{{payment.total_original_total_session_rate|currency:"$"}}</span>
+                <!-- <p>24 hours hotline: <span style="color:blue">714-213-9873</span></p> -->
+            </div>
+        </div>
+        <!-- payment left -->
+        <div class="payment-left">
+            <form class="payment-step-1" ng-if="!is_billing" name="billingForm" ng-submit="ajaxBilling()">
+                <div class="step-title">Billing address</div>
+                <div class="clearfix">
+                    <div class="visa-input">
+                        <div class="visa-label">First Name<b class="text-danger">*</b></div>
+                        <input type="text" placeholder="Your First Name" name="first_name" ng-model="input.first_name" required>
+                    </div>
+                    <div class="visa-input">
+                        <div class="visa-label">Last Name<b class="text-danger">*</b></div>
+                        <input type="text" placeholder="Your Last Name" name="last_name" ng-model="input.last_name" required>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="visa-input">
+                        <div class="visa-label">Street <b class="text-danger">*</b></div>
+                        <input type="text" placeholder="Street" name="street" ng-model="input.street" required>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="visa-input">
+                        <div class="visa-label">City/Town <b class="text-danger">*</b></div>
+                        <input type="text" placeholder="City" name="city" ng-model="input.city" required>
+                    </div>
+                    <div class="visa-input">
+                        <div class="visa-label">State <b class="text-danger">*</b></div>
+                        <!-- <input type="text" placeholder="State" name="state" ng-model="input.state" required> -->
+                        <select name="state" id="state" ng-model="input.state" ng-options="state.name as state.name for state in states"></select>
+                    </div>
+                    <div class="visa-input">
+                        <div class="visa-label">Zip Code <b class="text-danger">*</b></div>
+                        <input type="number" placeholder="Zip Code" name="zipcode" ng-model="input.zipcode" required>
+                    </div>
+                </div>
+                <div class="clearfix">
+                    <div class="visa-input">
+                        <div class="visa-label">Phone Number <b class="text-danger">*</b><span class="text-danger" ng-if="visaForm.phone.$dirty && visaForm.phone.$invalid">eg: xxx-xxx-xxxx</span> </div>
+                        <input type="text" placeholder="Phone" name="phone" mark ng-model="input.phone" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" ng-disabled="billingForm.$invalid">Continue</button>
+            </form>
+            <div class="payment-step-2" ng-if="is_billing">
+                <p>Pay with</p>
+                <div class="list-group bg-white">
+                    <div class="list-group-item" ng-click="select_payment('paypal')">
+                        <i class="fa" ng-class="{'fa-check-circle':pay_with=='paypal','fa-circle-o':pay_with!='paypal'}" aria-hidden="true"></i> <img height="30px;" ng-src="/skillopedia/images/paypal.png" style="vertical-align: middle;">
+                    </div>
+                    <div class="list-group-item" ng-if="pay_with=='paypal'">
+                        <!-- paypal -->
+                        <div class="paypal">
+                            <!--  <form name="paypalForm" action="https://www.paypal.com/cgibin/webscr" method="post"> -->
+                            <!-- paypal沙盒支付测试地址 -->
+                            <form id="pay_form" name="paypalForm" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+                                <!-- Payment amount-->
+                                <input type="hidden" name="amount" value="{{payment.total_total_session_rate}}">
+                                <!-- 自己的参数 商品条目-->
+                                <input type="hidden" name="item_number" id="item_number" value="{{payment.course_titles}}">
+                                <!-- 表示立即支付-->
+                                <input type="hidden" name="cmd" value="_xclick">
+                                <!-- 商品名称-->
+                                <input type="hidden" name="item_name" id="item_name" value="skillpier">
+                                <!-- 商户订单唯一id 不可重复 -->
+                                <!--
+            <input type="hidden" name="invoice" id="invoice" value="201604291655176">
+            System.currentTimeMillis()
+             -->
+                                <input type="hidden" name="invoice" value="{{id}}">
+                                <!--支付成功后台通知地址-->
+                                <input type="hidden" name="notify_url" id="notify_url" value="https://www.skillpier.com/PaypalNotify">
+                                <!--支付成功返回地址-->
+                                <input type="hidden" name="return" id="return" value="https://www.skillpier.com/">
+                                <input type="hidden" name="lc" value="US">
+                                <!--支付取消返回地址-->
+                                <input type="hidden" name="cancel_return" id="cancel_return" value="https://www.skillpier.com/">
+                                <input type="hidden" name="currency_code" value="USD">
+                                <!--商户邮件-->
+                                <input type="hidden" name="business" value="administrator@skillpier.com">
+                                <input type="image" src="/skillopedia/images/paypal.png" border="0" name="submit" alt="Make payments with PayPal it's st, free and secure!">
+                            </form>
+                        </div>
+                        <div>Click PayPal to complete your purchase</div>
+                    </div>
+                    <div class="list-group-item" ng-click="select_payment('visa')">
+                        <i class="fa" ng-class="{'fa-check-circle':pay_with=='visa','fa-circle-o':pay_with!='visa'}" aria-hidden="true"></i> <img height="30px;" ng-src="/skillopedia/images/visa.jpg" style="vertical-align: middle;">
+                    </div>
+                    <div class="list-group-item" ng-if="pay_with =='visa'">
+                        <!-- visa pay -->
+                        <form name="visaForm" ng-submit="ajaxForm()" class="visa-form clearfix">
+                            <div class="visa-caret"></div>
+                            <div class="visa-content">
+                                <div class="visa-tip">
+                                    <b>Enter Your Credit Card</b> This card is only used to reserve your room. You may choose another form at check-in.
+                                </div>
+                                <div class="clearfix">
+                                    <div class="visa-input">
+                                        <input type="number" placeholder="Card number" required name="visa_card_id" ng-model="input.visa_card_id" maxlength="16" ng-class="{'text-danger':visaForm.visa_card_id.$invalid && visaForm.visa_card_id.$dirty}">
+                                    </div>
+                                    <div class="visa-input">
+                                        <input type="text" placeholder="Month" class="month" required name="visa_card_month"  ng-model="input.visa_card_month" month-mark>
+                                        <input type="number" placeholder="Year" class="year" required name="visa_card_year" ng-model="input.visa_card_year" year-mark>
+                                    </div>
+                                    <div class="visa-input">
+                                        <input type="number" placeholder="Security code" class="code" required name="visa_card_code" ng-model="input.visa_card_code" security-code-mark>
+                                    </div>
+                                </div>
+                                <p></p>
+                                <button type="submit" class="btn btn-primary" ng-disabled="visaForm.$invalid">Confirm</button>
+                                <p></p>
+                                <div>Click Confirm to complete your purchase</div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <span class="hover" style="color: blue" ng-click="last_step()"> Back</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- alipay -->
+<form name="alipayForm" method="post" id="alipayForm" action="https://mapi.alipay.com/gateway.do?_input_charset=utf-8">
+    <input type="hidden" name="service" value="{{alipay.service}}">
+    <input type="hidden" name="partner" value="{{alipay.partner}}">
+    <input type="hidden" name="seller_id" value="{{alipay.seller_id}}">
+    <input type="hidden" name="_input_charset" value="{{alipay._input_charset}}">
+    <input type="hidden" name="payment_type" value="{{alipay.payment_type}}">
+    <input type="hidden" name="notify_url" value="{{alipay.notify_url}}">
+    <input type="hidden" name="return_url" value="{{alipay.return_url}}">
+    <input type="hidden" name="out_trade_no" value="{{alipay.out_trade_no}}">
+    <input type="hidden" name="subject" value="{{alipay.subject}}">
+    <input type="hidden" name="total_fee" value="{{alipay.total_fee}}">
+    <input type="hidden" name="show_url" value="{{alipay.show_url}}">
+    <input type="hidden" name="body" value="{{alipay.body}}">
+    <input type="hidden" name="it_b_pay" value="{{alipay.it_b_pay}}">
+    <input type="hidden" name="extern_token" value="{{alipay.extern_token}}">
+    <input type="hidden" name="sign" value="{{alipay.sign}}">
+    <input type="hidden" name="sign_type" value="{{alipay.sign_type}}">
+</form>
+<div class="wrap" ng-cloak ng-if="error_msg">
+    {{error_msg}}
+</div>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

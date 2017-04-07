@@ -1,0 +1,105 @@
+<!-- header -->
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap">
+    <div class="section sm list-section">
+        <div class="wrap bg-white">
+            <form class="search-form clearfix" name="searchForm" ng-submit="ajaxForm()" ng-controller="searchFormController">
+                <!-- <p>Search on Skillopedia</p> -->
+                <div class="skill-input addon">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                    <input type="text" class="full-width" ng-model="input.keyword" ng-focus="focus()" ng-blur="blur()" placeholder="Find your private coach or lesson">
+                    <span class="category-suggestion" ng-if="input.focus && input.categorys.length>0">
+            <span class="suggestion-item" ng-repeat="category in input.categorys" ng-click="select_category(category)">{{category.category_02_name}}</span>
+                    </span>
+                </div>
+                <div class="skill-input addon-btn">
+                    <span class="zipcode">
+                        <autocomplete location="input.location"></autocomplete>
+                </span>
+                </div>
+                <button class="btn btn-primary" type="submit">Search</button>
+                <div class="filter">
+                    More filters
+                    <div class="rangeslider-wrap">
+                        <rangeslider  max="50" range-title="'Distance (miles)'" slide-callback="distance_callback"></rangeslider>
+                        <rangeslider  max="500" range-title="'Price ($)'" slide-callback="price_callback"></rangeslider>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="conditions">
+            <!-- <div class="condition-1">
+                <span class="text-primary"><b>Category:</b></span>
+                <label class="condition" ng-class="{'active':input.category.id == category.category_02_id}" ng-repeat="category in categorys">
+                    <input type="radio" class="hide" ng-model="input.category" ng-value="{name:category.category_02_name,id:category.category_02_id}" name="category">{{category.category_02_name}}</label>
+            </div> -->
+            <div class="condition-3">
+                <span class="text-primary"><b>Priority:</b></span>
+                <span class="condition" ng-class="{'active':input.price}" ng-click="sort_by_price()">
+                            Price 
+                            <i class="fa" ng-class="{'fa-caret-down':input.price == '1','fa-caret-up':input.price == '2'}" aria-hidden="true"></i>
+                    </span>
+                <span class="condition" ng-class="{'active':input.review}" ng-click="sort_by_review()">
+                            Rating 
+                    </span>
+                <span class="condition" ng-class="{'active':input.hot}" ng-click="sort_by_hot()">
+                            Popular
+                    </span>
+            </div>
+            <div class="condition-3">
+                <span class="text-primary"><b>Travel Services Available:</b></span>
+                <!-- <span class="condition" ng-class="{'active':input.travel =='1'}" ng-click="travel_yes()">
+                            Yes
+                    </span>
+                <span class="condition" ng-class="{'active':input.travel =='0'}" ng-click="travel_no()">
+                            No
+                    </span> -->
+                    <span class="on-off" ng-class="{'on':input.travel =='1','off':input.travel =='0'}" ng-click="travel()"></span>
+            </div>
+        </div>
+        <div class="line"></div>
+        <div class="conditions">
+            <span class="text-primary">{{paging.result}}</span>
+        </div>
+        <div class="coach-item hover" ng-click="local_go(course.course_id)" ng-repeat="course in courses">
+            <div class="coach-avatar">
+                <imageview data-rate="1" center-only src="staticImageUrl + course.coach_image"></imageview>
+                <span class="official-coach" ng-if="course.is_official"></span>
+            </div>
+            <div class="coach-info">
+                <div class="long-title text-ellipsis">{{course.title}}</div>
+                <span class="pull-right text-primary text-big">{{course.session_rate|currency:"$"}}</span>
+                <div style="margin-bottom:10px;" class="text-transform">{{course.coach_name}}</div>
+                <div class="justified">
+                    <div>
+                        <i class="fa fa-star" aria-hidden="true"></i>
+                        <span>{{course.total_coment_num || "0"}} reviews</span>
+                    </div>
+                    <div>
+                        <span ng-if="course.distance">{{course.distance}}</span>
+                    </div>
+                    <div>
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+                        <span>{{course.category_02_name}}</span>
+                    </div>
+                    <div class="text-primary" ng-click="open_map(course,$event)">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        <span>{{course.area}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="section text-center">
+            <span class="btn btn-lg" ng-click="loadMore()">{{page.message}}</span>
+        </div> -->
+        <div class="section text-center">
+            <div ng-if="courses.length == 0">0 record found</div>
+            <!-- <span class="btn btn-lg" ng-click="loadMore()">{{page.message}}</span> -->
+            <pagination paging="paging"></pagination>
+        </div>
+    </div>
+</div>
+<!-- confirm -->
+<confirm confirm="confirm" class="hide"></confirm>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

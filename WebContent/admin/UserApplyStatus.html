@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<#include "header.html">
+		 <SCRIPT LANGUAGE="JavaScript">
+			   $("document").ready(function(){
+				//装修程度
+				var fitment = '${(r.authen_status)!''}';
+				$("input[name=authen_status]:radio").each(function(){
+			    		if($(this).val()==fitment){
+			    			$(this).attr("checked","checked");
+			    		}
+				})
+			   })
+ 	 </SCRIPT>
+	</head>
+	<body>
+		<div class="navbar navbar-default" id="navbar">
+			<script type="text/javascript">
+				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+			</script>
+			<#include "navigate.html">
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div class="sidebar" id="sidebar">
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+					</script>
+
+					<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+						<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+							<button class="btn btn-success">
+								<i class="icon-signal"></i>
+							</button>
+
+							<button class="btn btn-info">
+								<i class="icon-pencil"></i>
+							</button>
+
+							<button class="btn btn-warning">
+								<i class="icon-group"></i>
+							</button>
+
+							<button class="btn btn-danger">
+								<i class="icon-cogs"></i>
+							</button>
+						</div>
+
+						<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+							<span class="btn btn-success"></span>
+
+							<span class="btn btn-info"></span>
+
+							<span class="btn btn-warning"></span>
+
+							<span class="btn btn-danger"></span>
+						</div>
+					</div><!-- #sidebar-shortcuts -->
+					  <!-- .nav-list -->
+					<script type="text/javascript">
+						  $(document).ready(function() {
+							  $('#3').addClass("active open");
+							  $('#34').addClass("open");
+						 });
+					 </script>
+					<#include "left_common.html">
+					<!-- /.nav-list -->
+
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+					</div>
+
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+					</script>
+				</div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+						<div class="nav-search" id="nav-search">
+						</div><!-- #nav-search -->
+					</div>
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								教练端管理
+								<small>
+									<i class="icon-double-angle-right"></i>
+									教练详情
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<div class="row">
+									<div class="col-xs-12">
+										
+										<div class="widget-header">
+											<div class="widget-toolbar no-border">
+							                </div>
+										</div>
+										<div class="table-responsive">
+											<form id="form" action="" name="form" method="post">
+												<input type="hidden" name="user_id" value="${r.user_id}">
+												<input type="hidden" name="pn" value="${pn}">
+												<input type="hidden" name="kw" value="${kw}">
+												<input type="hidden" name="province" value="${province}">
+												<input type="hidden" name="city" value="${city}">
+												<table class="table table-striped table-bordered table-hover">
+													<thead></thead>
+													<tbody>
+														
+														<tr>
+															<td>头像</td>
+															<td>
+																<div class="input-group">
+																	<img style="width:80px;height:80px;" src="/files/image?name=${(r.image_01)!''}" alt="">
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td>昵称</td>
+															<td>
+																<div class="input-group">
+																	${(r.nickname)!''}
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td>性别</td>
+															<td>
+																<div class="input-group">
+																	 <#if r.sex=1>男<#elseif r.sex=0>女<#elseif r.sex=2>保密</#if>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td>出生日期</td>
+															<td>
+																<div class="input-group">
+																	${(r.birthday)!''}
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td style="width:250px">手机号</td>
+															<td>
+																<div class="input-group">
+																	${(r.telephone)!''}
+																</div>
+															</td>
+														</tr>
+														 <tr>
+															<td>邮件</td>
+															<td>
+																<div class="input-group">
+																	${(r.email)!''}
+																</div>
+															</td>
+														</tr> 
+														<tr>
+															<td>官方认证</td>
+															<td>
+																<div class="input-group">
+																
+																	 <#if r.is_official=0>否<#elseif r.is_official=1>是</#if>
+																</div>
+															</td>
+														</tr> 
+														<tr>
+															<td>区域</td>
+															<td>
+																<div class="input-group">
+																	${(r.province)!''}-${(r.city)!''}
+																</div>
+															</td>
+														</tr>
+														 <tr>
+															<td>身份证正反面</td>
+															<td>
+																	<div class="row-fluid">
+																		<ul class="ace-thumbnails">
+																			<#if r.cover_ID_01!=''>
+																			<li>
+																				<a href="/files/image?name=${(r.cover_ID_01)!''}" title="Photo Title" data-rel="colorbox">
+																					<img style="width:150px;height:150px;" alt="" src="/files/image?name=${(r.cover_ID_01)!''}" />
+																				</a>
+																			</li>
+																			</#if>
+																			<#if r.cover_ID_02!=''>
+																			<li>
+																				<a href="/files/image?name=${(r.cover_ID_02)!''}" title="Photo Title" data-rel="colorbox">
+																					<img style="width:150px;height:150px;" alt="" src="/files/image?name=${(r.cover_ID_02)!''}" />
+																				</a>
+																			</li>
+																			</#if>
+																		</ul>
+																	</div><!-- row-fluid ENDS -->
+															</td>
+														</tr>
+														<tr>
+															<td>最近登录时间</td>
+															<td>
+																<div class="input-group">
+																	${(r.last_login_time?string("yyyy-MM-dd HH:mm:ss"))!''}
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td>注册时间</td>
+															<td>
+																<div class="input-group">
+																	${(r.post_time?string("yyyy-MM-dd HH:mm:ss"))!''}
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td>
+																 教练状态
+															</td>
+															<td>
+																 <div class="input-group">
+																	<label>
+																		<input name="authen_status"  type="radio" class="ace" value="1" />
+																		<span class="lbl"> 审核中</span>
+																	</label>
+																	<label>
+																		<input name="authen_status" type="radio" class="ace" value="2"/>
+																		<span class="lbl"> 审核通过</span>
+																	</label>
+																	<label>
+																		<input name="authen_status" type="radio" class="ace" value="3"/>
+																		<span class="lbl"> 审核不通过</span>
+																	</label>
+																</div>
+															</td>
+														</tr>
+														<tr>
+															<td>
+															  <a class="btn btn-lg btn-danger" type="submit" href='javascript:history.go(-1)'>
+																	<i class="icon-bolt bigger-110"></i>
+						                                                	返回
+																	<i class="icon-arrow-right icon-on-right"></i>
+																</a>
+															</td>
+															<td>
+															    <script type="text/javascript">
+															       function checkok(){
+															    	   $("#form").attr("action","/admin/UsersApply/unfreeze");
+															    	   return true;
+															       }
+															    </script>
+																       <button id="reject1" class="btn btn-lg btn-success" type="submit"  onclick="checkok();">
+																			<i class="icon-ok"></i>
+																			提交
+																	   </button>
+															</td>
+														</tr>
+													</tbody>
+												</table>
+												</form>
+										</div>
+									</div>
+								</div>
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+				</div>
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+
+		<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+
+	<!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+		<![endif]
+
+		[if IE]>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<![endif] -->
+
+	<!--[if !IE]> -->
+
+	<script type="text/javascript">
+		window.jQuery
+				|| document
+						.write("<script src='/admin/assets/js/jquery-2.0.3.min.js'>"
+								+ "<"+"/script>");
+	</script>
+
+	<!-- <![endif]-->
+
+	<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='/admin/assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+
+	<script type="text/javascript">
+		if ("ontouchend" in document)
+			document
+					.write("<script src='/admin/assets/js/jquery.mobile.custom.min.js'>"
+							+ "<"+"/script>");
+	</script>
+	<script src="/admin/assets/js/bootstrap.min.js"></script>
+	<script src="/admin/assets/js/typeahead-bs2.min.js"></script>
+
+	<!-- page specific plugin scripts -->
+
+	<script src="/admin/assets/js/jquery.dataTables.min.js"></script>
+	<script src="/admin/assets/js/jquery.dataTables.bootstrap.js"></script>
+
+	<!-- ace scripts -->
+
+	<script src="/admin/assets/js/ace-elements.min.js"></script>
+	<script src="/admin/assets/js/ace.min.js"></script>
+
+	<!-- inline scripts related to this page -->
+
+	<script type="text/javascript">
+		jQuery(function($) {
+			var oTable1 = $('#sample-table-2').dataTable({
+				"aoColumns" : [ {
+					"bSortable" : false
+				}, null, null, null, null, null, {
+					"bSortable" : false
+				} ]
+			});
+
+			$('table th input:checkbox').on(
+					'click',
+					function() {
+						var that = this;
+						$(this).closest('table').find(
+								'tr > td:first-child input:checkbox').each(
+								function() {
+									this.checked = that.checked;
+									$(this).closest('tr').toggleClass(
+											'selected');
+								});
+
+					});
+
+			$('[data-rel="tooltip"]').tooltip({
+				placement : tooltip_placement
+			});
+			function tooltip_placement(context, source) {
+				var $source = $(source);
+				var $parent = $source.closest('table')
+				var off1 = $parent.offset();
+				var w1 = $parent.width();
+
+				var off2 = $source.offset();
+				var w2 = $source.width();
+
+				if (parseInt(off2.left) < parseInt(off1.left)
+						+ parseInt(w1 / 2))
+					return 'right';
+				return 'left';
+			}
+		})
+	</script>
+			<script type="text/javascript">
+			jQuery(function($) {
+				var colorbox_params = {
+					reposition:true,
+					scalePhotos:true,
+					scrolling:false,
+					previous:'<i class="icon-arrow-left"></i>',
+					next:'<i class="icon-arrow-right"></i>',
+					close:'&times;',
+					current:'{current} of {total}',
+					maxWidth:'100%',
+					maxHeight:'100%',
+					onOpen:function(){
+						document.body.style.overflow = 'hidden';
+					},
+					onClosed:function(){
+						document.body.style.overflow = 'auto';
+					},
+					onComplete:function(){
+						$.colorbox.resize();
+					}
+				};
+			
+				$('.ace-thumbnails [data-rel="colorbox"]').colorbox(colorbox_params);
+				$("#cboxLoadingGraphic").append("<i class='icon-spinner orange'></i>");//let's add a custom loading icon
+
+			})
+		</script>
+</body>
+</html>

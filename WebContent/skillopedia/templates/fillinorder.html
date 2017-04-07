@@ -1,0 +1,223 @@
+<myresource cs-resource="{'account_css':'/skillopedia/lib/css/account.css','media_css':'/skillopedia/lib/css/media.css'}"></myresource>
+<!-- header -->
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap">
+    <div class="section sm detail-section">
+        <!-- left -->
+        <div class="detail-left">
+            <div class="coach-item">
+                <div class="coach-avatar">
+                    <!-- <img ng-src="{{staticImageUrl + course.user_image_01}}" class="full-width" alt="" err-src="/skillopedia/images/example_7.png"> -->
+                    <imageview data-rate="1" center-only ng-if="course.user_image_01" src="staticImageUrl + course.user_image_01"></imageview>
+                    <span class="official-coach" ng-if="course.is_official"></span>
+                </div>
+                <div class="coach-info">
+                    <div class="long-title text-ellipsis">{{course.title}}</div>
+                    <div style="margin-bottom:10px;" class="text-transform">{{course.nickname}}</div>
+                    <div class="justified">
+                        <div>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <span>{{course.total_coment_num || "0"}} reviews</span>
+                        </div>
+                        <div>
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                            <span>{{course.category_02_name}}</span>
+                        </div>
+                        <div class="text-primary" ng-click="open_map(course,$event)">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                            <span>{{course.area}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wrap bg-white">
+                <span>Travel location - </span>
+                <a class="hover text-success" ng-if="course.travel_to_session == '1'" ng-click="edit()"><span class="text-transform">{{course.nickname}}</span> offer travel service, please enter your location</a>
+                <a class="hover text-danger" ng-if="course.travel_to_session != '1'"><span class="text-transform">{{course.nickname}}</span> does not offer travel services.</a>
+                <div ng-if="input.travel_to_session == '1'"><span class="btn" ng-click="edit()">You want to have you course at : {{format_address}}</span></div>
+            </div>
+            <div class="section sm bg-white">
+                <div class="calendar-wrap">
+                    <div class="calendar-header" style="background-color: #ffb342;color:white" ng-if="course.is_stop_course == '1'">
+                        Attention! This course is suspend.
+                    </div>
+                    <div class="calendar-header" ng-if="course.is_stop_course != '1'">
+                        Select and book your preferred time.
+                    </div>
+                    <calendar calendar="calendar" class="calendar-left" ng-show="course.is_stop_course != 1"></calendar>
+                    <div class="calendar-right" ng-if="course.is_stop_course != 1">
+                        <div class="calendar-result">
+                            <div class="calendar-title text-center">Schedule</div>
+                            <div class="result-item" ng-click="calendar.remove(select)" ng-repeat="select in calendar.selected">
+                                <i class="pull-right fa fa-times"></i>
+                                <div>{{select.from.day}}</div>
+                                {{get_from_time(select.from.hour)}} to {{get_to_time(select.to.hour)}}
+                            </div>
+                            <div class="result-item" ng-if="calendar.selected.length==0">
+                                Your booking time will show up here.
+                            </div>
+                            <div class="result-item" ng-if="calendar.selected.length>0">
+                                Your booking will be showed below.</br>
+                                {{query_remain()}} booking time remained.
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <span class="calender-tip unavailable">Unavailable</span>
+                            <span class="calender-tip confirm">Booked</span>
+                            <!-- <span class="calender-tip busy">unavailable, coach busy</span> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="section sm">
+                <div class="wrap bg-white">
+                    <a style="font-size:20px;" class="hover" ng-click="go('contact')">Questions? Ask us</a>
+                </div>
+            </div>
+            <div class="section sm">
+                <div class="wrap bg-white">
+                    <span style="font-size:20px;">Teaching Location</span> <small style="color:#969696">Specific location will be made available after payment.</small>
+                </div>
+                <div class="section-content">
+                    <div style="height:300px;border:1px solid #d2d2d2" id="map"></div>
+                </div>
+            </div>
+        </div>
+        <div class="detail-right">
+            <div class="settlement" style="position: relative">
+                <div class="settlement-price-group">
+                    <div class="total-price">
+                        <span class="text-primary">Total price</span>
+                        <div class="pull-right">
+                            {{input.discount_total_price|currency:"$"}}
+                        </div>
+                    </div>
+                    <p class="line" style="background:#dadada"></p>
+                    <div>
+                        <span>Course price * {{input.amount}}</span>
+                        <div class="pull-right">
+                            <b ng-class="{'underline':input.discount_total_course_price>0&&input.discount_total_course_price!=input.total_course_price}">{{input.total_course_price|currency:"$"}}</b>
+                            <b ng-if="input.discount_total_course_price>0&&input.discount_total_course_price!=input.total_course_price">{{input.discount_total_course_price|currency:"$"}}</b>
+                        </div>
+                    </div>
+                    <div ng-if="input.total_traffic_cost>0" style="margin-top:8px">
+                        <span>Travel Fee</span>
+                        <div class="pull-right">
+                            <b>{{input.total_traffic_cost|currency:"$"}}</b>
+                        </div>
+                    </div>
+                    <div ng-if="input.total_service_fee>0" style="margin-top:8px;position:relative">
+                        <span>One times service fee <i class="fa fa-question-circle-o hover" aria-hidden="true" title="" style="color:blue;"  ng-mouseover="show()" ng-mouseleave="hide()"></i></span>
+                        <span class="hovertips" ng-show="show">This fee is used for maintain coach service, you won't be charged in the future when you purchase the same course with this coach.</span>
+                        <div class="pull-right">
+                            <b>{{input.total_service_fee|currency:"$"}}</b>
+                        </div>
+                    </div>
+                    <div style="margin-top:8px">
+                        <span> {{input.partner}} additional partner * {{input.amount}}</span>
+                        <div class="pull-right">
+                            <b ng-class="{'underline':input.discount_total_partner_fee>0&&input.discount_total_partner_fee!=input.total_partner_fee}">{{input.total_partner_fee|currency:"$"}}</b>
+                            <b ng-if="input.discount_total_partner_fee>0&&input.discount_total_partner_fee!=input.total_partner_fee">{{input.discount_total_partner_fee|currency:"$"}}</b>
+                        </div>
+                    </div>
+                    <p class="line" style="background:#dadada"></p>
+                    <div class="text-center">{{course.session_length||'60'}} mins per session</div>
+                </div>
+                <!-- <p class="text-center">
+                    Session fee 
+                    <span ng-if="input.total_fee>0">+One times service fee &nbsp;
+                    <span><i class="fa fa-question-circle-o" aria-hidden="true" title="" style="color:blue;"  ng-mouseover="show()" ng-mouseleave="hide()"></i>
+                    </span>
+                    </span>
+                    <span class="hovertips" ng-show="show">This fee is used for maintain coach service, you won't be charged in the future when you purchase the same course with this coach</span>
+                    <span ng-if="input.total_traffic_cost>0">+Travel Fee</span>
+                </p>
+                <p class="price text-center">
+                    <span ng-class="{'underline':input.discount_price>0}">{{input.total_price|currency:"$"}}</span>
+                    <span ng-if="input.discount_price>0">{{input.discount_price|currency:"$"}}</span>
+                    <span ng-if="input.total_fee>0">+ {{input.total_fee|currency:"$"}}</span>
+                    <span ng-if="input.total_traffic_cost>0">+ {{input.total_traffic_cost|currency:"$"}}</span>
+                </p>
+                <p class="text-center">per session {{course.session_length||'60'}}min</p> -->
+                <p class="clearfix settlement-action settlement-line">
+                    Session quantity :
+                    <span class="control">
+                    <span class="settlement-minus" ng-click="minus_amount()">-</span>
+                    <span class="settlement-amount">{{input.amount}}</span>
+                    <span class="settlement-plus" ng-click="add_amount()">+</span>
+                    </span>
+                </p>
+                <div class="settlement-discount clearfix" ng-if="discounts.length>0">
+                    <div class="col-xs-4 pull-right hover" ng-click="select_package(discount)" ng-if="course.discount_type == '2' && discounts.length>0" ng-repeat="discount in discounts">
+                        <div class="discount-wrap">
+                            <div class="discount" ng-class="{'active':discount.purchase == input.amount}">
+                                <div class="title">Package</div>
+                                <div class="discount-info">
+                                    <span>Buy</span>
+                                    <b class="block size number">{{discount.purchase}}</b>
+                                    <span class="block">courses get</span>
+                                    <b class="size number margin">{{discount.off +"%"}}</b>
+                                    <span class="block">off</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <p class="clearfix settlement-action settlement-line" ng-if="course.additional_partner>0">
+                    Additional partner :
+                    <span class="control">
+                    <span class="settlement-minus" ng-click="minus_partner()">-</span>
+                    <span class="settlement-amount">{{input.partner}}</span>
+                    <span class="settlement-plus" ng-click="add_partner()">+</span>
+                    </span>
+                </p>
+                <div class="settlement-line" ng-if="course.additional_partner>0">
+                    <small style="color:#969696">{{course.surcharge_for_each|currency:"$"}} extra for each partner. Up to {{course.additional_partner}} partners allowed.
+                    </small>
+                </div>
+                <!-- <div class="settlement-fee settlement-line">
+                    
+                    <div class="line" ng-if="course.first_joint_fee>0"></div>
+                    <div ng-if="course.first_joint_fee>0">
+                        <p>One time service fee : {{course.first_joint_fee}}%</p>
+                    </div>
+                    <div class="line" ng-if="course.travel_to_session=='1'"></div>
+                    <div ng-if="course.travel_to_session=='1'">
+                        <p>Travel Fee : {{course.travel_to_session_trafic_surcharge|currency:"$"}}</p>
+                    </div>
+                    <div class="line"></div>
+                </div> -->
+                <p class="clearfix settlement-line">
+                    <span class="col-xs-4" style="padding-top:6px">
+                        Coupons:
+                    </span>
+                    <span class="col-xs-8">
+                        <dribehance-select options="input.coupons" ng-if="is_signin()"></dribehance-select>
+                        <span class="pull-right hover text-success" ng-click="signin()" ng-if="!is_signin()" style="padding-top:6px">Sign in to use Cupons</span>
+                    </span>
+                </p>
+            </div>
+            <div class="clearfix row text-center" ng-if="course.is_stop_course != 1 && course.status == 1">
+                <a class="col-xs-6 wrap bg-primary hover text-white" ng-click="fillinorder('1')" style="text-indent:30px;"><img ng-src="/skillopedia/images/cart.png" alt="" err-src="/skillopedia/images/example_7.png" style="position:absolute;left:15px;top:8px;width:30px">Add to cart</a>
+                <a class="col-xs-6 wrap bg-danger hover text-white" ng-click="fillinorder('11')">Pay now</a>
+            </div>
+            <div class="clearfix row text-center" ng-if="course.status != 1">
+                The course is out date
+            </div>
+            <div class="section sm" style="margin-bottom:0">
+                <div class="wrap bg-white">
+                    <div class="">
+                        <textarea class="form-control full-width" rows="7" ng-model="input.message" placeholder="Leave message for coach"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- signin -->
+<div id="location-popup" class="popup location-popup mfp-hide">
+    <div ng-include="'/skillopedia/templates/location.html'"></div>
+</div>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>
+<div class="animate-dot"></div>

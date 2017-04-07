@@ -1,0 +1,32 @@
+<div class="header" ng-controller="headerController">
+    <div class="wrap">
+        <div class="clearfix">
+            <div class="pull-left">
+                <a href="#/index"><img src="/skillopedia/images/logo.png" class="logo" alt=""></a>
+            </div>
+            <div class="pull-right">
+                <span class="signin-btn" ng-click="signin()" ng-if="!is_signin()">Sign in</span>
+                <span class="signup-btn" ng-click="signup()" ng-if="!is_signin()">Sign up</span>
+                <a class="shoppingcart r-align" ng-if="is_signin()" ng-href="#/shoppingcart"><img ng-src="/skillopedia/images/cart.png" alt="" err-src="/skillopedia/images/example_7.png"><span class="cart-count" ng-if="amount>0">{{amount}}</span></a>
+                <span class="logout-btn r-align" ng-if="is_signin()" ng-click="show_menu($event)"><img ng-if="user.image_01" ng-src="{{staticImageUrl + user.image_01}}" alt="" err-src="/skillopedia/images/example_7.png"></span>
+                <div class="dropdown-menu" ng-if="is_signin()">
+                    <a class="menu-item" ng-href="#/orders">
+                        <i class="fa fa-user" aria-hidden="true"></i>Orders
+                    </a>
+                    <a class="menu-item" ng-href="#/orders_management" ng-if="user.agent_level == '2'">
+                        <i class="fa fa-bookmark" aria-hidden="true"></i>As a coach
+                    </a>
+                    <a class="menu-item" ng-href="#/orders_management" ng-if="user.agent_level == '1'">
+                        <i class="fa fa-bookmark" aria-hidden="true"></i>Teach with Skillopdia
+                    </a>
+                    <a class="menu-item" ng-href="#/messages">
+                        <i class="fa fa-user" aria-hidden="true"></i>Messages
+                    </a>
+                    <a class="menu-item" ng-click="logout()">
+                        <i class="fa fa-sign-out" aria-hidden="true"></i>Sign out
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

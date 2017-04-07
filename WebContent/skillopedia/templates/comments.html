@@ -1,0 +1,80 @@
+<!-- header -->
+<myresource cs-resource="{'account_css':'/skillopedia/lib/css/account.css','media_css':'/skillopedia/lib/css/media.css'}"></myresource>
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap">
+    <div class="section account-section">
+        <!-- sidebar -->
+        <sidebar active="" class="sidebar-wrap" user="user" go="go"></sidebar>
+        <div class="content-wrap">
+            <div class="tabs clearfix">
+                <!-- <a class="tab-item pull-left" ng-href="#/courses">Courses</a> -->
+                <a class="tab-item pull-left active">Comments</a>
+                <a class="tab-item pull-left" ng-href="#/steps_publish">Steps</a>
+            </div>
+            <div class="section sm">
+                <div class="comments">
+                    <div class="comment-item" ng-repeat="comment in comments">
+                        <div class="comment-header">
+                            <div class="comment-avatar">
+                                <imageview data-rate="1" center-only src="staticImageUrl+comment.comment_image"></imageview>
+                            </div>
+                            <div class="comment-meta">
+                                <span class="comment-name">
+                                    {{comment.comment_name}}
+                                </span>
+                                <div class="clearfix text-ellipsis">
+                                    <span class="pull-left">
+                                        <i class="fa fa-star" ng-class="{'text-primary':comment.total_score >0}" aria-hidden="true"></i>
+                                        <i class="fa fa-star" ng-class="{'text-primary':comment.total_score >1}" aria-hidden="true"></i>
+                                        <i class="fa fa-star" ng-class="{'text-primary':comment.total_score >2}" aria-hidden="true"></i>
+                                        <i class="fa fa-star" ng-class="{'text-primary':comment.total_score >3}" aria-hidden="true"></i>
+                                        <i class="fa fa-star" ng-class="{'text-primary':comment.total_score >4}" aria-hidden="true"></i>
+                                    </span>
+                                    <span class="pull-right">speciality{{to_fix(comment.pro_skill)}} environment {{to_fix(comment.teaching_environment)}}attitude {{to_fix(comment.teaching_attitude)}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="comment-content">
+                            {{comment.note}}
+                            <div class="comment-reply" ng-if="comment.is_reply">
+                                <b>coach reply:</b>{{comment.commentReply_content}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section text-center" ng-click="loadMore()">
+                    <span class="btn btn-lg">{{page.message}}</span>
+                </div>
+            </div>
+            <!-- <div class="comments-itemwrap">
+                <div class="comments-item">
+                    <div class="comments-avatar">
+                        <img src="images/avatar.png" class="full-width">
+                    </div>
+                    <div class="items-news">
+                        <span>Yang</span>
+                        <div class="starwrap">
+                            <div class="star">
+                                <i class="fa fa-star active" aria-hidden="true"></i>
+                                <i class="fa fa-star active" aria-hidden="true"></i>
+                                <i class="fa fa-star active" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <label>Jan 2015</label>
+                                <div class="tip pull-right">speciality 3.5 environment 3.5 attitude 3.5 </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tips clearfix">
+                    Lorem ipsum dolor sit amet,consectetur adipisicing elit. Harum provident eos,consequa,eveniet molestiae,essa sequi,ab sint reprehenderit sit labore neque doloremque,Doloribus pariatur perpiciatis a labore bearae?Lorem ipsum dolor sit amet,consectetur adipisicing elit. Harum provident eos,consequa,eveniet molestiae,essa sequi,ab sint reprehenderit sit labore neque doloremque
+                </div>
+                <em>
+                    #DRIBEGHANCE-FOOTBALL#
+                </em>
+            </div> -->
+        </div>
+    </div>
+</div>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

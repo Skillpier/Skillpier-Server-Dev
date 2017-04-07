@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<#include "header.html">
+	<script type="text/javascript">
+		//提交表单
+		function onPost(){
+			var startTime=$("#id-date-picker-1").val();
+	    	var start=new Date(startTime.replace("-", "/").replace("-", "/"));
+	    	var endTime=$("#id-date-picker-2").val();
+	    	var end=new Date(endTime.replace("-", "/").replace("-", "/"));
+	    	if(end<start){
+	    		document.getElementById('time_notice').innerHTML = "开始时间大于结束时间";
+	    	 	return false;
+	    	}
+		}
+	</script>
+	<style>
+	.num{ width:40px; height:26px; line-height:16px; border:1px solid #CCC; text-align:center;  float:left; margin:0 5px;}
+	.add,.jian{ width:26px; height:26px; float:left; border:1px solid #ccc; background:#eee; cursor:pointer;}
+	</style>
+	
+	</head>
+
+	<body>
+		<div class="navbar navbar-default" id="navbar">
+			<script type="text/javascript">
+				try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+			</script>
+			<#include "navigate.html">
+		</div>
+
+		<div class="main-container" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+
+			<div class="main-container-inner">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div class="sidebar" id="sidebar">
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+					</script>
+
+					<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+						<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+							<button class="btn btn-success">
+								<i class="icon-signal"></i>
+							</button>
+
+							<button class="btn btn-info">
+								<i class="icon-pencil"></i>
+							</button>
+
+							<button class="btn btn-warning">
+								<i class="icon-group"></i>
+							</button>
+
+							<button class="btn btn-danger">
+								<i class="icon-cogs"></i>
+							</button>
+						</div>
+
+						<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+							<span class="btn btn-success"></span>
+
+							<span class="btn btn-info"></span>
+
+							<span class="btn btn-warning"></span>
+
+							<span class="btn btn-danger"></span>
+						</div>
+					</div><!-- #sidebar-shortcuts -->
+					<!-- .nav-list -->
+					<script type="text/javascript">
+						  $(document).ready(function() {
+							  $('#4').addClass("active open");
+							  $('#41').addClass("open");
+						 });
+					 </script>
+					<#include "left_common.html">
+					<!-- /.nav-list -->
+
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+					</div>
+
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+					</script>
+				</div>
+
+				<div class="main-content">
+					<div class="breadcrumbs" id="breadcrumbs">
+						<script type="text/javascript">
+							try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+						</script>
+						<div class="nav-search" id="nav-search">
+						</div><!-- #nav-search -->
+					</div>
+					<br> 
+				<#if ok??>
+					<div style="font-size:16px; color: #ff0000;" class="success-tip" data-id="successTip">${(ok)!''}</div>
+				</#if>
+					
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								引导界面
+								<small>
+									<i class="icon-double-angle-right"></i>
+									添加引导图片
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+					<form id="form" action="" method="post"  enctype="multipart/form-data">
+					<table class="table table-striped table-bordered table-hover">
+						<thead></thead>
+						<tbody>
+
+							<tr>
+								<td>图片<br><span style="color:#ff0000">图片尺寸：750px*1334px</span></td>
+									<td>
+										<span style="float:left;">
+											<input name="cover" type="file" id="cover" class="file" size="40"/>
+										</span>
+										 <#if message1??>
+											<span class="red help-inline col-xs-12 col-sm-7">
+											<span class="middle">请上传图片</span>
+											</span>
+										</#if>
+								</td>
+							</tr>
+							<tr>
+								<td></td>
+								<td>
+								<script type="text/javascript">
+									function add() {
+										$("#form").attr("action","/admin/IndexGuide/add");
+										return true;
+									}
+									
+								</script>
+									<button id="reject1" class="btn btn-lg btn-success" type="submit" onclick="add();">
+										<i class="icon-ok"></i> 增加
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+					
+					
+					
+					
+					
+
+					<div class="page-content">
+						<div class="page-header">
+							<h1>
+								信息管理
+								<small>
+									<i class="icon-double-angle-right"></i>
+									引导列表
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+
+						<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+
+								<div class="row">
+									<div class="col-xs-12">
+										<div class="widget-header">
+											<div class="widget-toolbar no-border">
+											
+							                </div>
+										</div>
+										<div class="widget-body">
+										<div class="widget-main padding-6">
+											
+										</div></div>
+										<div class="widget-body">
+										<div class="widget-main padding-6">
+										<div class="table-responsive">
+											<table id="sample-table-1" class="table table-striped table-bordered table-hover">
+												<thead>
+													<tr>
+				                                        <th>编号</th>
+				                                       
+				                                        <th>APP图片</th>
+				                                        <th>类型</th>			                                     
+				                                        <th>时间</th>
+				                                        <th>操作</th>
+				                                    </tr>
+												</thead>
+												<tbody>
+												<#if list??>
+									               <#list list.getList() as r>
+													<tr>
+				                                        <td>
+				                                            ${(r.index_banner_id)!''}
+				                                        </td>
+				                                        
+				                                        <td>
+						                                    <div class="feed-element">
+						                                       	<img alt="" style="width:50px;height:50px;" class="" src="/files/image?name=${(r.cover)!''}">
+						                               		</div>
+				                                        </td>
+				                                        <!-- <td>
+						                                    <div class="feed-element">
+						                                       	<img alt="" style="width:80px;height:80px;" class="" src="/files/image?name=${(r.big_cover)!''}">
+						                               		</div>
+				                                        </td>
+				                                         -->
+				                                        <td><#if r.type=1>引导页<#elseif r.type=2>首页</#if></td>
+				                                         			                       
+				                                        <td>${(r.post_time)!''}</td>
+				                                  
+				                                        <td>
+				                                       	 <a class="btn btn-xs btn-success" href="/admin/IndexGuide/bannerInfo?index_banner_id=${(r.index_banner_id)!''}&pn=${pn}"  data-rel="tooltip" data-placement="left" title="修改"><i class="icon-ok bigger-90"></i></a>
+				                                         <a class="btn btn-xs btn-danger" href="/admin/IndexGuide/delete?index_banner_id=${(r.index_banner_id)!''}&pn=${pn}" onclick="return confirm('确定删除?');" data-rel="tooltip" data-placement="left" title="删除">
+															<i class="icon-remove bigger-90"></i>
+														</a> 
+				                                        </td>
+				                                    </tr>
+								 				</#list>
+								             </#if>
+											 <#if  list.getList().size()=0>
+											  <tr>
+													<td style="with:100%;color: #27a9e3;padding-bottom: 100px;padding-top: 100px;text-align: center;" class="norecord" colspan="20">
+														<div class="warning-option">
+														<i class="icon-warning-sign"></i>
+														<span>暂无符合条件的数据记录</span>
+														</div>
+													</td>
+											  </tr>
+											</#if>		
+												</tbody>
+											</table>
+										</div>
+										</div>
+										</div>
+									</div>
+								</div>
+	
+							<div class="pagination">
+		                       <#if action == "search">
+		                        <#include "/common/admin_paginate.html">
+		                          <@paginate currentPage=list.getPageNumber() totalPage=list.getTotalPage() actionUrl="/admin/IndexBanners/list?"/>
+		                       <#else>
+		                       <#include "/common/admin_paginate.html">
+		                          <@paginate currentPage=list.getPageNumber() totalPage=list.getTotalPage() actionUrl="/admin/IndexBanners/list?"/>
+		                       </#if>
+		                    </div>
+							</div><!-- /.col -->
+						</div><!-- /.row -->
+					</div><!-- /.page-content -->
+				</div><!-- /.main-content -->
+
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+	<!-- 上传图片JS -->
+		<script>
+		    $("#cover").fileinput({
+				showUpload: false,
+				showRemove:true
+			});
+		</script>
+		<!-- basic scripts -->
+
+		<!--[if !IE]> -->
+
+	<!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+		<![endif]
+
+		[if IE]>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<![endif] -->
+
+		<!--[if !IE]> -->
+
+		<script type="text/javascript">
+			window.jQuery || document.write("<script src='/admin/assets/js/jquery-2.0.3.min.js'>"+"<"+"/script>");
+		</script>
+
+		<!-- <![endif]-->
+
+		<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='/admin/assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+
+		<script type="text/javascript">
+			if("ontouchend" in document) document.write("<script src='/admin/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+		</script>
+		<script src="/admin/assets/js/bootstrap.min.js"></script>
+		<script src="/admin/assets/js/typeahead-bs2.min.js"></script>
+
+		<!-- page specific plugin scripts -->
+
+		<script src="/admin/assets/js/jquery.dataTables.min.js"></script>
+		<script src="/admin/assets/js/jquery.dataTables.bootstrap.js"></script>
+
+		<!-- ace scripts -->
+
+		<script src="/admin/assets/js/ace-elements.min.js"></script>
+		<script src="/admin/assets/js/ace.min.js"></script>
+
+		<!-- inline scripts related to this page -->
+
+		<script type="text/javascript">
+			jQuery(function($) {
+				var oTable1 = $('#sample-table-2').dataTable( {
+				"aoColumns": [
+			      { "bSortable": false },
+			      null, null,null, null, null,
+				  { "bSortable": false }
+				] } );
+				
+				
+				$('table th input:checkbox').on('click' , function(){
+					var that = this;
+					$(this).closest('table').find('tr > td:first-child input:checkbox')
+					.each(function(){
+						this.checked = that.checked;
+						$(this).closest('tr').toggleClass('selected');
+					});
+						
+				});
+			
+				$('[data-rel="tooltip"]').tooltip({placement: tooltip_placement});
+				function tooltip_placement(context, source) {
+					var $source = $(source);
+					var $parent = $source.closest('table')
+					var off1 = $parent.offset();
+					var w1 = $parent.width();
+			
+					var off2 = $source.offset();
+					var w2 = $source.width();
+			
+					if( parseInt(off2.left) < parseInt(off1.left) + parseInt(w1 / 2) ) return 'right';
+					return 'left';
+				}
+			})
+		</script>
+</body>
+</html>

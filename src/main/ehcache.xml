@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="ehcache.xsd"
+         updateCheck="false" monitoring="autodetect"
+         dynamicConfig="true">
+ 
+    <diskStore path="java.io.tmpdir"/>
+ 
+    <defaultCache
+           maxElementsInMemory="1000"
+           maxElementsOnDisk="10000"
+           maxEntriesLocalHeap="1000"
+		   maxEntriesLocalDisk="10000"
+           eternal="false"
+           timeToIdleSeconds="100"
+           timeToLiveSeconds="200"
+           overflowToDisk="true"
+           diskPersistent="true">
+    </defaultCache>
+             
+    <cache name="sweets_list"
+     	   maxElementsInMemory="1000"
+           maxElementsOnDisk="10000"
+           maxEntriesLocalHeap="1000"
+		   maxEntriesLocalDisk="10000"
+           eternal="false"
+           timeToIdleSeconds="100"
+           timeToLiveSeconds="200"
+           overflowToDisk="true"
+           diskSpoolBufferSizeMB="20"
+           diskPersistent="true"
+            />
+            
+   <cache name="sweetinfo"
+          maxElementsInMemory="1000"
+           maxElementsOnDisk="10000"
+           maxEntriesLocalHeap="1000"
+		   maxEntriesLocalDisk="10000"
+           eternal="false"
+           timeToIdleSeconds="100"
+           timeToLiveSeconds="200"
+           overflowToDisk="true"
+           diskPersistent="true"
+            />
+   <cache name="sweetme"
+           maxElementsInMemory="1000"
+           maxElementsOnDisk="10000"
+           maxEntriesLocalHeap="1000"
+		   maxEntriesLocalDisk="10000"
+           eternal="false"
+           timeToIdleSeconds="100"
+           timeToLiveSeconds="200"
+           overflowToDisk="true"
+           diskPersistent="true"
+            />
+   <cache name="indexbanner"
+           maxElementsInMemory="1000"
+           maxElementsOnDisk="10000"
+           maxEntriesLocalHeap="1000"
+		   maxEntriesLocalDisk="10000"
+           eternal="false"
+           timeToIdleSeconds="100"
+           timeToLiveSeconds="200"
+           overflowToDisk="true"
+           diskPersistent="true"
+            />
+</ehcache>

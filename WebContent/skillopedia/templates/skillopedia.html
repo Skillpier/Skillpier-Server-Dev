@@ -1,0 +1,56 @@
+<!-- header -->
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap">
+    <div class="section account-section">
+        <!-- sidebar -->
+        <sidebar active="" class="sidebar-wrap" user="user" go="go"></sidebar>
+        <div class="content-wrap">
+            <div class="tabs clearfix">
+                <a class="tab-item pull-left active">Courses</a>
+                <a class="tab-item pull-left" ng-href="#/orders_management">Orders</a>
+                <a class="tab-item pull-left" ng-href="#/schedule">Schedule</a>
+                <a ng-href="#/create_course" target="_blank" class="pull-right clearfix tab-item-action">
+                    Publish new course
+                </a>
+            </div>
+            <div class="coach-item with-action-bar" ng-repeat="course in courses" ng-click="local_go(course.course_id)">
+                <div class="coach-avatar">
+                    <imageview data-rate="1" center-only src="staticImageUrl + course.coach_image"></imageview>
+                    <span class="official-coach" ng-if="course.is_official"></span>
+                </div>
+                <div class="coach-info">
+                    <div class="long-title text-ellipsis"><span class="text-danger" ng-if="course.status == 0">[Offline]</span>{{course.title}}</div>
+                    <span class="pull-right text-primary text-big">{{course.session_rate|currency:"$"}}</span>
+                    <div style="margin-bottom:10px;" class="text-transform">{{course.coach_name}}</div>
+                    <div class="justified">
+                        <div>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <span>{{course.total_coment_num || "0"}} reviews</span>
+                        </div>
+                        <div>
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                            <span>{{course.category_02_name}}</span>
+                        </div>
+                        <div class="text-primary" ng-click="open_map(course,$event)">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                            <span>{{course.area}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-bar clearfix">
+                    <div class="btn-group clearfix pull-right">
+                        <a ng-click="edit_course(course.course_id,$event)"><span class="btn btn-success">edit</span></a>
+                        <a ng-click="remove_course(course.course_id,$event)"><span class="btn btn-danger">Delete</span></a>
+                    </div>
+                </div>
+            </div>
+            <div class="section text-center">
+                <span class="btn btn-lg" ng-click="loadMore()">{{page.message}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- confirm -->
+<confirm confirm="confirm" class="hide"></confirm>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

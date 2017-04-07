@@ -1,0 +1,6 @@
+<div id="locationField" ng-if="!mode">
+    <input id="autocomplete" placeholder="{{placeholder}}" class="full-width" ng-model="location.address" ng-focus="autocomplete()" type="text" autocomplete="off"></input>
+</div>
+<div id="locationField" ng-if="mode == 'street'">
+    <input id="autocomplete" placeholder="{{placeholder}}" class="full-width" ng-model="location.street" ng-focus="autocomplete()" type="text" autocomplete="off"></input>
+</div>

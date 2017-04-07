@@ -1,0 +1,46 @@
+<!-- header -->
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<!-- <div class="about-poster"></div> -->
+<div class="section sm">
+    <div class="wrap bg-white">
+        <div class="section">
+            <h1 class="text-center">How it work</h1>
+            <div class="tabs clearfix text-center">
+                <!-- <a class="tab-item pull-left" ng-href="#/courses">Courses</a> -->
+                <a class="tab-item" ng-class="{'active':view == 'customers'}" ng-click="jump('customers')">Customers</a>
+                <a class="tab-item" ng-class="{'active':view == 'coaches'}" ng-click="jump('coaches')">Coaches</a>
+            </div>
+            <div class="section-content" ng-if="view == 'customers'">
+                <h3>1. Sign up</h3>
+                <p class="text-indent">The first step to help us get you connected with coaches is to create an account. After taking a few minutes to sign up and verify your email address, you’ll be ready to go!</p>
+                <h3>2. Search</h3>
+                <p class="text-indent">After signing up, you’ll be able to connect with coaches right away! You can adjust your search history through the convenient distance, price and rating filters to ensure you’re getting the coach that best fits your needs.</p>
+                <h3>3.  Book a Time</h3>
+                <p class="text-indent">When you find a coach you like, you can make a reservation with them. You will be able to set-up a time and, depending on the coaches’ travel preferences, you may be able to schedule a specific location as well. After reserving your coach, you will receive his or her’s contact information.</p>
+                <p class="text-indent">**Tips: Time Schedule is available after payment. **</p>
+                <h3>4. Get Ready to Learn</h3>
+                <p class="text-indent">Now you are almost all set. Our customer service will ensure that the time and location is correct, we wish you all the best and don’t forget: have fun!</p>
+                <p class="text-indent"><i>As always if you have any questions feel free to contact us:</i>
+                    <br><i>service@skillpier.com</i></p>
+            </div>
+            <div class="section-content" ng-if="view == 'coaches'">
+                <h3>1. Sign up </h3>
+                <p class="text-indent">Create an account using our quick and easy to use registration platform.</p>
+                <h3>2. Apply</h3>
+                <p class="text-indent">In order to ensure our clients are getting the best possible coaches, which we’re sure you are, we need to verify some information first. </p>
+                <p class="text-indent">Sign in your account → Go to Personal Center → Click “Apply for Coaching” (You’ll need an official ID of some kind: Driver License, Passport etc) You should expect to receive a response within 48 hours.
+                </p>
+                <h3>3. Get Ready to Teach</h3>
+                <p class="text-indent">If all goes well in the verification process, you should be good to go! After you get confirmed, you’ll be all set to add some flair to your profile. You’ll be free to publish your courses.</p>
+                <p><b>Tip:</b>
+                    <br> To Add a Course:
+                    <br> Go to Personal Center → Click the “As a coach” button → Click “Publish New Course” Fill out “Basic Information”, “Extension”, ”Teaching ”, “Course Time”, and you are good to go!
+                </p>
+                <p><i>As always if you have any questions feel free to contact us:</i>
+                    <br><i>service@skillpier.com</i></p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer_index.html'"></div>

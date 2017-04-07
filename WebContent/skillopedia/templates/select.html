@@ -1,0 +1,13 @@
+<div class="dribehance-select">
+	<div class="select-option">
+		{{options.selected.coupon_name}} <span ng-if="options.selected.coupon_money"><b>/</b></span> <b>{{options.selected.coupon_money|currency:"$"}}</b>
+	</div>
+	<div class="dribehance-options hide">
+		<div class="dribehance-option" ng-click="select({coupon_name:'No coupon available',my_coupon_id:'0'},$event)" ng-if="options.all.length>0">
+			No coupon available
+		</div>
+		<div class="dribehance-option" ng-repeat="op in options.all" ng-click="select(op,$event)" title="{{op.coupon_name}}">
+			{{op.coupon_name}} <span ng-if="op.coupon_money"><b>/</b></span> <b> {{op.coupon_money|currency:"$"}}</b>
+		</div>
+	</div>
+</div>

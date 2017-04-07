@@ -1,0 +1,51 @@
+<myresource cs-resource="{'account_css':'/skillopedia/lib/css/account.css','media_css':'/skillopedia/lib/css/media.css'}"></myresource>
+<!-- header -->
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap">
+    <div class="section account-section">
+        <!-- sidebar -->
+        <sidebar active="" class="sidebar-wrap" user="user" go="go"></sidebar>
+        <div class="content-wrap">
+            <div class="tabs clearfix">
+                <a class="tab-item pull-left active">Account</a>
+            </div>
+            <div class="account-center">
+                <div class="account-center-left" flow-init="{singleFile:true}" flow-file-added="!!{png:1,gif:1,jpg:1,jpeg:1}[$file.getExtension()]" flow-attrs="{accept:'image/*'}" ng-controller="uploadAvatarController">
+                    <div class="account-avatar">
+                        <img ng-src="{{staticImageUrl + user.image_01}}" err-src="/skillopedia/images/example_7.png" flow-img="$flow.files[0]" alt="">
+                        <div class="progress progress-striped" ng-if="$flow.files[0].isUploading()">
+                            <div class="progress-bar" ng-style="{width: ($flow.files[0].progress() * 100) + '%'}">
+                                <span>{{progress($flow.files[0].progress())+"%"}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-second btn-block" flow-btn >Upload Image</button>
+                </div>
+                <form ng-submit="ajaxForm()" name="nicknameForm" class="account-center-right">
+                    <p class="">
+                        Account Name: {{user.email}}
+                    </p>
+                    <p><span ng-if="user.agent_level == 1">Role：Normal user</span><span ng-if="user.agent_level == 2">Role: Coach</span></p>
+                    <p>
+                        <span>Full name: {{input.nickname}}</span>
+                    </p>
+                    <div class="skill-input">
+                        <input type="hidden" ng-model="input.nickname" ng-required="true" placeholder="Enter your nickname" class="full-width text-transform" readonly>
+                    </div>
+                    <div class="skill-input" ng-if="user.is_third =='0'">
+                        <input type="password" ng-model="input.password" required ng-minLength="6" placeholder="Enter your old password" class="full-width">
+                    </div>
+                    <div class="skill-input" ng-if="user.is_third =='0'">
+                        <input type="password" ng-model="input.password_1" required ng-minLength="6" placeholder="Enter your password. must be 6-16 characters long." class="full-width">
+                    </div>
+                    <div class="skill-input" ng-if="user.is_third =='0'">
+                        <input type="password" ng-model="input.password_2" required ng-minLength="6" placeholder="Enter your password again" class="full-width">
+                    </div>
+                    <button class="btn btn-second" type="submit" ng-disabled="nicknameForm.$invalid" ng-if="user.is_third =='0'">Change Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

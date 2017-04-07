@@ -1,0 +1,55 @@
+<div class="sidebar" ng-controller="sidebarController">
+    <div class="section hover" ng-click="go('/account')">
+        <div class="sidebar-avatar">
+            <img ng-if="user.image_01" ng-src="{{staticImageUrl + user.image_01}}" err-src="/skillopedia/images/example_7.png" alt="">
+        </div>
+        <p class="text-center text-transform"><b>{{user.nickname}}</b></p>
+    </div>
+    <div class="sidebar-list">
+        <a class="sidebar-item clearfix" ng-href="#/orders" ng-class="{'active':highlight('/orders')}">
+            <i class="sidebar-icon sidebar-order"></i> Orders
+            <i class="fa fa-angle-right pull-right" aria-hidden="true"></i>
+        </a>
+        <a class="sidebar-item clearfix" ng-href="#/orders_management" ng-class="{'active':highlight('/skillopedia')||highlight('/authenication')||highlight('/order_management')||highlight('/order_confirm')||highlight('/order_finish')||highlight('/schedule')}">
+            <i class="sidebar-icon sidebar-coach"></i>
+            <span class="marquee" ng-if="user.agent_level == '1'">Teach With Skillpier</span>
+            <span class="marquee" ng-if="user.agent_level == '2'">As a coach</span>
+            <i class="fa fa-angle-right pull-right" aria-hidden="true"></i>
+            <span class="red-dot" ng-if="user.booking_number>0">{{user.booking_number}}</span>
+        </a>
+        <a class="sidebar-item clearfix" ng-href="#/messages" ng-class="{'active':highlight('/messages')}">
+            <i class="sidebar-icon sidebar-message"></i>
+            Message
+            <i class="fa fa-angle-right pull-right" aria-hidden="true"></i>
+            <span class="red-dot" ng-if="user.read_number>0">{{user.read_number}}</span>
+        </a>
+        <a class="sidebar-item clearfix" ng-href="#/comments" ng-class="{'active':highlight('/comments')}">
+            <i class="sidebar-icon sidebar-comment"></i>
+            Comments & Steps
+            <i class="fa fa-angle-right pull-right" aria-hidden="true"></i>
+        </a>
+        <a class="sidebar-item clearfix" ng-href="#/favourite" ng-class="{'active':highlight('/favourite')}">
+            <i class="sidebar-icon sidebar-fav"></i>
+            Favourite
+            <i class="fa fa-angle-right pull-right" aria-hidden="true"></i>
+        </a>
+        <!-- <a class="sidebar-item clearfix" ng-href="#/steps_publish" ng-class="{'active':highlight('/steps_publish')}">
+            Create my steps
+            <i class="fa fa-angle-right pull-right" aria-hidden="true"></i>
+        </a> -->
+        <a class="sidebar-item clearfix" ng-href="#/coupons" ng-class="{'active':highlight('/coupons')}">
+            <i class="sidebar-icon sidebar-coupon"></i>
+            Coupons
+            <i class="fa fa-angle-right pull-right" aria-hidden="true"></i>
+        </a>
+        <!-- <a class="sidebar-item clearfix" ng-href="#/account" ng-class="{'active':highlight('/account')}">
+            <i class="sidebar-icon sidebar-setting"></i>
+            My Account
+            <i class="fa fa-angle-right pull-right" aria-hidden="true"></i>
+        </a> -->
+    </div>
+    <a ng-href="#/account" ng-class="{'active':highlight('/account')}" class="account-item clearfix">
+        <i class="sidebar-icon sidebar-setting"></i>
+            Account setting
+    </a>
+</div>

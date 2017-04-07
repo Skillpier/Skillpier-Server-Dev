@@ -1,0 +1,108 @@
+<meta charset="utf-8" />
+		<title>SkillOpedia-超級管理後台</title>
+		<meta name="keywords" content="SkillOpedia-超級管理後台" />
+		<meta name="description" content="SkillOpedia-超級管理後台" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		
+		<script type="text/javascript" src="/admin/assets/js/jquery-2.0.3.min.js"></script> 
+		<script type="text/javascript" src="/admin/assets/js/jquery.cookie.js"></script>
+		<script type="text/javascript" charset="utf-8" src="/admin/ueditor/ueditor.config.js"></script>
+	    <script type="text/javascript" charset="utf-8" src="/admin/ueditor/ueditor.all.min.js"></script>
+	    
+	    
+		<!-- basic styles -->
+
+		<link href="/admin/assets/css/bootstrap.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="/admin/assets/css/font-awesome.min.css" />
+
+		<!--[if IE 7]>
+		  <link rel="stylesheet" href="/admin/assets/css/font-awesome-ie7.min.css" />
+		<![endif]-->
+
+		<!-- page specific plugin styles -->
+
+		<!-- fonts -->
+
+		<link href="/skillopedia/images/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+
+		<!-- ace styles -->
+
+		<link rel="stylesheet" href="/admin/assets/css/ace.min.css" />
+		<link rel="stylesheet" href="/admin/assets/css/ace-rtl.min.css" />
+		<link rel="stylesheet" href="/admin/assets/css/ace-skins.min.css" />
+		<link rel="stylesheet" href="/admin/assets/css/chosen.css" />
+		<link rel="stylesheet" href="/admin/assets/css/ui.jqgrid.css" />
+		
+		<!--[if lte IE 8]>
+		  <link rel="stylesheet" href="/admin/assets/css/ace-ie.min.css" />
+		<![endif]-->
+
+		<!-- inline styles related to this page -->
+
+		<!-- ace settings handler -->
+
+		<script src="/admin/assets/js/ace-extra.min.js"></script>
+
+		<script type="text/javascript" src="/admin/assets/js/date-time/bootstrap-datetimepicker.min-2.js"></script>
+        <link rel="stylesheet" type="text/css" media="screen"href="/admin/assets/css/bootstrap-datetimepicker.min.css">
+  
+		<link rel="stylesheet" href="/admin/assets/css/ace.min.css" />
+				
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+
+		<!--[if lt IE 9]>
+		<script src="/admin/assets/js/html5shiv.js"></script>
+		<script src="/admin/assets/js/respond.min.js"></script>
+		<![endif]-->
+		<!--[if IE]>
+		<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
+	    <![endif]-->
+	    
+		<script type="text/javascript">
+		  //正数
+			function checkRate(obj){
+				var number = /^(([0-9]+\.[0-9]*[1-9][0-9]*)|([0-9]*[1-9][0-9]*\.[0-9]+)|([0-9]*[1-9][0-9]*))$/;
+				if(!number.test(obj.value)){
+					obj.value = "";
+					return false;
+				}
+			}
+			//0-100正数
+			function checkInteger(obj){
+				var number =/^(100|[1-9]\d|\d)$/;
+				if(!number.test(obj.value)){
+					obj.value = "";
+					return false;
+				}
+			}
+			//图片预览
+			function viewmypic(mypic,imgfile) {       
+				if (imgfile.value){       
+				mypic.src="/files/image?name="+imgfile.value;       
+				mypic.style.display="";       
+				mypic.border=1;       
+				}       
+			}   
+			//包括0的数字
+		 	function checkNum(obj){
+		 		var number =/^[0-9]*$/;
+			if(!number.test(obj.value)){
+				obj.value = "";
+				$("[name=stocks]:input").focus();
+				return false;
+				}
+		 	}
+		 	//建立一個可存取到該file的url
+			function getObjectURL(file) {
+				var url = null ; 
+				if (window.createObjectURL!=undefined) { // basic
+					url = window.createObjectURL(file) ;
+				} else if (window.URL!=undefined) { // mozilla(firefox)
+					url = window.URL.createObjectURL(file) ;
+				} else if (window.webkitURL!=undefined) { // webkit or chrome
+					url = window.webkitURL.createObjectURL(file) ;
+				}
+				return url ;
+			}
+	
+		</script>

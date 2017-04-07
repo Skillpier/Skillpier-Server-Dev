@@ -1,0 +1,54 @@
+<!-- header -->
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap">
+    <div class="section account-section">
+        <!-- sidebar -->
+        <sidebar active="'/orders'" class="sidebar-wrap" user="user" go="go"></sidebar>
+        <div class="content-wrap">
+            <div class="tabs clearfix">
+                <a class="tab-item pull-left active">Booking</a>
+            </div>
+            <div class="calendar-wrap">
+                <calendar calendar="calendar" class="calendar-left"></calendar>
+                <div class="calendar-right">
+                    <div class="calenader-result">
+                        <p class="text-center">Schedule</p>
+                        <div class="result-item hover" ng-click="calendar.remove(select)" ng-repeat="select in calendar.selected">
+                            <i class="pull-right fa fa-times"></i>
+                            <div>{{parse_day(select.from.day)}}</div>
+                            {{get_from_time(select.from.hour)}} to {{get_to_time(select.to.hour)}}
+                        </div>
+                        <div class="result-item" ng-if="calendar.selected.length==0">
+                            <span ng-if="schedule_meta.under_select_course_num>0">
+                                your booking time will show here! there are {{schedule_meta.under_select_course_num}} couse you can book !
+                            </span>
+                            <span ng-if="schedule_meta.under_select_course_num==0">
+                                you now has book all you time! 
+                            </span>
+                        </div>
+                        <div class="result-item" ng-if="calendar.selected.length>0 && get_left()>0">
+                            {{get_left()}} sessions remain!
+                        </div>
+                        <div class="result-item" ng-if="calendar.selected.length>0 && get_left() == 0">
+                            You have booked all sessions.
+                        </div>
+                        <div class="clearfix" ng-if="calendar.selected.length>0">
+                            <p class="btn-group text-center">
+                                <button type="button" class="btn btn-primary" ng-click="booking()">booking</button>
+                            </p>
+                        </div>
+                        <div class="text-center">
+                            <span class="calender-tip unavailable">Unavailable</span>
+                            <span class="calender-tip confirm">Booked</span>
+                            <!-- <span class="calender-tip busy">unavailable, coach busy</span> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- confirm -->
+<confirm confirm="confirm" class="hide"></confirm>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

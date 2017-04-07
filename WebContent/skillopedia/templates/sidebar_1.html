@@ -1,0 +1,26 @@
+<div class="sidebar" ng-controller="sidebarController">
+    <div class="section">
+        <div class="sidebar-avatar">
+            <img ng-src="{{staticImageUrl + guest.image_01}}" err-src="/skillopedia/images/example_7.png" alt="">
+        </div>
+        <p class="text-center">{{guest.nickname}}</p>
+    </div>
+    <div class="sidebar-list">
+    	<div class="sidebar-item-header clearfix">
+    		My Skillpier
+    		<i class="fa fa-angle-down pull-right" aria-hidden="true"></i>
+    	</div>
+    	<a class="sidebar-item sub-item clearfix" ng-href="#/show?user_id={{user_id}}" ng-class="{'active':highlight('/show')}">
+    		Courses
+    		<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>
+    	</a>
+    	<a class="sidebar-item sub-item clearfix" ng-href="#/show_comments?user_id={{user_id}}" ng-class="{'active':highlight('/show_comments')}">
+    		Comments
+    		<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>
+    	</a>
+    	<a class="sidebar-item sub-item clearfix" ng-href="#/show_steps?user_id={{user_id}}" ng-class="{'active':highlight('/show_steps')}">
+    		Steps
+    		<i class="fa fa-angle-right pull-right" aria-hidden="true"></i>
+    	</a>
+    </div>
+</div>

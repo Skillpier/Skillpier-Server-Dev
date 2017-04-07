@@ -1,0 +1,74 @@
+<!-- header -->
+<myresource cs-resource="{'account_css':'/skillopedia/lib/css/account.css','media_css':'/skillopedia/lib/css/media.css'}"></myresource>
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap">
+    <div class="section account-section">
+        <!-- sidebar -->
+        <sidebar active="" class="sidebar-wrap" user="user" go="go"></sidebar>
+        <div class="content-wrap">
+            <div class="tabs clearfix">
+                <a class="tab-item pull-left" ng-class="{'active':input.order_type=='1'}" ng-click="active_tab('1')">All</a>
+                <a class="tab-item pull-left" ng-class="{'active':input.order_type=='2'}" ng-click="active_tab('2')">Unpaid</a>
+                <a class="tab-item pull-left" ng-class="{'active':input.order_type=='3'}" ng-click="active_tab('3')">Paid</a>
+                <a class="tab-item pull-left" ng-class="{'active':input.order_type=='4'}" ng-click="active_tab('4')">Finished</a>
+            </div>
+            <div class="coach-item with-action-bar" ng-repeat="order in orders" ng-class="{'opacity':order.status == '10'}">
+                <div class="coach-avatar">
+                    <imageview data-rate="1" center-only src="staticImageUrl + order.Course.coach_image"></imageview>
+                    <span class="official-coach" ng-if="order.Course.is_official"></span>
+                </div>
+                <div class="coach-info" ng-click="local_go(order)">
+                    <div class="long-title order-item text-ellipsis">{{order.Course.title}} <span class="timestamp">{{order.post_time}}</span></div>
+                    <span class="pull-right" style="margin-left:8px;">x{{order.buy_amount}}</span>
+                    <span class="pull-right text-primary text-big">{{order.Course.session_rate|currency:"$"}}</span>
+                    <div style="margin-bottom:10px;" class="text-transform">{{order.Course.coach_name}}</div>
+                    <div class="justified">
+                        <div>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <span>{{order.Course.total_coment_num || "0"}} reviews</span>
+                        </div>
+                        <div>
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                            <span>{{order.Course.category_02_name}}</span>
+                        </div>
+                        <div class="text-primary" ng-click="open_map(course,$event)">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                            <span>{{order.Course.area}}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-bar clearfix">
+                    <!-- <span class="btn pull-left">{{get_status_message(order.status)}}</span> -->
+                    <span class="pull-left text-big">{{order.total_session_rate|currency:"$"}}</span>
+                    <span class="pull-left text-line-through" style="position: absolute;margin-left:8px;" ng-if="order.total_session_rate != order.original_total_session_rate">{{order.original_total_session_rate|currency:"$"}}</span>
+                    <span class="pull-left" ng-if="order.status == '10'" style="position: relative;top:15px;margin-left: 8px;">The price of this course is modified, please order it again</span>
+                    <div class="btn-group clearfix pull-right">
+                        <!-- pay or delete status 11 -->
+                        <span class="btn btn-danger" ng-if="order.status == '10' || order.status == '11'" ng-click="remove(order)">Delete</span>
+                        <span class="btn btn-success" ng-if="order.status == '11'" ng-click="pay(order)">Pay now</span>
+                        <!-- refund active #/order_refund-->
+                        <a class="btn btn-danger" ng-if="order.status == '21'" ng-href="#/order_refund?id={{order.orders_id}}">Refund</a>
+                        <!-- refund disabled -->
+                        <span class="btn btn-danger" disabled ng-if="order.status == '22'">Refund</span>
+                        <!-- Buy again when course is finish -->
+                        <a class="btn btn-default" ng-if="order.status == '30' || order.status == '40'" ng-href="#/detail?course_id={{order.Course.course_id}}">Buy again</a>
+                        <!-- comment when course is finish #/order_comment-->
+                        <a class="btn btn-second" ng-if="order.status == '30'" ng-href="#/order_comment?id={{order.orders_id}}">Comment</a>
+                        <a class="btn btn-second" ng-if="order.status == '40'" ng-href="#/order_comment?id={{order.orders_id}}&c_id={{order.Course.comment_id}}">Update comment</a>
+                        <!-- booking active book_status #/order_booking-->
+                        <a class="btn btn-success" ng-if="order.booking_status == '1'" ng-href="#/order_booking?order_id={{order.orders_id}}&course_id={{order.Course.course_id}}">Booking</a>
+                        <!-- booking disabled book_status-->
+                        <span class="btn btn-success" disabled ng-if="order.booking_status == '2'">Booking</span>
+                    </div>
+                </div>
+            </div>
+            <div class="section text-center">
+                <span class="btn btn-lg" ng-click="loadMore()">{{page.message}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- confirm -->
+<confirm confirm="confirm" class="hide"></confirm>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

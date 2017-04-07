@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="youyi-api" default="war" basedir=".">
+	<property name="classes" value="${basedir}/build/classes" />
+	<property name="build" value="${basedir}/build" />
+	<property name="lib" value="${basedir}/WebContent/WEB-INF/lib" />
+	<path id="project.classpath">
+		<fileset dir="${basedir}/WebContent/WEB-INF/lib">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+	<target name="clean">
+		<delete dir="${build}" />
+	</target>
+	<target name="compile" depends="clean">
+		<mkdir dir="${classes}" />
+		<javac srcdir="${basedir}/src/" destdir="${classes}"  includeAntRuntime="false">
+			<compilerarg line="-encoding UTF-8 " />
+			<classpath refid="project.classpath">
+			</classpath>
+		</javac>
+		<copy todir="${classes}">
+			<fileset dir="${basedir}/src/main/">
+				<include name="ehcache.xml"/>
+				<include name="log4j.properties"/>
+			</fileset>
+		</copy>
+	</target>
+	<target name="war" depends="compile">
+		<war destfile="C:/apache-tomcat-7.0.55/webapps/ROOT.war" webxml="${basedir}/WebContent/WEB-INF/web.xml">
+			<fileset dir="${basedir}/WebContent" includes="**" />
+			<lib dir="${lib}" />
+			<classes dir="${classes}" />
+		</war>
+	</target>
+</project>

@@ -1,0 +1,176 @@
+<myresource js-resource="{'main_js':'/skillopedia/lib/js/main.js'}"></myresource>
+<!-- header -->
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap">
+    <div class="detail-section">
+        <div class="detail-left">
+            <div class="coach-item">
+                <div class="coach-avatar">
+                    <imageview data-rate="1" center-only ng-if="course.user_image_01" src="staticImageUrl + course.user_image_01"></imageview>
+                    <span class="official-coach" ng-if="course.is_official"></span>
+                </div>
+                <div class="coach-info">
+                    <div class="auto-title text-ellipsis">{{course.title||"..."}}</div>
+                    <div style="margin-bottom:10px;" class="text-transform">{{course.nickname||"..."}}</div>
+                    <div class="justified">
+                        <div>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <span>{{course.total_coment_num || "0"}} reviews</span>
+                        </div>
+                        <div>
+                            <span class="" ng-click="toggle_like()"><i class="fa" ng-class="{'fa-heart-o':course.is_collection == '0','fa-heart':course.is_collection == '1'}" aria-hidden="true" style="margin-right: 8px"></i>like</span>
+                        </div>
+                        <div>
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                            <span>{{course.category_02_name}}</span>
+                        </div>
+                        <div>
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                            <span>{{course.area}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- gallery -->
+            <dribehance-gallery gallery-image="course.CourseBanners" gallery-video="course.CourseVedios"></dribehance-gallery>
+            <div class="line"></div>
+            <div class="justified text-center bg-white detail-tab">
+                <span class="wrap hover" ng-class="{'text-primary':tab == 'about'}" ng-click="active_tab('about')">About coach</span>
+                <span class="wrap hover" ng-class="{'text-primary':tab == 'achievement'}" ng-click="active_tab('achievement')">Achievements</span>
+                <span class="wrap hover" ng-class="{'text-primary':tab == 'specialist'}" ng-click="active_tab('specialist')">Specialist</span>
+                <span class="wrap hover" ng-class="{'text-primary':tab == 'certificate'}" ng-click="active_tab('certificate')">Certificate</span>
+            </div>
+            <div class="line"></div>
+            <div class="wrap bg-white" ng-if="tab == 'about'">
+                <div class="overview" ng-bind-html="parse_html(course.overview)">
+                </div>
+            </div>
+            <div class="wrap bg-white" ng-if="tab == 'achievement'">
+                <div class="overview" ng-bind-html="parse_html(course.achievements)">
+                </div>
+            </div>
+            <div class="wrap bg-white" ng-if="tab == 'specialist'">
+                <div class="overview" ng-bind-html="parse_html(course.specialist)">
+                </div>
+            </div>
+            <div class="wrap bg-white" ng-show="tab == 'certificate'">
+                <div class="image-gallaxy clearfix">
+                    <a class="image" href="{{staticImageUrl + certification.image_01}}" ng-repeat="certification in course.CourseCertifications">
+                        <img ng-if="certification.image_01" ng-src="{{staticImageUrl + certification.image_01}}" class="full-width" alt="" err-src="/skillopedia/images/error.jpg">
+                    </a>
+                </div>
+            </div>
+            <!-- <div class="section sm">
+                <div class="section-title">About coach</div>
+                <div class="overview" ng-bind-html="parse_html(course.overview)">
+                </div>
+            </div> -->
+            <div class="line" ng-show="course.CourseCertifications.length>0"></div>
+            <!-- <div class="section sm" ng-show="course.CourseCertifications.length>0">
+                <div class="section-title">Certification</div>
+                <div class="image-gallaxy clearfix">
+                    <a class="image" href="{{staticImageUrl + certification.image_01}}" ng-repeat="certification in course.CourseCertifications">
+                        <img ng-src="{{staticImageUrl + certification.image_01}}" class="full-width" alt="" err-src="/skillopedia/images/error.jpg">
+                    </a>
+                </div>
+            </div> -->
+            <div class="line" ng-if="comments.length>0"></div>
+            <div class="section sm bg-white wrap" ng-if="comments.length>0">
+                <div class="section-title">Comments</div>
+                <div class="comments">
+                    <div class="comment-item" ng-repeat="comment in comments">
+                        <div class="comment-avatar">
+                            <imageview data-rate="1" center-only src="staticImageUrl+comment.comment_image"></imageview>
+                        </div>
+                        <div class="comment-meta">
+                            <span class="comment-name comment-meta-entry">
+                                    {{comment.comment_name}}
+                            </span>
+                            <span class="comment-meta-entry">
+                                <i class="fa fa-star" ng-class="{'text-primary':comment.total_score >0}" aria-hidden="true"></i>
+                                <i class="fa fa-star" ng-class="{'text-primary':comment.total_score >1}" aria-hidden="true"></i>
+                                <i class="fa fa-star" ng-class="{'text-primary':comment.total_score >2}" aria-hidden="true"></i>
+                                <i class="fa fa-star" ng-class="{'text-primary':comment.total_score >3}" aria-hidden="true"></i>
+                                <i class="fa fa-star" ng-class="{'text-primary':comment.total_score >4}" aria-hidden="true"></i>
+                            </span>
+                            <span class="comment-meta-entry">{{comment.format_post_time || 'just now'}}</span>
+                        </div>
+                        <div class="comment-content">
+                            {{comment.note}}
+                            <div class="comment-reply" ng-if="comment.is_reply">
+                                <b>coach reply:</b>{{comment.commentReply_content}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section text-center">
+                    <span class="btn btn-lg" ng-click="loadMore()">{{page.message}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="detail-right">
+            <div class="settlement">
+                <div class="single-price text-center">{{course.session_rate|currency:"$"}}</div>
+                <p class="text-center"> {{course.session_length}} mins per session</p>
+                <p class="text-center" ng-if="course.is_stop_course != 1 && course.status == 1">
+                    <a class="btn btn-warning btn-lg" ng-href="#/fillinorder?course_id={{course.course_id}}">Get Started</a>
+                </p>
+                <p class="text-center text-danger" ng-if="course.status != 1">
+                    This course is currently not available.
+                </p>
+            </div>
+            <div class="section sm wrap bg-white detail-group">
+                <i class="detail-icon" aria-hidden="true"></i>
+                <div class="group-title">
+                    <b>Details</b>
+                </div>
+                <p><b>Experience: </b> {{course.teaching_since}} years</p>
+                <p><b>Group Session:</b> Up to {{course.additional_partner}} ppl</p>
+                <p>
+                    <span ng-if="course.travel_to_session == '1'"><b>Travel: </b> Yes</span><span ng-if="course.travel_to_session == '0'"><b>Travel: </b> No</span>
+                </p>
+                <p><b>Session Duration: </b> {{course.session_length}}min</p>
+                <p><b>Ages: </b> <span ng-if="parse_age(course.teaching_age)">at least {{course.teaching_age}} years old</span> <span ng-if="!parse_age(course.teaching_age)">{{course.teaching_age}}</span></p>
+                <p><span ng-if="course.travel_to_session == '1'"><b>Travel Distance: </b>  {{course.travel_to_session_distance}} miles</span></p>
+            </div>
+            <div class="section sm bg-white wrap detail-group">
+                <i class="address-icon" aria-hidden="true"></i>
+                <div class="group-title hover" class="text-primary" ng-click="open_map(course,$event)">
+                    <b class="v-middle">Teaching location</b>
+                </div>
+                <!-- <div style="height:300px;border:1px solid #d2d2d2" id="map"></div>
+                <p>Travel: 
+                    <span ng-if="course.travel_to_session == '1'">yes</span>
+                    <span ng-if="course.travel_to_session == '0'">no</span>
+                </p>
+                <p ng-if="course.travel_to_session == '1'">Travel distance: {{course.travel_to_session_distance}}miles</p>
+                <span>Specific location will be made available after payment.</span> -->
+            </div>
+            <div class="section sm bg-white" style="margin-bottom: 0">
+                <div class="wrap bg-primary text-white text-center" ng-if="course.is_stop_course == '1'">
+                    Attention! This course is suspend.
+                </div>
+                <div class="wrap bg-primary text-white text-center" style="opacity:0.5" ng-if="course.is_stop_course != '1'">
+                    Availability
+                </div>
+                <!-- <div ng-include="'/skillopedia/templates/calendar.html'"></div> -->
+                <calendar calendar="calendar" class="small-calendar" ng-show="course.is_stop_course != 1"></calendar>
+                <div class="wrap" ng-if="course.is_stop_course != 1"><span class="calender-tip unavailable">Unavailable</span>
+                    <span class="calender-tip confirm">Booked</span></div>
+                <!-- <span class="calender-tip busy">unavailable, coach busy</span> -->
+            </div>
+            <!-- <div class="section sm map-section">
+                <div class="section-title">Teaching location</div>
+                <div style="height:300px;border:1px solid #d2d2d2" id="map"></div>
+                <p>Travel: 
+                    <span ng-if="course.travel_to_session == '1'">yes</span>
+                    <span ng-if="course.travel_to_session == '0'">no</span>
+                </p>
+                <p ng-if="course.travel_to_session == '1'">Travel distance: {{course.travel_to_session_distance}}miles</p>
+                <span>Specific location will be made available after payment.</span>
+            </div> -->
+        </div>
+    </div>
+</div>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

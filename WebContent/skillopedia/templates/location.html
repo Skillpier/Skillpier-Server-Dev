@@ -1,0 +1,29 @@
+<form class="location-wrap step" name="locationForm" ng-submit="save_location()">
+    <p>Enter the preferred address for you lesson. <b class="text-danger" ng-if="street_error">{{street_error}}</b></p>
+    <div class="course-input">
+        <input type="text" ng-model="input.street" ng-required="true" class="full-width" placeholder="Street address, P.O. box, company name, c/o." />
+    </div>
+    <div class="course-input z-margin">
+        <input type="text" ng-model="input.address" class="full-width" placeholder="Apartment, suite, unit, building, floor, etc." />
+    </div>
+    <div class="clearfix">
+        <div class="m-session z-margin pull-left">
+            <div class="u-input">
+                <input type="text" ng-model="input.area" ng-required="true" class="full-width" placeholder="City, e.g. San Francisco" />
+            </div>
+        </div>
+        <div class="m-session z-margin pull-right">
+            <div class="u-input">
+                <input type="text" ng-model="input.city" ng-required="true" class="full-width" placeholder="State, e.g. CA" />
+            </div>
+        </div>
+        <div class="m-session pull-left z-margin">
+            <div class="u-input">
+                <input type="text" ng-model="input.zipcode" class="full-width" placeholder="Zip Code, e.g. 94105" />
+            </div>
+        </div>
+    </div>
+    <div class="m-session z-margin">
+        <button type="submit" class="btn btn-danger btn-lg" ng-disabled="loactionForm.$inalid">Save</button>
+    </div>
+</form>

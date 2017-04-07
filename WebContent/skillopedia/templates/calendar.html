@@ -1,0 +1,22 @@
+<div class="calendar">
+    <!-- <div class="calendar-day" ng-click="pickadate($event)" ng-show="calendar.mode != 'confirm'">
+        <i class="fa fa-calendar pull-left" aria-hidden="true"></i> {{calendar.day}}
+        <i class="fa fa-angle-right pull-right" aria-hidden="true"></i>
+    </div> -->
+    <div class="calendar-day" ng-show="calendar.mode != 'confirm'">
+        <datepicker date-format="MMM dd, yyyy" date-min-limit="{{nowaday}}">
+        <input type="text" name="day" date-format="MMM dd, yyyy" ng-model="calendar.day" class="full-width" readonly/>
+    <i class="fa fa-angle-right pull-right"></i>
+    </datepicker>
+    </div>
+    <div class="calendar-times">
+        <div class="calendar-time state_{{time.schedule_state}}" ng-class="{'active':time.active}" ng-repeat="time in calendar.times track by $index" ng-click="select(time,$index)">
+            <span class="hour">{{time.hour}}</span>
+            <span class="plan">{{time.schedule_state_message}}</span>
+            <i class="fa fa-check-square-o hide" aria-hidden="true"></i>
+        </div>
+    </div>
+    <div class="calendar-disabled" ng-if="calendar.disabled">
+        <!-- <p>{{calendar.disabled_message}}</p> -->
+    </div>
+</div>

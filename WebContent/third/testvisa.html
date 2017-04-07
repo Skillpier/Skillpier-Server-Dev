@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport"
+	content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+<script type="text/javascript"
+	src="/admin/assets/js/jquery-2.0.3.min.js"></script>
+<script type="text/javascript">
+	function onVisaCheckoutReady(){
+		V.init({
+			apikey:"JL57ZAV24YRD53DGI6T521gO4XusPNtOOgAjNymTxwTdfYjRg",
+			sourceId:"Merchant Defined Source ID",
+			settings:{
+			locale:"en_US",
+			countryCode:"US",
+			displayName:"...Corp",
+			logoUrl:"www.Some_Image_URL.gif",
+			websiteUrl:"https://www.skillpier.com/",
+			customerSupportUrl:"www....Corp.support.com",
+			shipping:{
+			acceptedRegions:["US","CA"],
+			collectShipping:"true"
+			},
+			payment:{
+				cardBrands:[
+					"VISA",
+					"MASTERCARD"],
+				acceptCanadianVisaDebit:"true"
+			},
+			review:{
+				message:"Merchant defined message",
+				buttonAction:"Continue"
+			},
+			dataLevel:"SUMMARY"
+			},
+			paymentRequest:{
+				merchantRequestId:"Merchant defined request ID",
+				currencyCode:"USD",
+				subtotal:"10.00",
+				shippingHandling:"2.00",
+				tax:"2.00",
+				discount:"1.00",
+				giftWrap:"2.00",
+				misc:"1.00",
+				total:"16.00",
+				description:"MegacorpProduct",
+				orderId:"5",
+				promoCode:"Merchant	defined promo code",
+				customData:{
+				"nvPair":[
+				{"name":"customName1","value":"customValue1"},
+				{"name":"customName2","value":"customValue2"}
+				]
+			  }
+				}
+				}
+			);
+			V.on("payment.success",function(payment){document.write(JSON.stringify(payment));});
+			V.on("payment.cancel",function(payment){document.write(JSON.stringify(payment));});
+			V.on("payment.error",function(payment,error){document.write(JSON.stringify(payment));});
+		}
+</script>
+</head>
+<body>
+	<img alt="Visa Checkout" class="v-button" role="button"
+		src="https://sandbox.secure.checkout.visa.com/wallet-services-web/xo/button.png?cardBrands=VISA,MASTERCARD,DISCOVER,AMEX"/>
+	<script type="text/javascript" src="https://sandbox-assets.secure.checkout.visa.com/checkout-widget/resources/js/integration/v1/sdk.js">		
+	</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="gtc">
+        <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/jfinal"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/utils"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/BoneCP"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/quark"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/keys"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/json"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/jpush"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/alipay"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/weixin"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/unipay"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/rong"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/apple_pay"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/paypal"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/visa"/>
+        <property name="java-output-path" value="/gtc/build/classes"/>
+        <property name="context-root" value="/"/>
+    </wb-module>
+</project-modules>

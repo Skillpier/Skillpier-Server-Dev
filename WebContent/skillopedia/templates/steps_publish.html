@@ -1,0 +1,47 @@
+<!-- header -->
+<myresource cs-resource="{'account_css':'/skillopedia/lib/css/account.css','media_css':'/skillopedia/lib/css/media.css'}"></myresource>
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap">
+    <div class="section account-section">
+        <!-- sidebar -->
+        <sidebar active="'/comments'" class="sidebar-wrap" user="user" go="go"></sidebar>
+        <div class="content-wrap">
+        	<div class="tabs clearfix">
+                <!-- <label class="tab-item pull-left" ng-class="{'active':input.step_status == '1'}">
+                    <input type="radio" class="hide" name="published" ng-model="input.step_status" value="1">Published
+                </label>
+                <label class="tab-item pull-left" ng-class="{'active':input.step_status == '2'}">
+                    <input type="radio" class="hide" name="draft" ng-model="input.step_status" value="2">Draft
+                </label> -->
+                <a class="tab-item pull-left" ng-href="#/comments">Comments</a>
+                <a class="tab-item pull-left active">Steps</a>
+                <a ng-href="#/create_step" target="_blank" class="pull-right clearfix tab-item-action">
+                    <i class="fa fa-paper-plane-o " style="margin-right:8px"></i> Create my step
+                </a>
+            </div>
+            <a class="step-item" ng-repeat="step in steps" ng-href="#/step?id={{step.experience_id}}" target="_blank">
+                <!-- <div class="coach-avatar">
+                    <img src="images/avatar.png" class="full-width" alt="">
+                </div> -->
+                <div class="coach-info">
+                    <div class="step-info">
+                        <span class="step-title"><span class="text-danger" ng-if="step.status=='2'"> [ draft ] </span>{{step.title}}</span>
+                        <div ng-bind-html="step.content" class="step-content"></div>
+                        <span class="pull-left btn" style="padding:6px 0">{{step.post_time}}</span>
+                        <div class="btn-group pull-right">
+                            <button class="btn btn-success" ng-click="edit_step(step.experience_id,$event)">edit</button>
+                            <button class="btn btn-danger" ng-click="remove_step(step.experience_id,$event)">delete</button>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <div class="section text-center" ng-if="steps.length == 0">
+                <span class="btn btn-lg">{{steps_message}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- confirm -->
+<confirm confirm="confirm" class="hide"></confirm>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

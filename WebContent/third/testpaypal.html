@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <!-- <base href="/"> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="yes" />
+</head>
+
+<body>
+<!-- paypal沙盒支付测试地址 -->
+<form id="pay_form" name="pay_form" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+<!-- 支付金额-->
+<input type="hidden" name="amount" id="amount" value="0.5">
+<!-- 自己的参数 商品条目-->
+<input type="hidden" name="item_number" id="item_number" value="xiu90 coins:50">
+<!-- 表示立即支付-->
+<input type="hidden" name="cmd" id="cmd" value="_xclick">
+<!-- 商品名称-->
+<input type="hidden" name="item_name" id="item_name" value="buy xiu90 coins">
+<!-- 商户订单唯一id 不可重复 -->
+<!--
+<input type="hidden" name="invoice" id="invoice" value="201604291655176">
+ -->
+<!--支付成功后台通知地址-->
+<input type="hidden" name="notify_url" id="notify_url" value="https://www.skillpier.com/PaypalNotify">
+<!--支付成功返回地址-->
+<input type="hidden" name="return" id="return" value="https://www.skillpier.com">
+<input type="hidden" name="lc" id="lc" value="China">
+<!--支付取消返回地址-->
+<input type="hidden" name="cancel_return" id="cancel_return" value="https://www.skillpier.com">
+<input type="hidden" name="currency_code" id="currency_code" value="USD">
+<!--商户邮件-->
+<input type="hidden" name="business" id="business" value="admin-facilitator-1@skillopedia.cc">
+</form>
+<script language="javascript">document.pay_form.submit();</script>
+</body>
+
+</html>

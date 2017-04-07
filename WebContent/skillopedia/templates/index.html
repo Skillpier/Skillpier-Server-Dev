@@ -1,0 +1,162 @@
+<myresource cs-resource="{'superslides':'/skillopedia/lib/css/superslides.css','index_css':'/skillopedia/lib/css/index.css'}" js-resource="{'easing':'//cdn.bootcss.com/jquery-easing/1.3/jquery.easing.min.js','animate_enhanced':'/skillopedia/lib/js/jquery.animate-enhanced.min.js','superslides':'/skillopedia/lib/js/jquery.superslides.js','main_js':'/skillopedia/lib/js/main.js'}">
+</myresource>
+<!-- nav -->
+<div class="topBar">
+    <div class="centered"> Sign up now and get $25 dollars cash coupon immediately! Available on all courses!</div>
+</div>
+<div class="nav">
+    <span class="nav-btn">
+        Skillpier <i class="fa fa-angle-down hover-spin-reverse" aria-hidden="true"></i>
+    </span>
+    <div class="nav-action" ng-controller="headerController">
+        <span class="signin-btn btn btn-black" ng-click="signin()" ng-if="!is_signin()">Sign in</span>
+        <span class="signup-btn btn" ng-click="signup()" ng-if="!is_signin()">Sign up</span>
+        <a class="shoppingcart" ng-if="is_signin()" ng-href="#/shoppingcart"><img ng-src="/skillopedia/images/cart.png" alt="" err-src="/skillopedia/images/example_7.png"></a>
+        <span class="logout-btn" ng-click="show_menu($event)" ng-if="is_signin()"><img ng-if="user.image_01" ng-src="{{staticImageUrl + user.image_01}}" alt="" err-src="/skillopedia/images/example_7.png" onload></span>
+        <div class="dropdown-menu" ng-if="is_signin()">
+            <a class="menu-item" ng-href="#/orders">
+                <i class="fa fa-user" aria-hidden="true"></i>Orders
+            </a>
+            <a class="menu-item" ng-href="#/orders_management" ng-if="user.agent_level == '2'">
+                <i class="fa fa-bookmark" aria-hidden="true"></i>As a coach
+            </a>
+            <a class="menu-item" ng-href="#/orders_management" ng-if="user.agent_level == '1'">
+                <i class="fa fa-bookmark" aria-hidden="true"></i>Teach With Skillpier
+            </a>
+            <a class="menu-item" ng-href="#/messages">
+                <i class="fa fa-user" aria-hidden="true"></i>Messages
+            </a>
+            <a class="menu-item" ng-click="logout()">
+                <i class="fa fa-sign-out" aria-hidden="true"></i>Sign out
+            </a>
+        </div>
+    </div>
+    <div class="dropdown clearfix">
+        <div class="dropdown-section">
+            <div class="dropdown-title">
+                Download For
+            </div>
+            <div class="info-list">
+                <div class="info-item">
+                    <i class="fa fa-apple text-big" aria-hidden="true"></i><span class="info-text">Iphone</span>
+                </div>
+                <div class="info-item">
+                    <i class="fa fa-android text-big" aria-hidden="true"></i><span class="info-text">Android</span>
+                </div>
+            </div>
+            <div class="line"></div>
+            <span class="or">or</span>
+            <img src="/skillopedia/images/qrcode.png" class="qrcode full-width" alt="">
+        </div>
+        <div class="dropdown-section">
+            <div class="dropdown-title">
+                Info
+            </div>
+            <div class="info-list">
+                <a class="info-item" ng-href="#/about">About Skillpier</a>
+                <a class="info-item" ng-href="#/support">Support</a>
+                <a class="info-item" ng-href="#/contact">Contact Us</a>
+                <a class="info-item" ng-href="#/services">Terms of Services</a>
+                <a class="info-item" ng-href="#/privacy">Privacy Policy</a>
+            </div>
+            <div class="dropdown-title">
+                Follow Us
+            </div>
+            <div class="info-list">
+                <a class="info-item"><i class="fa fa-facebook" aria-hidden="true"></i>Like Us on Facebook</a>
+                <a class="info-item"><i class="fa fa-twitter" aria-hidden="true"></i>Follow Us on Twitter</a>
+                <a class="info-item"><i class="fa fa-google" aria-hidden="true"></i>Follow Us on Google+</a>
+                <a class="info-item"><i class="fa fa-linkedin" aria-hidden="true"></i>Follow Us on Linkedin</a>
+            </div>
+        </div>
+    </div>
+    <div class="dropdown-cover hide"></div>
+</div>
+<!-- slider -->
+<dribehance-slider banners="banners"></dribehance-slider>
+<!-- search -->
+<div class="wrap search-wrap">
+    <form class="search-input" ng-submit="ajaxForm()" name="searchForm" ng-controller="searchFormController">
+        <i class="fa fa-search" aria-hidden="true"></i>
+        <input type="text" class="full-width" ng-model="input.keyword" ng-focus="focus()" ng-blur="blur()" placeholder="Find your private coach or lesson">
+        <span class="category-suggestion" ng-if="input.focus && input.categorys.length>0">
+            <span class="suggestion-item" ng-repeat="category in input.categorys" ng-click="select_category(category)">{{category.category_02_name}}</span>
+        </span>
+        <span class="zipcode">
+            <autocomplete location="input.location"></autocomplete>
+        </span>
+        <button class="btn highlight" type="submit">Search</button>
+    </form>
+</div>
+<!-- feature section -->
+<div class="wrap">
+    <div class="section feature-section clearfix">
+        <div class="feature-item feature-left" ng-click="open_left_feature($event)">
+            <img ng-if="sport.image_01" ng-src="{{staticImageUrl + sport.image_01}}" class="hvr-grow" err-src="/skillopedia/images/error.jpg" onload alt="">
+            <div class="feature-caption">
+                <h1>{{sport.category_01_name}}</h1>
+                <span>{{sport.category_describe}}</span>
+            </div>
+            <div class="sub-feature">
+                <span class="close_left close" ng-click="close_left($event)"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <div class="sub-feature-{{$index}} circle" ng-repeat="sport_second in sport_seconds track by $index" ng-if="$index<6">
+                    <a class="feature-meta hover" ng-click="go_list(sport_second)" title="{{sport_second.category_describe}}">
+                        <img ng-if="sport_second.big_image_01" ng-src="{{staticImageUrl + sport_second.big_image_01}}" class="full-width" err-src="/skillopedia/images/error.jpg" onload>
+                        <span class="feature-meta-title text-ellipsis">
+                            <!-- {{sport_second.category_02_name}} -->
+                            {{sport_second.category_describe}}
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="feature-item feature-right" ng-click="open_right_feature($event)">
+            <img ng-if="arts.image_01" ng-src="{{staticImageUrl + arts.image_01}}" class="hvr-grow" err-src="/skillopedia/images/error.jpg" onload>
+            <div class="feature-caption">
+                <h1>{{arts.category_01_name}}</h1>
+                <span>{{arts.category_describe}}</span>
+            </div>
+            <div class="sub-feature">
+                <span class="close_right close" ng-click="close_right($event)"><i class="fa fa-times" aria-hidden="true"></i></span>
+                <div class="sub-feature-{{$index}} circle" ng-repeat="art_second in art_seconds track by $index" ng-if="$index<6">
+                    <a class="feature-meta hover" ng-click="go_list(art_second)" title="{{art_second.category_describe}}">
+                        <img ng-if="art_second.big_image_01" ng-src="{{staticImageUrl + art_second.big_image_01}}" class="full-width" err-src="/skillopedia/images/error.jpg" onload>
+                        <span class="feature-meta-title text-ellipsis">
+                            <!-- {{art_second.category_02_name}} -->
+                            {{art_second.category_describe}}
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <div class="wrap">
+    <div class="section text-center download-section">
+        <span class="btn android text-ellipsis"><i class="fa fa-android" aria-hidden="true"></i>downlaod for android</span>
+        <span class="btn iphone text-ellipsis"><i class="fa fa-apple" aria-hidden="true"></i>downlaod for iphone</span>
+    </div>
+</div> -->
+<!-- category -->
+<div class="wrap">
+    <div class="section category-section" ng-repeat="hot in hots">
+        <a class="category-large" ng-href="#/list?category={{hot.name}}&category_id={{hot.catetory_id}}&type=1">
+            <img ng-src="{{staticImageUrl+hot.big_image_01}}" class="hvr-bounce-in" alt="" err-src="/skillopedia/images/error.jpg" onload>
+            <div class="category-caption large">
+                <h3 class="text-ellipsis">{{hot.name}}</h3>
+                <span class="block">{{hot.sub_title}}</span>
+            </div>
+        </a>
+        <a class="category-small" ng-href="#/detail?course_id={{single.course_id}}" ng-repeat="single in hot.Courses">
+            <img ng-src="{{staticImageUrl + single.big_coach_image}}" class="hvr-bounce-in" alt="" err-src="/skillopedia/images/error.jpg" onload>
+            <div class="category-caption">
+                <h3 class="text-ellipsis">{{single.title}}</h3>
+                <span class="block text-transform">{{single.coach_name}}</span>
+            </div>
+        </a>
+    </div>
+</div>
+<!-- confirm -->
+<confirm confirm="confirm" class="hide"></confirm>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer_index.html'"></div>

@@ -1,0 +1,5 @@
+<div class="pagination text-center" ng-if="total_pages>1">
+	<span class="page" ng-click="prev()" ng-if="paging.pn != 1">Prev</span>
+	<span class="page" ng-repeat="page in paging.pages track by $index" ng-class="{'active':paging.pn == page}" ng-click="jump(page)">{{page}}</span>
+	<span class="page" ng-click="next()" ng-if="paging.pn != total_pages">Next</span>
+</div>

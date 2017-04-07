@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+   <script type="text/javascript" src="/admin/assets/js/jquery-2.0.3.min.js"></script> 
+   <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimal-ui" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="yes" />
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+	img {
+        max-width: 100%;
+    }
+    a:link,a:visited{
+		 text-decoration:none;  /*超链接无下划线*/
+		 color:#000;
+	}
+	a:hover{
+	   text-decoration:none;  /*鼠标放上去有下划线*/
+	}
+    .zan {
+       background-image: url("/webview/img/like9.png");
+        background-repeat: no-repeat;
+        background-position: left center;
+        display: inline-block;
+        width: 24px;
+        height: 24px;
+        vertical-align: middle;
+        background-size: 100%;
+        position: relative;
+        top: -2px;
+    }
+    body {
+        padding: 8px;
+        margin: 0;
+        width: 100%;
+        overflow-x:hidden; 
+        box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+    }
+}
+    </style>
+    <script type="text/javascript">
+  //热度
+	function zan(){
+		var is_zan = $("#is_zan").val();
+		var news_id = $("#news_id").val();
+		var user_id = $("#user_id").val();
+		　  //向后台发送处理数据
+	  　     $.ajax({
+	  　     　　type: "POST", //用POST方式传输
+	  　     　　dataType: "JSON", //数据格式:JSON
+	  　     　　url: '/app/NewsManage/addZan', //目标地址
+	  　    　　 data: { //发送给数据库的数据
+	  　			"is_zan" : is_zan,
+	   			"news_id" : news_id,
+	   			"user_id": user_id,
+	  　		},
+	  　    　　 error: function (XMLHttpRequest, textStatus, errorThrown) {},
+	  　     　　success: function (data){
+		  　  	    var res = eval(data);
+		  　  	     if (res && res.message == true) {   
+		  　  	       // window.location.href=window.location.href;
+	  	   　　　　　　  $("#zan_num").html(res.zan_num);
+	  	   　　　　　　  $("#is_zan").val(res.is_zan);
+	  	   　　　　　　  $("#news_id").val(res.news_id);
+	  	   　　　　　　  $("#user_id").val(res.user_id);
+	  	   　　　　} else {
+	  		 		alert("更新失败");
+	  	   　　　　} 
+	  　     　　} 
+	  　  	   	  　  	  
+	  　     });
+	}
+    </script>
+</head>
+
+<body>
+	<input type="hidden" class="num" id="is_zan" value="${is_zan}"/>
+	<input type="hidden" class="num" id="news_id" value="${news_id}"/>
+	<input type="hidden" class="num" id="user_id" value="${user_id}"/>
+    <!-- 标题 -->
+    <h2 class="rich_media_title" id="activity-name" style="margin: 0px 0px 14px; padding: 0px 0px 10px; font-weight: 400; font-size: 24px; line-height: 1.4; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: rgb(231, 231, 235); font-family: &#39;Helvetica Neue&#39;, Helvetica, &#39;Hiragino Sans GB&#39;, &#39;Microsoft YaHei&#39;, Arial, sans-serif;">
+      ${(title)!''}
+	</h2>
+    <!-- meta 时间 作者 -->
+    <p>
+        <span id="post-date" class="rich_media_meta rich_media_meta_text" style="margin: 0px 8px 10px 0px; padding: 0px; display: inline-block; vertical-align: middle; font-size: 16px; color: rgb(140, 140, 140); max-width: none;">${(post_date)!''}</span>&nbsp;<span style="margin: 0px 8px 10px 0px; padding: 0px; display: inline-block; vertical-align: middle; font-size: 16px; color: rgb(140, 140, 140); max-width: none;">${(writer)!''}</span>
+    </p>
+    <!-- content -->
+    <p>
+        ${(content)!''}
+    </p>
+    <!-- footer -->
+    <p style="height:53px;background-color:white;border-top:1px solid #ccc;margin-top: 0px; margin-bottom: 0px; padding-left: 20px; max-width: 100%; clear: both; min-height: 1em; white-space: pre-line; box-sizing: border-box !important; word-wrap: break-word !important; ">
+        阅读${(read_num)!''} <a onclick="zan();" href="javascript:void(0)"><span><i class="zan"></i>赞<span id="zan_num">${(zan_num)!''}</span></span></a>
+    </p>
+</body>
+
+</html>

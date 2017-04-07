@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<#include "header.html">
+	<SCRIPT LANGUAGE="JavaScript">
+			   $("document").ready(function(){
+				//装修程度
+				var fitment = '${(r.is_hot_recommand)!''}';
+				$("input[name=is_hot_recommand]:radio").each(function(){
+			    		if($(this).val()==fitment){
+			    			$(this).attr("checked","checked");
+			    		}
+				})
+			   })
+ 	 </SCRIPT>
+</head>
+<body>
+	<div class="navbar navbar-default" id="navbar">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('navbar', 'fixed')
+			} catch (e) {
+			}
+		</script>
+		<#include "navigate.html">
+	</div>
+
+	<div class="main-container" id="main-container">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('main-container', 'fixed')
+			} catch (e) {
+			}
+		</script>
+
+		<div class="main-container-inner">
+			<a class="menu-toggler" id="menu-toggler" href="#"> <span
+				class="menu-text"></span>
+			</a>
+			<div class="sidebar" id="sidebar">
+				<script type="text/javascript">
+					try {
+						ace.settings.check('sidebar', 'fixed')
+					} catch (e) {
+					}
+				</script>
+
+				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+						<button class="btn btn-success">
+							<i class="icon-signal"></i>
+						</button>
+
+						<button class="btn btn-info">
+							<i class="icon-pencil"></i>
+						</button>
+
+						<button class="btn btn-warning">
+							<i class="icon-group"></i>
+						</button>
+
+						<button class="btn btn-danger">
+							<i class="icon-cogs"></i>
+						</button>
+					</div>
+
+					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+						<span class="btn btn-success"></span> <span class="btn btn-info"></span>
+
+						<span class="btn btn-warning"></span> <span class="btn btn-danger"></span>
+					</div>
+				</div>
+				<!-- #sidebar-shortcuts -->
+				<!-- .nav-list -->
+				<script type="text/javascript">
+					$(document).ready(function() {
+						$('#3').addClass("active open");
+						$('#32').addClass("open");
+					});
+				</script>
+				<#include "left_common.html">
+				<!-- /.nav-list -->
+
+				<div class="sidebar-collapse" id="sidebar-collapse">
+					<i class="icon-double-angle-left"
+						data-icon1="icon-double-angle-left"
+						data-icon2="icon-double-angle-right"></i>
+				</div>
+
+				<script type="text/javascript">
+					try {
+						ace.settings.check('sidebar', 'collapsed')
+					} catch (e) {
+					}
+				</script>
+			</div>
+
+			<div class="main-content">
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch (e) {
+						}
+					</script>
+					<!-- #nav-search -->
+				</div>
+				 <br> 
+				 <div class="page-content">
+						<div class="page-header">
+							<h1>
+								推荐课程
+								<small>
+									<i class="icon-double-angle-right"></i>
+									修改
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+					<#if ok??>
+						<div style="font-size:16px; color: #ff0000;" class="success-tip" data-id="successTip">${(ok)!''}</div>
+					</#if>
+					<div class="row">
+							<div class="col-xs-12">
+								<!-- PAGE CONTENT BEGINS -->
+								<div class="row">
+									<div class="col-xs-12">
+										
+										<div class="widget-header">
+											<div class="widget-toolbar no-border">
+							                </div>
+										</div>
+										 <div class="widget-body">
+										<div class="widget-main padding-6">
+										<div class="table-responsive">
+									<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            		  <div class="panel panel-default">
+									    <div class="panel-heading" role="tab" id="headingOne">
+									      <h4 class="panel-title">
+									        <a style="text-decoration:none;" disabled='false' data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+									          <!-- header -->
+									           <div style="background-color: #e8e8e8;font-size: 16px;padding-top: 12px;padding-bottom: 12px;">
+					                               <span style="padding-left: 25px;">获得的资质证书：</span>
+				  
+				                              </div>
+									          <!-- end header-->
+									        </a>
+									      </h4>
+									    </div>
+									      <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+									      <div class="panel-body">
+									        <!-- 伸展 body -->
+										       <table  class="table table-striped table-bordered table-hover">
+					                               <thead>
+					                               <tr>
+					                               </tr>
+					                               </thead>
+					                               <tbody>
+					                               <tr>
+					                                <td>
+					                                <span>
+					                               
+					                                 <table  class="table table-striped table-bordered table-hover">
+					                                 <thead>
+					                                 <tr>
+					                                 <th class="center" style="width:300px">
+													     	机构名称
+													</th>
+													 <th class="center" >
+													     	证书名称
+													</th>
+													 <th class="center" >
+													     	获取的时间
+													</th>
+											         <th class="center" style="width:300px">
+											                图片
+											         </th>
+											         
+													</tr>
+													</thead>
+													 <#if r.courseCertification??>
+														<#list r.courseCertification as list_exp>
+														<tbody>
+					                                    <tr>
+					                                    
+					                                     <th class="center">
+													     	<span style="color: #005ea6">${(list_exp.institue)!''}</span>
+														</th>
+					                                    <th class="center">
+													     	<span style="color: #005ea6">${(list_exp.name)!''}</span>
+														</th>
+											             <th class="center">
+													     	<span style="color: #005ea6">${(list_exp.get_time)!''}</span>
+														</th>
+					                                    <th class="center">
+															
+															<span style="color: #005ea6">
+																<img style="width:80px;height:80px;" src="/files/image?name=${(list_exp.image_01)!''}" alt="">
+															</span>
+																
+					                                	</th>
+					                                	</tbody>
+					                                	   
+											            </#list>
+                       							 </#if>
+					                                	</table>
+					                                	
+					                                </td>
+					                            </tr>
+					                            </tbody>
+												</table>
+									       <!-- 伸展 end body -->
+									      </div>
+									    </div>
+									  </div>
+                       				 </div>
+                            		  <div class="panel panel-default">
+									    <div class="panel-heading" role="tab" id="headingOne1">
+									      <h4 class="panel-title">
+									        <a style="text-decoration:none;" disabled='false' data-toggle="collapse" data-parent="#accordion" href="#collapseOne1" aria-expanded="false" aria-controls="collapseOne1">
+									          <!-- header -->
+									           <div style="background-color: #e8e8e8;font-size: 16px;padding-top: 12px;padding-bottom: 12px;">
+					                               <span style="padding-left: 10px;">上传课程图片或视屏：</span>
+			
+				                              </div>
+									          <!-- end header-->
+									        </a>
+									      </h4>
+									    </div>
+									      <div id="collapseOne1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne1">
+									      <div class="panel-body">
+									        <!-- 伸展 body -->
+										       <table  class="table table-striped table-bordered table-hover">
+					                               <thead>
+					                               <tr>
+					                               </tr>
+					                               </thead>
+					                               <tbody>
+					                               <tr>
+					                                <td>
+					                                <span>
+					                                
+					                                 <table  class="table table-striped table-bordered table-hover">
+					                                 <thead>
+					                                 <tr>
+					                                 <th class="center" style="width:400px">
+													     	图片名称
+													</th>
+													 <th class="center" >
+													     	URL名称
+													</th>
+													 <th class="center" style="width:400px">
+													     	上传的时间
+													</th>
+													</tr>
+													</thead>
+														<tbody>
+					                                    <tr>
+					                                    
+					                                     <th class="center">
+					                                     <#list r.banners?split("#") as xy>  
+																<img style="width:80px;height:80px;" src="/files/image?name=${(xy)!''}" alt=""> 
+													     </#list>
+														</th>
+					                                    <th class="center">
+					                                     <#list r.videos?split("#") as y>
+													     	<span style="color: #005ea6"><a href="http://${(y)!''}">${(y)!''}&nbsp&nbsp&nbsp</a></span>
+													     	   </#list>
+														</th>
+											             <th class="center">
+													     	<span style="color: #005ea6">${(r.post_time)!''}</span>
+														</th>
+					                                    </tr>
+					                                	</tbody>
+					                                	
+					                                	</table>
+					                                
+					                                </td>
+					                            </tr>
+					                            </tbody>
+												</table>
+									       <!-- 伸展 end body -->
+									       
+									      </div>
+									    </div>
+									  </div>
+                       				 </div>
+
+							<div class="table-responsive">
+								<form id="form" action="" method="post">
+									<input type="hidden" name="course_id" value="${r.course_id}">
+									<table class="table table-striped table-bordered table-hover">
+										<thead></thead>
+										<tbody>
+											<tr>
+												<td>自定义类别</td>
+
+															<td><select name="catetory_name" id="catetory_name"
+																required="required"
+																style="width: 300px; margin-left: 10px;">
+																	<#list s as f>
+																	<#if f.name=r.catetory_name>
+																	<option value="${(f.catetory_id)!''}:${(f.name)!''}:${(f.is_hot_recommand)!''}" selected>
+																		${(f.name)!''}
+																		
+																	</option> 
+																	<#else>
+																	<option value="${(f.catetory_id)!''}:${(f.name)!''}:${(f.is_hot_recommand)!''}">
+																		${(f.name)!''}
+																		
+																	</option> 
+																	</#if>
+																	</#list>
+															</select></td>
+														</tr>
+											<tr>
+												<td>标题</td>
+												<td>
+													<div class="input-group">${(r.title)!''}</div>
+												</td>
+											</tr>
+											<tr>
+												<td>课程时长</td>
+												<td>
+													<div class="input-group">${(r.session_length)!''}</div>
+												</td>
+												</td>
+											</tr>
+											<tr>
+												<td>课程价格</td>
+												<td>
+													<div class="input-group">${(r.session_rate)!''}</div>
+												</td>
+												</td>
+											</tr>
+
+
+											<tr>
+												<td>上课地址</td>
+												<td>
+													<div class="input-group">${(r.city)!''}--${(r.area)!''}
+													</div>
+												</td>
+												</td>
+											</tr>
+
+											<tr>
+												<td>热门推荐</td>
+												<td><#if r.is_hot_recommand=0>否<#elseif
+													r.is_hot_recommand=1>是</#if></td>
+
+											</tr>
+
+											<tr>
+												<td width="500px">开始教育时间</td>
+												<td>
+													<div class="input-group">${(r.teaching_since)!''}</div>
+												</td>
+											</tr>
+											<tr>
+												<td>教育的年限</td>
+												<td>
+													<div class="input-group">${(r.teaching_age)!''}</div>
+												</td>
+											</tr>
+											<tr>
+												<td>是否上门服务</td>
+												<td><#if r.travel_to_session=0>否<#elseif
+													r.travel_to_session=1>是</#if></td>
+											</tr>
+											<tr>
+												<td>上门服务距离</td>
+												<td>
+													<div class="input-group">
+														${(r.travel_to_session_distance)!''}</div>
+												</td>
+											</tr>
+											<tr>
+												<td>上门服务交通费</td>
+												<td>
+													<div class="input-group">
+														${(r.travel_to_session_trafic_surcharge)!''}</div>
+												</td>
+											</tr>
+
+											<tr>
+												<td>额外的最多人【打折幅度】</td>
+												<td>
+													<div class="input-group"><#if
+														r.additional_partner=0>----
+
+														<#else>${(r.additional_partner)!''} </#if></div>
+												</td>
+											</tr>
+											<tr>
+												<td>&nbsp&nbsp每个人的附加费用【打折幅度】</td>
+												<td>
+													<div class="input-group"><#if
+														r.surcharge_for_each=0.00>----
+
+														<#else>${(r.surcharge_for_each)!''} </#if></div>
+												</td>
+											</tr>
+											<tr>
+												<td>成果</td>
+												<td>
+													<div class="input-group">${(r.achievements)!''}</div>
+												</td>
+											</tr>
+											<tr>
+												<td>擅长领域</td>
+												<td>
+													<div class="input-group">${(r.specialist)!''}</div>
+												</td>
+											</tr>
+											<tr>
+												<td>简介</td>
+												<td>
+													<div class="input-group">${(r.overview)!''}</div>
+												</td>
+											</tr>
+											<tr>
+												<td>
+													<a class="btn btn-lg btn-danger" type="submit" href='javascript:history.go(-1)'> 
+														<i class="icon-bolt bigger-110"></i> 返回
+														 <i class="icon-arrow-right icon-on-right"></i>
+													</a>
+												</td>
+												<td>
+												<script type="text/javascript">
+													function add() {
+														$("#form").attr("action", "/admin/RecommendCourse/addModify?course_id=${r.course_id}");
+														return true;
+													}
+												</script>
+													<button id="reject1" class="btn btn-lg btn-success" type="submit" onclick="add();">
+														<i class="icon-ok"></i> 编辑
+													</button>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</form>
+							</div>
+						</div>
+					</div>
+		<!-- end -->
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+
+	<!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+		<![endif]
+
+		[if IE]>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<![endif] -->
+
+	<!--[if !IE]> -->
+
+	<script type="text/javascript">
+		window.jQuery
+				|| document
+						.write("<script src='/admin/assets/js/jquery-2.0.3.min.js'>"
+								+ "<"+"/script>");
+	</script>
+
+	<!-- <![endif]-->
+
+	<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='/admin/assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+
+	<script type="text/javascript">
+		if ("ontouchend" in document)
+			document
+					.write("<script src='/admin/assets/js/jquery.mobile.custom.min.js'>"
+							+ "<"+"/script>");
+	</script>
+	<script src="/admin/assets/js/bootstrap.min.js"></script>
+	<script src="/admin/assets/js/typeahead-bs2.min.js"></script>
+
+	<!-- page specific plugin scripts -->
+
+	<script src="/admin/assets/js/jquery.dataTables.min.js"></script>
+	<script src="/admin/assets/js/jquery.dataTables.bootstrap.js"></script>
+
+	<!-- ace scripts -->
+
+	<script src="/admin/assets/js/ace-elements.min.js"></script>
+	<script src="/admin/assets/js/ace.min.js"></script>
+
+	<!-- inline scripts related to this page -->
+
+	<script type="text/javascript">
+		jQuery(function($) {
+			var oTable1 = $('#sample-table-2').dataTable({
+				"aoColumns" : [ {
+					"bSortable" : false
+				}, null, null, null, null, null, {
+					"bSortable" : false
+				} ]
+			});
+
+			$('table th input:checkbox').on(
+					'click',
+					function() {
+						var that = this;
+						$(this).closest('table').find(
+								'tr > td:first-child input:checkbox').each(
+								function() {
+									this.checked = that.checked;
+									$(this).closest('tr').toggleClass(
+											'selected');
+								});
+
+					});
+
+			$('[data-rel="tooltip"]').tooltip({
+				placement : tooltip_placement
+			});
+			function tooltip_placement(context, source) {
+				var $source = $(source);
+				var $parent = $source.closest('table')
+				var off1 = $parent.offset();
+				var w1 = $parent.width();
+
+				var off2 = $source.offset();
+				var w2 = $source.width();
+
+				if (parseInt(off2.left) < parseInt(off1.left)
+						+ parseInt(w1 / 2))
+					return 'right';
+				return 'left';
+			}
+		})
+		</script>
+		<!-- 上传图片JS -->
+		<script>
+		    $("#imgfile").fileinput({
+				showUpload: false,
+				showRemove:true,
+				 initialPreview: [
+					"<img style='height:160px' src='/files/image?name=${(r.image_01)!''}'>"
+				]
+			});
+		</script>
+		<!-- end -->
+	
+</body>
+</html>

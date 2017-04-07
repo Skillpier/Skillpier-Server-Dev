@@ -1,0 +1,63 @@
+/*header*/
+.header {
+	position: relative;
+	display: block;
+	height: 65px;
+	/*line-height: 80px;*/
+	color: white;
+	/*border-bottom: 1px solid #ccc;*/
+	background-color: #E63E46;
+	overflow: hidden;
+}
+.back-icon {
+	display: inline-block;
+	width: 65px;
+	height: 65px;
+	vertical-align: middle;
+	background-image: url("../img/arrow_left.png");
+	background-position: 10px 23px;
+	background-repeat: no-repeat;
+}
+.arrow-left {
+	display: inline-block;
+	width: 27px;
+	height: 41px;
+	background-image: url("../img/arrow_left.png");
+	background-repeat: no-repeat;
+}
+.slogan {
+	padding: 0 16px;
+}
+.slogan h1 {
+	margin: 0;
+	padding: 16px 0 0;
+	font-size: 24px;
+}
+.header .ng-back {
+	width: 80px;
+	color: white;
+}
+.header .ng-title {
+	display: block;
+	
+	color: white;
+
+	line-height: 80px;
+	font-size: 20px
+}
+.cog {
+	display: inline-block;
+	width: 80px;
+	padding-top: 31px;
+	color: white;
+	text-align: center;
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-ms-box-sizing: border-box;
+	-o-box-sizing: border-box;
+	box-sizing: border-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}

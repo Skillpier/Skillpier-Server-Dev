@@ -1,0 +1,400 @@
+<!-- header -->
+<myresource cs-resource="{'account_css':'/skillopedia/lib/css/account.css','media_css':'/skillopedia/lib/css/media.css'}"></myresource>
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap">
+    <div class="section">
+        <form class="crease_coursewrap" name="createCourseForm" ng-submit="ajaxForm()">
+            <!-- 新建课程第1步 -->
+            <div class="step" ng-show="step == 1" ng-form="stepForm1">
+                <div class="step-wrap">
+                    <div class="step_1 hover" ng-click="show_step(1)"></div>
+                    <div class="step_2 hover" ng-click="show_step(2)"></div>
+                    <div class="step_3 hover" ng-click="show_step(3)"></div>
+                    <div class="step_4 hover" ng-click="show_step(4)"></div>
+                    <img ng-src="/skillopedia/images/step_1.png" class="full-width" alt="">
+                </div>
+                <div class="title-input">
+                    <span><b class="text-danger"> * </b>Course Title</span>
+                    <div class="course-input">
+                        <input type="text" name="title" ng-model="input.title" ng-required="true" placeholder="Enter course title" class="full-width" />
+                    </div>
+                </div>
+                <div class="title-input">
+                    <span><b class="text-danger"> * </b>Category</span>
+                    <!-- 下拉框 -->
+                    <div class="m-session pull-left clearfix">
+                        <div class="">
+                            <div class="input-select">
+                                <select name="category_1" ng-model="input.category_1" ng-options="c1.name for c1 in category_1"></select>
+                                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-session pull-right clearfix">
+                        <div class="input-select">
+                            <select name="category_2" ng-model="input.category_2" ng-options="c2.name for c2 in category_2[input.category_1.name]"></select>
+                            <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="title-input">
+                    <span><b class="text-danger" ng-if="input.certs.length>0"> * </b>Certification - suggested size: 520*296, below 3M</span>
+                    <div class="course-itemwrap clearfix">
+                        <div class="course-items pull-left" ng-repeat="cert in input.certs">
+                            <div class="course-item" ng-form="certForm">
+                                <div class="imgwrap" flow-init="{singleFile:true}" flow-attrs="{accept:'image/*'}" ng-controller="uploadController">
+                                    <img ng-src="{{staticImageUrl+cert.url}}" flow-btn flow-img="$flow.files[0]" class="full-width full-height" err-src="/skillopedia/images/about_bg.png" />
+                                    <input type="hidden" name="cert_url" ng-model="cert.url" required>
+                                </div>
+                                <div class="course-input">
+                                    <input type="text" name="cert_title" ng-model="cert.title" class="full-width" placeholder="Certification Name" />
+                                </div>
+                                <div class="course-input">
+                                    <datepicker date-format="MMM dd, yyyy">
+                                        <input type="text" name="cert_time" ng-model="cert.time" class="full-width" placeholder="Award time" readonly/>
+                                    </datepicker>
+                                </div>
+                                <div class="course-input">
+                                    <input type="text" name="cert_institute" ng-model="cert.institute" class="full-width" placeholder="Licensed by" />
+                                </div>
+                                <a class="btn btn-danger" ng-click="remove_cert(cert)">remove</a>
+                                <a class="btn btn-success pull-right" ng-if="cert.id==''" ng-click="ajaxCert(cert,certForm)" ng-disabled="certForm.$invalid">upload</a>
+                                <a class="btn btn-warning pull-right" ng-if="cert.id!=''" ng-click="editCert(cert,certForm)" ng-disabled="certForm.$invalid">update</a>
+                            </div>
+                        </div>
+                        <div class="course-items pull-left">
+                            <div class="course-item" ng-click="add_cert()">
+                                <div class="imgwrap">
+                                    <img src="/skillopedia/images/upload.png" class="full-width full-height" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="title-input">
+                    <span><b class="text-danger"> * </b>Poster - the icon for this course</span>
+                    <div class="open-img" flow-init="{singleFile:true}" ng-controller="uploadPosterController" flow-btn>
+                        <img ng-src="{{staticImageUrl + input.poster}}" class="full-width full-height" alt="">
+                    </div>
+                    <input type="hidden" name="poster" required ng-model="input.poster">
+                </div>
+                <div class="title-input">
+                    <span><b class="text-danger"> * </b>Picture</span>
+                    <div class="open-img" ng-repeat="cover in input.covers track by $index" ng-form="coverForm">
+                        <img ng-src="{{staticImageUrl + cover}}" class="full-width full-height" err-src="/skillopedia/images/error.jpg" alt="">
+                        <input type="hidden" name="cover" required ng-model="cover">
+                        <a ng-click="remove_cover(cover)" class="remove"><i class="fa fa-times"></i></a>
+                    </div>
+                    <div class="open-img" flow-init="{singleFile:true}" ng-controller="uploadCoversController" flow-btn>
+                        <img ng-src="/skillopedia/images/upload.png" class="full-width full-height" alt="">
+                    </div>
+                </div>
+                <div class="title-input">
+                    <span><b class="text-danger" ng-if="input.videos.length>0"> * </b>Video, e.g. <code class="text-primary">http://www.youtube.com/watch?v=xxx</code><div class="pull-right" ng-click="add_video()"><i class="fa fa-plus-circle" aria-hidden="true" style="font-size: 26px;color: #00E370;"></i></div></span>
+                    <div class="remove-input" ng-repeat="video in input.videos track by $index" ng-form="videoForm" style="margin-bottom:15px;">
+                        <input type="text" ng-model="video.url" class="full-width" ng-required="true" placeholder="http://www.youtube.com/watch?v=xxx" />
+                        <div class="course-videoremove" ng-click="remove_video(video)">remove</div>
+                    </div>
+                </div>
+                <div class="title-input">
+                    <span class="clearfix"><b class="text-danger"> * </b>About myself<b class="text-danger" ng-if="stepForm1.$dirty && stepForm1.overview.$invalid"> (at least 200 character)</b></span>
+                    <textarea class="full-width" rows="8" name="overview" ng-model="input.overview" ng-required="true" placeholder="Tell us your experience and story "></textarea>
+                </div>
+                <div class="title-input">
+                    <span class="clearfix"><b class="text-danger"> * </b>Achievements<b class="text-danger" ng-if="stepForm1.$dirty && stepForm1.achievements.$invalid"> (at least 50 character)</b></span>
+                    <textarea class="full-width" rows="8" name="achievements" minlength="50" ng-model="input.achievements" ng-required="true" placeholder="Your achievement"></textarea>
+                </div>
+                <div class="title-input">
+                    <span class="clearfix"><b class="text-danger"> * </b>Specialties<b class="text-danger" ng-if="stepForm1.$dirty && stepForm1.specialist.$invalid"></b></span>
+                    <textarea class="full-width" rows="8" name="specialist" ng-model="input.specialist" ng-required="true" placeholder="Tell us your specialist. Something like backend, forehand, serve if you are a tennis player."></textarea>
+                </div>
+                <div class="section text-center">
+                    <button type="button" class="btn btn-success col-xs-4 btn-md col-xs-offset-4" ng-click="show_step(2)" ng-disabled="createCourseForm.stepForm1.$invalid">Next</button>
+                </div>
+                <div class="section text-center text-danger">
+                    <div ng-if="stepForm1.title.$invalid &&stepForm1.$dirty">* Course name is required</div>
+                    <div ng-if="stepForm1.certForm.$invalid &&stepForm1.$dirty">* Certification is required</div>
+                    <div ng-if="stepForm1.poster.$invalid &&stepForm1.$dirty">* Poster of course is required</div>
+                    <div ng-if="(stepForm1.coverForm.$invalid || input.covers.length == 0)&&stepForm1.$dirty">* Cover of course is required</div>
+                    <div ng-if="stepForm1.videoForm.$invalid &&stepForm1.$dirty">* Video url is required</div>
+                    <div ng-if="stepForm1.overview.$invalid &&stepForm1.$dirty">* About myself is required - 200 characters minimum</div>
+                    <div ng-if="stepForm1.achievements.$invalid &&stepForm1.$dirty">* Achievements is required - 50 characters minimum</div>
+                    <div ng-if="stepForm1.specialist.$invalid &&stepForm1.$dirty">* Specialties is required</div>
+                </div>
+            </div>
+            <!-- 新建课程第2步 -->
+            <div class="step" ng-show="step == 2" ng-form="stepForm2">
+                <!-- 步骤框 -->
+                <div class="step-wrap">
+                    <div class="step_1 hover" ng-class="{'error':stepForm1.$invalid,'success':stepForm1.$valid}" ng-click="show_step(1)"></div>
+                    <div class="step_2 hover active" ng-click="show_step(2)"></div>
+                    <div class="step_3 hover" ng-click="show_step(3)"></div>
+                    <div class="step_4 hover" ng-click="show_step(4)"></div>
+                    <img ng-src="/skillopedia/images/step_2.png" class="full-width" alt="">
+                </div>
+                <div class="title-input">
+                    <div class="m-session pull-left">
+                        <span><b class="text-danger"> * </b>Session Length</span>
+                        <!-- 下拉框 -->
+                        <div class="course-select">
+                            <select name="course_duration" ng-model="input.course_duration" ng-required>
+                                <option value="60">60 mins</option>
+                            </select>
+                            <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="m-session pull-right">
+                        <span><b class="text-danger"> * </b>Years of Experience</span>
+                        <div class="course-select">
+                            <select name="course_duration" ng-model="input.teaching_since">
+                                <option value="">Select Option</option>
+                                <option value="1+">1+</option>
+                                <option value="3+">3+</option>
+                                <option value="5+">5+</option>
+                                <option value="8+">8+</option>
+                                <option value="10+">10+</option>
+                                <option value="15+">15+</option>
+                            </select>
+                            <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+                <!-- session -->
+                <div class="title-input">
+                    <div class="clearfix">
+                        <div class="m-session pull-left">
+                            <span><b class="text-danger"> * </b>Session Rate ($) <b class="text-danger" ng-if="stepForm2.rate.$invalid && stepForm2.rate.$dirty"> (Number Only) </b></span>
+                            <div class="u-input">
+                                <input type="number" min="0" name="rate" ng-model="input.rate" ng-required="true" ng-pattern="/^\d+$/" class="full-width" placeholder="Session rate,($)" class="full-width" />
+                            </div>
+                        </div>
+                        <div class="m-session pull-right">
+                            <span><b class="text-danger"> * </b>Preferred Age of Students<b class="text-danger" ng-if="stepForm2.teaching_age.$invalid && stepForm2.teaching_age.$dirty"> (Number Only) </b></span>
+                            <div class="course-select">
+                                <select name="course_duration" ng-model="input.teaching_age">
+                                    <option value="">Select Option</option>
+                                    <option value="4+">4+</option>
+                                    <option value="7+">7+</option>
+                                    <option value="10+">10+</option>
+                                    <option value="15+">15+</option>
+                                    <option value="18+">18+</option>
+                                    <option value="No preference">No preference</option>
+                                </select>
+                                <i class="fa fa-caret-down" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- session -->
+                <div class="title-input">
+                    <div class="clearfix">
+                        <div class="m-session pull-left" style="position:relative">
+                            <span><b class="text-danger"> * </b>Number of Extra Partners <i class="fa fa-question-circle-o hover" aria-hidden="true" title="" style="color:blue;"  ng-mouseover="show()" ng-mouseleave="hide()"></i> <b class="text-danger" ng-if="stepForm2.partner.$invalid && stepForm2.partner.$dirty"> (Number Only) </b></span>
+                            <div class="hovertips" ng-show="show">If you don’t allow group session for your customer, please enter 0 .</div>
+                            <div class="u-input">
+                                <input type="number" min="0" name="partner" ng-model="input.partner" ng-required="true" ng-pattern="/^\d+$/" class="full-width" placeholder="Partner Limit" class="full-width" />
+                            </div>
+                        </div>
+                        <div class="m-session pull-right">
+                            <span><b class="text-danger"> * </b>Surcharge for Each Extra Partner ($)<b class="text-danger" ng-if="stepForm2.surcharge.$invalid && stepForm2.surcharge.$dirty"> (Number Only) </b></span>
+                            <div class="u-input">
+                                <input type="number" min="0" name="surcharge" ng-required="input.partner > 0" ng-disabled="input.partner == 0" ng-model="input.surcharge" ng-required="true" ng-pattern="/^\d+$/" class="full-width" placeholder="Surcharge for Each Extra Partner ($)" class="full-width" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="title-input">
+                    <span><b class="text-danger" ng-if="input.discounts.length>0"> * </b>Discount</span>
+                    <div class="course-itemwrap clearfix">
+                        <!-- discount 1 -->
+                        <div class="course-items pull-left">
+                            <div class="course-item" ng-form="discountForm1">
+                                <div class="course-item-header">
+                                    <span>One time: Buy {{input.discount_1.purchase||"xxx"}} courses, </span>
+                                    <span>get {{input.discount_1.off +"%"||"xxx"}} off</span>
+                                    <span><b class="text-danger" ng-if="(discountForm1.purchase.$invalid && discountForm1.purchase.$dirty) || (discountForm1.off.$invalid && discountForm1.off.$dirty)"> (Number Only, below 100) </b></span>
+                                </div>
+                                <div class="course-input">
+                                    <input type="number" min="0" class="full-width" name="purchase" ng-model="input.discount_1.purchase" ng-required="true" ng-pattern="/^\d+$/" placeholder="Course quantity" readonly />
+                                </div>
+                                <div class="course-input">
+                                    <input type="number" min="0" max="100" class="full-width" name="off" ng-model="input.discount_1.off" ng-required="true" ng-pattern="/^\d+$/" placeholder="Discount amount" />
+                                </div>
+                            </div>
+                        </div>
+                        <!-- discount 2 -->
+                        <div class="course-items pull-left">
+                            <div class="course-item" ng-form="discountForm2">
+                                <div class="course-item-header">
+                                    <span>One time: Buy {{input.discount_2.purchase||"xxx"}} courses</span>
+                                    <span>get {{input.discount_2.off +"%"||"xxx"}} off</span>
+                                    <span><b class="text-danger" ng-if="(discountForm2.purchase.$invalid && discountForm2.purchase.$dirty) || (discountForm2.off.$invalid && discountForm2.off.$dirty)"> (Number Only, {{input.discount_1.off}}-100) </b></span>
+                                </div>
+                                <div class="course-input">
+                                    <input type="number" min="0" class="full-width" name="purchase" ng-model="input.discount_2.purchase" ng-required="true" ng-pattern="/^\d+$/" placeholder="Course quantity" readonly />
+                                </div>
+                                <div class="course-input">
+                                    <input type="number" ng-min="input.discount_1.off" max="100" class="full-width" name="off" ng-model="input.discount_2.off" ng-required="true" ng-pattern="/^\d+$/" placeholder="Discount amount" />
+                                </div>
+                            </div>
+                        </div>
+                        <!-- discount 3 -->
+                        <div class="course-items pull-left">
+                            <div class="course-item" ng-form="discountForm3">
+                                <div class="course-item-header">
+                                    <span>One time: Buy {{input.discount_3.purchase||"xxx"}} courses</span>
+                                    <span>get {{input.discount_3.off +"%"||"xxx"}} off</span>
+                                    <span><b class="text-danger" ng-if="(discountForm3.purchase.$invalid && discountForm3.purchase.$dirty) || (discountForm3.off.$invalid && discountForm3.off.$dirty)"> (Number Only, {{input.discount_2.off}}-100)) </b></span>
+                                </div>
+                                <div class="course-input">
+                                    <input type="number" min="0" class="full-width" name="purchase" ng-model="input.discount_3.purchase" ng-required="true" ng-pattern="/^\d+$/" placeholder="Course quantity" readonly />
+                                </div>
+                                <div class="course-input">
+                                    <input type="number" ng-min="input.discount_2.off" max="100" class="full-width" name="off" ng-model="input.discount_3.off" ng-required="true" ng-pattern="/^\d+$/" placeholder="Discount amount" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section text-center">
+                    <button type="button" class="btn btn-default col-xs-3 btn-md col-xs-offset-2" ng-click="show_step(1)">Last step</button>
+                    <button type="button" class="btn btn-success col-xs-3 btn-md col-xs-offset-1" ng-click="show_step(3)" ng-disabled="createCourseForm.stepForm2.$invalid">Next</button>
+                </div>
+                <div class="section text-center text-danger">
+                    <div ng-if="stepForm2.rate.$invalid &&stepForm2.$dirty">* Session rate is required</div>
+                    <div ng-if="stepForm2.teaching_since.$invalid &&stepForm2.$dirty">* Years of Experience is required</div>
+                    <div ng-if="stepForm2.teaching_age.$invalid &&stepForm2.$dirty">* Preferred Age of Students is required</div>
+                    <div ng-if="stepForm2.partner.$invalid &&stepForm2.$dirty">* Parter is required</div>
+                    <div ng-if="stepForm2.surcharge.$invalid &&stepForm2.$dirty">* Surcharge is required</div>
+                    <div ng-if="stepForm2.byMoneyForm.$invalid &&stepForm2.$dirty">* Discount is required</div>
+                </div>
+            </div>
+            <!-- 新建课程第3步 -->
+            <div class="step" ng-show="step == 3" ng-form="stepForm3">
+                <div class="step-wrap">
+                    <div class="step_1 hover" ng-class="{'error':stepForm1.$invalid,'success':stepForm1.$valid}" ng-click="show_step(1)"></div>
+                    <div class="step_2 hover" ng-class="{'error':stepForm2.$invalid,'success':stepForm2.$valid}" ng-click="show_step(2)"></div>
+                    <div class="step_3 hover active" ng-click="show_step(3)"></div>
+                    <div class="step_4 hover" ng-click="show_step(4)"></div>
+                    <img ng-src="/skillopedia/images/step_3.png" class="full-width" alt="">
+                </div>
+                <div class="title-input">
+                    <span><b class="text-danger"> * </b>Travel to Sessions</span>
+                    <div class="m-check clearfix">
+                        <label class="u-check" ng-class="{'text-primary':input.travel_to_session == '1'}">
+                            <input type="radio" class="hide" ng-model="input.travel_to_session" value="1">
+                            <i class="fa" ng-class="{'fa-circle':input.travel_to_session == '1','fa-circle-o':input.travel_to_session == '0'}"></i> Yes, I am willing to travel to sessions.
+                        </label>
+                        <label class="u-check" ng-class="{'text-primary':input.travel_to_session == '0'}">
+                            <input type="radio" class="hide" ng-model="input.travel_to_session" value="0">
+                            <i class="fa" ng-class="{'fa-circle':input.travel_to_session == '0','fa-circle-o':input.travel_to_session == '1'}"></i> No, I am not willing to travel to sessions
+                        </label>
+                    </div>
+                </div>
+                <!-- session -->
+                <div class="title-input" ng-if="input.travel_to_session == '1'">
+                    <div class="clearfix">
+                        <div class="m-session pull-left">
+                            <span><b class="text-danger"> * </b>Travel Distance (miles)<b class="text-danger" ng-if="stepForm3.distance.$invalid && stepForm3.distance.$dirty"> (Number Only) </b></span>
+                            <div class="u-input">
+                                <input type="number" min="0" name="distance" ng-model="input.distance" ng-required="true" ng-pattern="/^\d+$/" class="full-width" placeholder="Travel distance(miles)" class="full-width" />
+                            </div>
+                        </div>
+                        <div class="m-session pull-right">
+                            <span><b class="text-danger"> * </b>Travel Fee ($)<b class="text-danger" ng-if="stepForm3.traffic_cost.$invalid && stepForm3.traffic_cost.$dirty"> (Number Only) </b></span>
+                            <div class="u-input">
+                                <input type="number" min="0" name="traffic_cost" ng-model="input.traffic_cost" ng-required="true" ng-pattern="/^\d+$/" class="full-width" placeholder="Travel Fee" class="full-width" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div ng-show="location_mode == 'preview'">
+                    <div class="title-input">
+                        <span>Location</span>
+                        <div class="clearfix">
+                            <div class="location">
+                                <label class="pull-left">{{format_address}}</label>
+                                <div class="course-location pull-right" ng-click="edit_location()">Edit Location</div>
+                            </div>
+                        </div>
+                        <div class="section sm map-section">
+                            <div style="height:300px;border:1px solid #d2d2d2" id="map"></div>
+                        </div>
+                    </div>
+                    <div class="section text-center">
+                        <button type="button" class="btn btn-default col-xs-3 btn-md col-xs-offset-2" ng-click="show_step(2)">Last step</button>
+                        <button class="btn btn-success col-xs-3 btn-md col-xs-offset-1" type="button" ng-disabled="stepForm3.$invalid" ng-click="show_step(4)">Next</button>
+                    </div>
+                    <div class="section text-center text-danger">
+                        <div ng-if="stepForm3.distance.$invalid &&stepForm3.$dirty">* Travel distance is required</div>
+                        <div ng-if="stepForm3.traffic_cost.$invalid &&stepForm3.$dirty">* traffic_cost is required</div>
+                        <div ng-if="stepForm3.locationForm.$invalid &&stepForm3.$dirty">* street,city,state is required</div>
+                    </div>
+                </div>
+                <div ng-show="location_mode == 'edit'" ng-form="locationForm">
+                    <div class="title-input">
+                        <span><b class="text-danger"> * </b>Location<b class="text-danger" ng-if="street_error"> - {{street_error}}</b></span>
+                        <div class="course-input">
+                            <autocomplete location="input.location" placeholder="'Street address, P.O. box, company name, c/o.'" mode="'street'"></autocomplete>
+                        </div>
+                        <div class="course-input z-margin">
+                            <input type="text" name="apt" ng-model="input.location.apt" class="full-width" placeholder="Apartment, suite, unit, building, floor, etc. (Not Required)" />
+                        </div>
+                    </div>
+                    <div class="title-input clearfix">
+                        <div class="m-session z-margin pull-left">
+                            <div class="u-input">
+                                <input type="text" name="city" ng-required="true" ng-model="input.location.city" class="full-width" placeholder="City, e.g. San Francisco" />
+                            </div>
+                        </div>
+                        <div class="m-session z-margin pull-right">
+                            <div class="u-input">
+                                <input type="text" name="state" ng-required="true" ng-model="input.location.state" ng-required="true" class="full-width" placeholder="State, e.g. CA" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-session z-margin">
+                        <div class="u-input" style="position:relative">
+                            <input type="text" autocomplete="off" name="zipcode" ng-pattern="/[0-9]/" ng-model="input.location.zipcode" ng-required="true" class="full-width" placeholder="Zip Code, e.g. 94105" />
+                        </div>
+                    </div>
+                    <div class="section text-center">
+                        <button type="button" class="btn btn-default col-xs-3 btn-md col-xs-offset-2" ng-click="show_step(2)">Last step</button>
+                        <button type="button" class="btn btn-danger col-xs-3 btn-md col-xs-offset-1" ng-click="save_location()" ng-disabled="locationForm.$invalid">Save</button>
+                    </div>
+                    <div class="section text-center text-danger">
+                        <div ng-if="stepForm3.distance.$invalid &&stepForm3.$dirty">* Travel distance is required</div>
+                        <div ng-if="stepForm3.traffic_cost.$invalid &&stepForm3.$dirty">* traffic_cost is required</div>
+                        <div ng-if="stepForm3.locationForm.$invalid &&stepForm3.$dirty">* street,city,state is required</div>
+                    </div>
+                </div>
+                <div class="course-tips">
+                    travel to session if you choose yes,means you are agree with travel terms.
+                </div>
+            </div>
+            <!-- 新建课程 第四步 -->
+            <div class="step" ng-show="step == 4" ng-form="stepForm4">
+                <div class="step-wrap">
+                    <div class="step_1 hover" ng-class="{'error':stepForm1.$invalid,'success':stepForm1.$valid}" ng-click="show_step(1)"></div>
+                    <div class="step_2 hover" ng-class="{'error':stepForm2.$invalid,'success':stepForm2.$valid}" ng-click="show_step(2)"></div>
+                    <div class="step_3 hover" ng-class="{'error':stepForm3.$invalid,'success':stepForm3.$valid}" ng-click="show_step(3)"></div>
+                    <div class="step_4 hover active" ng-click="show_step(4)"></div>
+                    <img ng-src="/skillopedia/images/step_4.png" class="full-width" alt="">
+                </div>
+                <p>Select time frame for your course</p>
+                <div class="weekly row">
+                    <div class="weekly-item" ng-repeat="week in weeks" ng-click="select_week(week)" ng-class="{'active':week.check}">
+                        <span ng-if="week.type !='content'">{{week.text}}</span>
+                    </div>
+                </div>
+                <a class="hover" style="margin-left:12.5%;margin-top:15px;display:inline-block" ng-click="check_all()" ng-class="{'text-primary':select_weeks.length==content_weeks.length}"><i class="fa" ng-class="{'fa-check-square-o':select_weeks.length==content_weeks.length,'fa-square-o':select_weeks.length!=content_weeks.length}"></i> All</a>
+                <div class="section text-center">
+                    <button type="button" class="btn btn-default col-xs-3 col-xs-offset-2 btn-md" ng-click="show_step(3)">Last step</button>
+                    <button class="btn btn-danger col-xs-3 btn-md col-xs-offset-1" type="submit" ng-disabled="createCourseForm.$invalid">Finsh</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

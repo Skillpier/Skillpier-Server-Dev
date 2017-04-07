@@ -1,0 +1,112 @@
+<!-- header -->
+<myresource cs-resource="{'account_css':'/skillopedia/lib/css/account.css','media_css':'/skillopedia/lib/css/media.css'}"></myresource>
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap">
+    <div class="section account-section">
+        <!-- sidebar -->
+        <sidebar active="'/orders'" class="sidebar-wrap" user="user" go="go"></sidebar>
+        <div class="content-wrap">
+            <div class="tabs clearfix">
+                <a class="tab-item pull-left active">Order</a>
+            </div>
+            <!-- 订单详情 -->
+            <div class="order-header">
+                <div class="text-h2">Successful appointment</div>
+                <div class="btn-group clearfix pull-right">
+                    <!-- pay or delete status 11 -->
+                    <span class="btn btn-danger" ng-if="order.status == '10' || order.status == '11'" ng-click="remove(order)">Delete</span>
+                    <span class="btn btn-success" ng-if="order.status == '11'" ng-click="pay(order)">Pay now</span>
+                    <!-- refund active #/order_refund-->
+                    <a class="btn btn-danger" ng-if="order.status == '21'" ng-href="#/order_refund?id={{order.orders_id}}">Refund</a>
+                    <!-- refund disabled -->
+                    <span class="btn btn-danger" disabled ng-if="order.status == '22'">refund</span>
+                    <!-- Buy again when course is finish -->
+                    <a class="btn btn-default" ng-if="order.status == '30'" ng-href="#/detail?course_id={{order.Course.course_id}}">Buy again</a>
+                    <!-- comment when course is finish #/order_comment-->
+                    <a class="btn btn-second" ng-if="order.status == '40'" ng-href="#/order_comment?id={{order.orders_id}}">Comment</a>
+                    <!-- booking active book_status #/order_booking-->
+                    <a class="btn btn-primary" ng-if="order.booking_status == '1'" ng-href="#/order_booking?order_id={{order.orders_id}}&course_id={{order.Course.course_id}}">Booking</a>
+                    <!-- booking disabled book_status-->
+                    <span class="btn btn-primary" disabled ng-if="order.booking_status == '2'">Booking</span>
+                </div>
+                <p>{{order.Course.hasnone_booking_course}} Sessons to confirm</p>
+            </div>
+            <div class="goods clearfix">
+                <ul>
+                    <li><a href="">Price:<em>{{order.Course.session_rate|currency:"$"}}</em></a></li>
+                    <li><a href="">Additional partners  ({{order.take_partner_num}}): <em>${{get_total_partner_fee()}}</em></a></li>
+                    <li><a href="">Traffic fee:<em>{{order.go_door_traffic_cost|currency:"$"}}</em></a></li>
+                    <li><a href="">Service fee:<em>{{order.first_joint_fee|currency:"$"}}</em></a></li>
+                    <li><a href="">Amount:<em>x{{order.buy_amount}}</em></a></li>
+                    <li><a href="">Discount:<em>{{order.discount_price}}% off</em></a></li>
+                    <li><a href="">Coupon:<em>{{order.my_coupon_money|currency:"$"}}</em></a></li>
+                    <li><a href="">Total:<em>{{order.total_session_rate|currency:"$"}}</em></a></li>
+                </ul>
+            </div>
+            <div class="tit">
+                Coach telephone: <span class="text-success">{{order.Course.course_telephone}}</span>
+            </div>
+            <div class="tit">
+                Teaching location
+            </div>
+            <!-- <iframe ng-src="{{get_map()}}" class="map" height="300px" frameborder="0" allowfullscreen></iframe> -->
+            <div style="height:300px;border:1px solid #d2d2d2" id="map"></div>
+            <div class="tit">
+                {{format_address}}
+            </div>
+            <div class="list-group">
+                <div class="list-group-item clearfix" ng-class="{'text-success':schedule.status == '1','text-primary':schedule.status=='20' && schedule.refund_status=='10','text-danger':schedule.status=='3' && schedule.refund_status=='10'}" ng-repeat="schedule in order.OrdersSchedules track by $index">
+                    <div class="col-xs-3">Session{{$index+1}}</div>
+                    <div class="col-xs-6">{{schedule.schedule_data}} {{schedule.schedule_hours}}</div>
+                    <!-- 课程完成 -->
+                    <div class="col-xs-3 text-right" ng-if="schedule.status=='1'">Complete</div>
+                    <!-- 教练确认 -->
+                    <div class="col-xs-3 text-right" ng-if="schedule.status=='20' && schedule.refund_status=='10'">Confirm</div>
+                    <!-- 教练未确认 -->
+                    <div class="col-xs-3 text-right" ng-if="schedule.status=='3' && (schedule.refund_status=='10'||schedule.refund_status=='1')">Unconfirm</div>
+                    <!-- 用户未选择 -->
+                    <div class="col-xs-3 text-right" ng-if="schedule.status=='4' && schedule.refund_status=='10'">Not Scheduled</div>
+                    <!-- 退款中 -->
+                    <div class="col-xs-3 text-right" ng-if="schedule.refund_status=='2' || schedule.refund_status=='30'">Refund pending</div>
+                    <!-- 退款完成 -->
+                    <div class="col-xs-3 text-right" ng-if="schedule.refund_status=='31'">Refunded</div>
+                </div>
+            </div>
+            <div class="tit clearfix">
+                <p>Transaction ID:{{order.order_number}}</p>
+                <div>Time:{{order.post_time}}</div>
+            </div>
+            <a class="coach-item" ng-href="#/detail?course_id={{order.Course.course_id}}">
+                <div class="coach-avatar">
+                    <img ng-src="{{staticImageUrl + order.Course.coach_image}}" class="full-width full-height" alt="" err-src="/skillopedia/images/example_7.png">
+                    <span class="official-coach" ng-if="order.Course.is_official"></span>
+                </div>
+                <div class="coach-info">
+                    <div class="long-title text-ellipsis">{{order.Course.title}}</div>
+                    <span class="pull-right" style="margin-left:8px;">x{{order.buy_amount}}</span>
+                    <span class="pull-right text-primary text-big">{{order.Course.session_rate|currency:"$"}}</span>
+                    <div style="margin-bottom:10px;" class="text-transform">{{order.Course.course_nickname}}</div>
+                    <div class="justified">
+                        <div>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <span>{{order.Course.total_coment_num || "0"}} reviews</span>
+                        </div>
+                        <div>
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                            <span>{{order.Course.category_02_name}}</span>
+                        </div>
+                        <div>
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                            <span>{{order.Course.area}}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- 订单详情 -->
+    </div>
+</div>
+<!-- confirm -->
+<confirm confirm="confirm" class="hide"></confirm>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

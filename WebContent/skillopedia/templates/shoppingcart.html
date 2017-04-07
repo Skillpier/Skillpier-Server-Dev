@@ -1,0 +1,172 @@
+<!-- header -->
+<myresource cs-resource="{'account_css':'/skillopedia/lib/css/account.css','media_css':'/skillopedia/lib/css/media.css'}"></myresource>
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap">
+    <div class="section account-section">
+        <!-- sidebar -->
+        <sidebar active="" class="sidebar-wrap" user="user" go="go"></sidebar>
+        <div class="content-wrap">
+            <div class="tabs clearfix">
+                <a class="tab-item pull-left active">Cart</a>
+                <a class="pull-right clearfix tab-item-action hover" ng-click="pay()">pay now</a>
+                <a class="pull-right clearfix tab-item">${{get_total()}}</a>
+                <a class="pull-right clearfix tab-item" ng-class="{'text-primary':shoppingcart_size==normal_courses.length}" ng-click="check_all()"><i class="fa" ng-class="{'fa-check-square-o':shoppingcart_size==normal_courses.length,'fa-square-o':shoppingcart_size!=normal_courses.length}"></i> All</a>
+                <!-- <div class="btn-group pull-right clearfix" ng-if="normal_courses.length>0">
+                    <a class="btn" ng-click="check_all()" ng-class="{'text-primary':shoppingcart_size==normal_courses.length}"><i class="fa" ng-class="{'fa-check-square-o':shoppingcart_size==normal_courses.length,'fa-square-o':shoppingcart_size!=normal_courses.length}"></i> All</a>
+                    <a class="btn text-primary">${{get_total()}}</a>
+                </div> -->
+            </div>
+            <!-- 正常订单 -->
+            <div class="coach-item with-action-bar shopping-cart" ng-repeat="course in normal_courses">
+                <span class="hover radio-btn" ng-click="toggle(course)"><i class="fa webfont" ng-class="{'text-primary':course.selected,'fa-check-square-o':course.selected,'fa-square-o':!course.selected}"></i></span>
+                <div class="coach-avatar">
+                    <imageview data-rate="1" center-only src="staticImageUrl + course.coach_image"></imageview>
+                    <span class="official-coach" ng-if="course.is_official"></span>
+                </div>
+                <div class="coach-info">
+                    <div class="long-title text-ellipsis">{{course.course_title}}</div>
+                    <span class="pull-right text-primary text-big">{{course.session_rate|currency:"$"}}</span>
+                    <div style="margin-bottom:10px;" class="text-transform">{{course.coach_name}}</div>
+                    <div class="justified">
+                        <div>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <span>{{course.total_coment_num || "0"}} reviews</span>
+                        </div>
+                        <div>
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                            <span>{{course.Course.category_02_name}}</span>
+                        </div>
+                        <div class="text-primary" ng-click="open_map(course.Course,$event,$event)">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                            <span>{{course.Course.area}}</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="coach-info">
+                    <div class="long-title text-ellipsis">{{course.course_title}}</div>
+                    <div style="margin-bottom:10px;" class="text-transform">{{course.coach_name}}</div>
+                    <span class="pull-right" style="margin-left:8px;">x{{course.buy_amount}}</span>
+                    <span class="pull-right text-primary text-big">{{course.session_rate|currency:"$"}}</span>
+                    <div class="star text-ellipsis">
+                        <i class="fa fa-star" ng-class="{'active':course.total_score >0}" aria-hidden="true"></i>
+                        <i class="fa fa-star" ng-class="{'active':course.total_score >1}" aria-hidden="true"></i>
+                        <i class="fa fa-star" ng-class="{'active':course.total_score >2}" aria-hidden="true"></i>
+                        <i class="fa fa-star" ng-class="{'active':course.total_score >3}" aria-hidden="true"></i>
+                        <i class="fa fa-star" ng-class="{'active':course.total_score >4}" aria-hidden="true"></i>
+                        <span>{{course.total_coment_num || "0"}} reviews</span>
+                    </div>
+                    <div class="coach-meta text-ellipsis">
+                        <span><i class="fa fa-bars" aria-hidden="true"></i>{{course.Course.category_02_name}}</span>
+                        <span><i class="fa fa-map-marker" aria-hidden="true"></i>{{course.Course.area}}</span>
+                        <span class="text-success open-map" class="text-primary" ng-click="open_map(course.Course,$event)"><i class="fa fa-hand-paper-o" aria-hidden="true"></i>Course location</span>
+                    </div>
+                </div> -->
+                <div class="action-bar clearfix">
+                    <span class="pull-left text-primary text-big">{{course.total_session_rate|currency:"$"}}</span>
+                    <span class="pull-left text-line-through" ng-if="course.total_session_rate < course.original_total_session_rate" style="margin-left:8px;">{{course.original_total_session_rate|currency:"$"}}</span>
+                    <div class="btn-group clearfix pull-right" ng-click="remove(course)">
+                        <span class="btn btn-danger">Delete</span>
+                    </div>
+                    <!-- <div class="btn-group pull-left">
+                        <span class="btn">Amount:</span>
+                        <span class="btn">-</span>
+                        <span class="btn">5</span>
+                        <span class="btn">+</span>
+                    </div> -->
+                </div>
+            </div>
+            <!-- 失效订单 -->
+            <p class="text-center hover" ng-if="expired_courses.length>0" ng-click="remove_expired()">Shopping Cart items expired, click to clear.</p>
+            <div class="coach-item with-action-bar shopping-cart" style="opacity:0.5" ng-repeat="course in expired_courses">
+                <!-- <span class="btn radio-btn" ng-click="toggle(course)"><i class="fa webfont" ng-class="{'text-primary':course.selected,'fa-check-square-o':course.selected,'fa-square-o':!course.selected}"></i></span> -->
+                <div class="coach-avatar">
+                    <imageview data-rate="1" center-only src="staticImageUrl + course.coach_image"></imageview>
+                    <span class="official-coach" ng-if="course.is_official"></span>
+                </div>
+                <div class="coach-info">
+                    <div class="long-title">{{course.course_title}}</div>
+                    <span class="pull-right" style="margin-left:8px;">x{{course.buy_amount}}</span>
+                    <span class="pull-right text-primary text-big">{{course.session_rate|currency:"$"}}</span>
+                    <div class="star text-ellipsis">
+                        <i class="fa fa-star" ng-class="{'active':course.total_score >0}" aria-hidden="true"></i>
+                        <i class="fa fa-star" ng-class="{'active':course.total_score >1}" aria-hidden="true"></i>
+                        <i class="fa fa-star" ng-class="{'active':course.total_score >2}" aria-hidden="true"></i>
+                        <i class="fa fa-star" ng-class="{'active':course.total_score >3}" aria-hidden="true"></i>
+                        <i class="fa fa-star" ng-class="{'active':course.total_score >4}" aria-hidden="true"></i>
+                        <span>{{course.total_coment_num || "0"}} reviews</span>
+                        <!-- <span ng-if="course.total_coment_num ==0">暂无评价</span> -->
+                    </div>
+                    <div class="coach-meta text-ellipsis">
+                        <span><i class="fa fa-bars" aria-hidden="true"></i>{{course.Course.category_02_name}}</span>
+                        <span><i class="fa fa-user" aria-hidden="true"></i>by {{course.coach_name}}</span>
+                        <span><i class="fa fa-map-marker" aria-hidden="true"></i>{{course.Course.area}}</span>
+                        <!-- <span class="text-success open-map" class="text-primary" ng-click="open_map(course.Course,$event)"><i class="fa fa-hand-paper-o" aria-hidden="true"></i>Course location</span> -->
+                    </div>
+                </div>
+                <div class="action-bar clearfix">
+                    <span class="pull-left text-primary text-big">{{course.total_session_rate|currency:"$"}}</span>
+                    <span class="pull-left text-line-through" ng-if="course.total_session_rate < course.original_total_session_rate" style="margin-left:8px;">{{course.original_total_session_rate|currency:"$"}}</span>
+                    <!--  <div class="btn-group clearfix pull-right" ng-click="remove(course)">
+                        <span class="btn btn-danger">Delete</span>
+                    </div> -->
+                    <!-- <div class="btn-group pull-left">
+                        <span class="btn">Amount:</span>
+                        <span class="btn">-</span>
+                        <span class="btn">5</span>
+                        <span class="btn">+</span>
+                    </div> -->
+                </div>
+            </div>
+            <div class="section text-center" ng-if="courses.length==0">
+                <span class="btn btn-lg" ng-click="loadMore()">{{page.message}}</span>
+            </div>
+            <!-- <div class="itemswrap">
+                 <a class="items">
+                    <div class="items-img">
+                         <img src="images/avatar.png" class="full-width">
+                    </div>
+                    <div class="items-info">
+                        <div class="item-info">
+                            <P>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem laudantium reiciendis, eos blanditiis. Beatae praesentium sint recusandae quam blanditiis molestias eligendi quidem dolores delectus non odio, amet reiciendis similique nihil.</P>
+                            <div class="star">
+                                <i class="fa fa-star active" aria-hidden="true"></i>
+                                <i class="fa fa-star active" aria-hidden="true"></i>
+                                <i class="fa fa-star active" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </div>
+                            <div class="items-meta">
+                                <span><i class="fa fa-bars" aria-hidden="true">football</i></span>
+                                <span><i class="fa fa-user" aria-hidden="true"></i>by dribehace</span>
+                                <span><i class="fa fa-map-marker" aria-hidden="true"></i>newyowk</span>
+                            </div>
+                            <div class="u-rmb">&yen100</div>
+                        </div>
+
+                        <div class="items-btn">
+                            <div class="items-delbtn">delete</div>             
+                        </div>
+                    </div>
+                </a>
+                <div class="amount-box">
+                    <div class="check">
+                        <input type="checkbox" name="" id="" value="" />
+                        <span>Check</span>
+                    </div>
+                    <div class="amount clearfix">
+                        <span>Amount:</span>
+                        <div class="click pull-right">
+                            <i class="fa fa-minus" aria-hidden="true"></i>  
+                            <label>5</label>
+                            <i class="fa fa-plus" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+<!-- confirm -->
+<confirm confirm="confirm" class="hide"></confirm>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

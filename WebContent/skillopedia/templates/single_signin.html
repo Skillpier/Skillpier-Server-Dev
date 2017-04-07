@@ -1,0 +1,64 @@
+<div class="signin-body">
+    <div class="signin-panel">
+        <div class="signin-left">
+            Use third party acount to log in
+            <div class="section">
+                <span class="full-width social-btn btn-facebook"><i class="fa fa-facebook" aria-hidden="true"></i>facebook</span>
+                <span class="full-width social-btn btn-twitter"><i class="fa fa-twitter" aria-hidden="true"></i>twitter</span>
+            </div>
+        </div>
+        <div class="signin-right" ng-if="sign =='signin'">
+            <form name="signinForm" ng-submit="signin_action()">
+                Already have an account ,log in
+                <div class="section">
+                    <div class="input-group">
+                        <input type="email" class="full-width form-control" ng-model="input.signin_email" required placeholder="enter you email/account">
+                    </div>
+                    <div class="input-group">
+                        <input type="password" class="full-width form-control " ng-model="input.signin_password" required placeholder="enter your password">
+                    </div>
+                    <div class="input-group">
+                        <button type="submit" class="btn btn-primary btn-lg full-width" ng-disabled="signinForm.$invalid">sign in</button>
+                    </div>
+                </div>
+                <div class="text-center">
+                    <span ng-click="forget()">forget password</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span ng-click="signup()">or you can signup</span>
+                </div>
+            </form>
+        </div>
+        <div class="signin-right" ng-if="sign =='signup'">
+            Signup
+            <form class="section" name="signupForm" ng-submit="signup_action()">
+                <div class="input-group">
+                    <input type="text" class="full-width form-control" ng-model="input.username" required placeholder="fullname">
+                </div>
+                <div class="input-group">
+                    <input type="email" class="full-width form-control" ng-model="input.signup_email" required placeholder="enter your email/account">
+                </div>
+                <div class="input-group">
+                    <input type="password" class="full-width form-control" ng-model="input.signup_password" required placeholder="enter your password">
+                </div>
+                <div class="input-group">
+                    <button type="submit" class="btn btn-primary btn-lg full-width" ng-disabled="signupForm.$invalid">sign up</button>
+                </div>
+            </form>
+            <div class="text-center">
+                <span ng-click="signin()">signin</span>
+            </div>
+        </div>
+        <div class="signin-right" ng-if="sign =='forget'">
+            Forget
+            <form class="section" name="forgetForm" ng-submit="forget_action()">
+                <div class="input-group">
+                    <input type="email" class="full-width form-control" ng-model="input.forget_email" required placeholder="enter your email/account">
+                </div>
+                <div class="input-group">
+                    <button type="submit" class="btn btn-primary btn-lg full-width" ng-disabled="forgetForm.$invalid">send to find password</button>
+                </div>
+            </form>
+            <div class="text-center">
+                <span ng-click="signin()">signin</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span ng-click="signup()">signup</span>
+            </div>
+        </div>
+    </div>
+</div>

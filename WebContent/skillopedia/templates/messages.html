@@ -1,0 +1,57 @@
+<!-- header -->
+<myresource cs-resource="{'account_css':'/skillopedia/lib/css/account.css','media_css':'/skillopedia/lib/css/media.css'}"></myresource>
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap">
+    <div class="section account-section">
+        <!-- sidebar -->
+        <sidebar active="" class="sidebar-wrap" user="user" go="go"></sidebar>
+        <div class="content-wrap">
+        	<div class="tabs clearfix">
+        		<a class="tab-item pull-left active">Messages</a>
+        	</div>
+            <div class="message clearfix" ng-repeat="message in messages">
+                <dl>
+                    <dt ng-if="message.type =='1'">[comment]</dt>
+                    <dt ng-if="message.type =='2'">[system notification]</dt>
+                    <dd class="message-info">{{message.note}}</dd>
+                    <dd class="clearfix" ng-if="message.is_reply && message.content !=''">
+                        <div class="note">
+                            <p>{{message.content}}</p>
+                        </div>
+                    </dd>
+                    <dd class="clearfix">
+                        <ul>
+                            <li ng-if="message.comment_name"><a class="">{{message.comment_name || "Administrator"}}</a></li>
+                            <li class="btn-group">
+                                <a ng-click="remove(message)" class="text-danger hover">
+                                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                    remove
+                                </a>
+                                <a ng-click="reply(message)" class="text-success hover" ng-if="message.type=='1'&& user.agent_level =='2'">
+                                    <i class="fa fa-share" aria-hidden="true"></i>
+                                    reply
+                                </a>
+                            </li>
+                            <div class="m-date fr">
+                                <a class="btn">{{message.post_time}}</span></a>
+                            </div>
+                        </ul>
+                    </dd>
+                </dl>
+                <div class="reply-input" ng-if="reply_id == message.comment_id">
+                    <div class="section sm">
+                        <input type="text" ng-model="input.reply_content" class="form-control full-width" placeholder="Reply">
+                    </div>
+                    <button class="btn btn-primary" ng-click="confirm_reply(message)">reply</button>
+                </div>
+            </div>
+            <div class="section text-center">
+                <span class="btn btn-lg" ng-click="loadMore()">{{page.message}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- confirm -->
+<confirm confirm="confirm" class="hide"></confirm>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

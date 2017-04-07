@@ -1,0 +1,10 @@
+<!-- header -->
+<myresource cs-resource="{'account_css':'/skillopedia/lib/css/account.css','media_css':'/skillopedia/lib/css/media.css'}"></myresource>
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap" style="min-height:500px">
+    <h1>{{step.title}}</h1>
+    <div ta-bind ng-model="step.content" class="webview"></div>
+    <img ng-src="{{staticImageUrl + cover.image_01}}" ng-repeat="cover in step.exBanners" style="display:block;width:100%;margin:15px auto;max-width:700px;" alt="">
+</div>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

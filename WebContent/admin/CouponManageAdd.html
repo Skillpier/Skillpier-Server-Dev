@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<#include "header.html">
+	<script type="text/javascript"> 
+		//提交表单
+		function onPost(){
+			var coupon_money=$("#coupon_money").val();
+	    	var consume_money=$("#consume_money").val();
+	    	if(coupon_money>consume_money){
+	    		document.getElementById('coupon_money_notice').innerHTML = "优惠券金额必须小于消费超过的金额数";
+	    		document.getElementById('consume_money_notice').innerHTML = "...";
+	    	 	return false;
+	    	}
+		}
+	</script>
+</head>
+<body>
+	<div class="navbar navbar-default" id="navbar">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('navbar', 'fixed')
+			} catch (e) {
+			}
+		</script>
+		<#include "navigate.html">
+	</div>
+
+	<div class="main-container" id="main-container">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('main-container', 'fixed')
+			} catch (e) {
+			}
+		</script>
+
+		<div class="main-container-inner">
+			<a class="menu-toggler" id="menu-toggler" href="#"> <span
+				class="menu-text"></span>
+			</a>
+			<div class="sidebar" id="sidebar">
+				<script type="text/javascript">
+					try {
+						ace.settings.check('sidebar', 'fixed')
+					} catch (e) {
+					}
+				</script>
+
+				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+						<button class="btn btn-success">
+							<i class="icon-signal"></i>
+						</button>
+
+						<button class="btn btn-info">
+							<i class="icon-pencil"></i>
+						</button>
+
+						<button class="btn btn-warning">
+							<i class="icon-group"></i>
+						</button>
+
+						<button class="btn btn-danger">
+							<i class="icon-cogs"></i>
+						</button>
+					</div>
+
+					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+						<span class="btn btn-success"></span> <span class="btn btn-info"></span>
+
+						<span class="btn btn-warning"></span> <span class="btn btn-danger"></span>
+					</div>
+				</div>
+				<!-- #sidebar-shortcuts -->
+				<!-- .nav-list -->
+				<script type="text/javascript">
+					$(document).ready(function() {
+						$('#6').addClass("active open");
+						$('#61').addClass("open");
+					});
+				</script>
+				<#include "left_common.html">
+				<!-- /.nav-list -->
+
+				<div class="sidebar-collapse" id="sidebar-collapse">
+					<i class="icon-double-angle-left"
+						data-icon1="icon-double-angle-left"
+						data-icon2="icon-double-angle-right"></i>
+				</div>
+
+				<script type="text/javascript">
+					try {
+						ace.settings.check('sidebar', 'collapsed')
+					} catch (e) {
+					}
+				</script>
+			</div>
+
+			<div class="main-content">
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch (e) {
+						}
+					</script>
+					<!-- #nav-search -->
+				</div>
+				 <br> 
+				 <div class="page-content">
+						<div class="page-header">
+							<h1>
+								优惠劵
+								<small>
+									<i class="icon-double-angle-right"></i>
+									添加
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+				<#if ok??>
+					<div style="font-size:16px; color: #ff0000;" class="success-tip" data-id="successTip">${(ok)!''}</div>
+				</#if>
+				<form id="form" name="form" action="" method="post" onsubmit="return onPost();">
+					<input id="catetory_id" name="catetory_id"  type="hidden" >
+					<table class="table table-striped table-bordered table-hover">
+						<thead></thead>
+						<tbody>
+							<tr>
+								<td>提供者</td>
+								<td>
+									<div class="input-group">
+										<input id="provider" name="provider" type="text" placeholder="提供者" required="required" style="width: 230px; height: 30px;">
+									</div>
+								</td>
+							</tr> 
+							<tr>
+								<td>优惠劵名称</td>
+								<td>
+									<div class="input-group">
+										<input id="coupon_name" name="coupon_name"  type="text" placeholder="优惠劵名称" required="required" style="width: 230px; height: 30px;">
+									</div>
+								</td>
+							</tr> 
+							<tr>
+								<td>消费超过的金额数</td>
+								<td>
+									<div class="input-group">
+										<input id="consume_money" name="consume_money"  type="text" onblur="checkRate(this)" placeholder="消费超过的金额数" required="required" style="width: 230px; height: 30px;">
+										<span id="consume_money_notice" class="red"></span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>优惠券金额</td>
+								<td>
+									<div class="input-group">
+										<input id="coupon_money" name="coupon_money" type="text" onblur="checkRate(this)" placeholder="优惠券金额" required="required" style="width: 230px; height: 30px;">
+										<span id="coupon_money_notice" class="red"></span>
+									</div>
+								</td>
+							</tr>
+							<tr>
+								<td>有效期天数</td>
+								<td>
+									<div class="input-group">
+										<input id="usable_day" name="usable_day"  type="text"  onblur="checkInteger(this)" placeholder="有效期天数" required="required" style="width: 230px; height: 30px;">
+									</div>
+								</td>
+							</tr>
+							 <tr>
+						 	 <td>一级分类是否可使用</td>
+							 <td>
+							 <div class="input-group">
+								
+								<label>
+									<input id="category_01_id" name="category_01_id" type="radio" class="ace" value="0" checked onclick="first(event,'category_01_name');"/>
+									<span class="lbl"> 无限</span>
+								</label>
+								<label>
+									<input id="category_01_id" name="category_01_id"  type="radio" class="ace" value="1" onclick="first(event,'category_01_name');"/>
+									<span class="lbl"> 受限</span>
+								</label>
+								<select name="category_01_name" id="category_01_name" style="width: 200px; margin-left: 10px;display:none" onchange="change();">
+										<option value="0">请选择</option> 
+										<#if categorys01??>
+										<#list categorys01 as cate>
+										<option value="${(cate.category_01_id)!''}">${(cate.category_01_name)!''}</option>
+										</#list>
+										</#if>
+								</select>	
+							</div>
+						</td>
+						</tr>
+						
+						<tr id="second"  >
+						  <td>二级分类是否可使用</td>
+							<td>
+							 <div class="input-group">
+								
+								<label>
+									<input id="category_02_id1" name="category_02_id" type="radio" class="ace" value="0" checked onclick="first(event,'category_02_name')"/>
+									<span class="lbl"> 无限</span>
+								</label>
+								<label>
+									<input id="category_02_id2" name="category_02_id"  type="radio" class="ace" value="1" disabled onclick="first(event,'category_02_name')"/>
+									<span class="lbl"> 受限</span>
+								</label>
+								<!-- 显示sports的 -->
+								<select name="category_02_name" id="category_02_name" style="width: 200px; margin-left: 10px;display:none;disabled;" onchange="change2();change3()">
+								</select>
+							</div>
+						</td>
+						</tr>
+						<tr>
+						  <td>是否指定的商家活动</td>
+							<td>
+							 <div class="input-group">
+								
+								<div class=""  style="width:320px">
+									<select id="user_id1" name="user_id" class="width-90 chosen-select"  data-placeholder="选择..."  onchange="change2()">
+										 <#if (users?size>0)>
+										  <option id="product_无" value="0">无</option>
+										  <#list users as a>
+										      <option id="product_${a.user_id}" value="${a.user_id}">${a.nickname}-${a.user_id}</option>
+										  </#list>
+										</#if>
+									</select>
+								</div>
+							</div>
+						</td>
+						</tr>
+						<tr>
+						  <td>是否指定课程</td>
+							<td>
+							 <div class="input-group">
+	
+								<div class=""  style="width:320px">
+									<select id="title1" name="title"  class="width-90 chosen-select" data-placeholder="选择..." disabled>
+									</select>
+								</div>
+							</div>
+						</td>
+						</tr>
+						<tr>
+								<td>使用规则</td>
+								<td>
+									<div class="input-group">
+										<textarea id="coupon_rule" name="coupon_rule" placeholder="使用规则" required="required" style="width: 600px; height: 200px;"></textarea>
+									</div>
+								</td>
+							</tr>
+							 <tr>
+								<td>
+								<a class="btn btn-lg btn-danger" type="submit" href='javascript:history.go(-1)'>
+								<i class="icon-bolt bigger-110"></i>
+						        	 返回
+								<i class="icon-arrow-right icon-on-right"></i>
+								</a>
+				
+								</td>
+								<td>
+								<script type="text/javascript">
+								var isok=-1;
+								function beforeadd(){
+									//判断1级是否受限
+									var value1 = -1;
+									var slt1 = -1;
+									var radio1 = document.getElementsByName("category_01_id");
+									for(var i=0;i<radio1.length;i++){
+										if(radio1[i].checked==true){
+											value1=radio1[i].value;
+											break;
+										}
+									}
+									//如果1级受限
+									if(value1 == 1){
+										slt1 = document.getElementById("category_01_name").value;
+										if(slt1 <= 0){
+											alert("请选择一级分类");isok=0;return;
+										}else
+											isok=1; 
+									} else{	
+										isok = 1;
+									} 
+									//判断二级是否受限
+									var value2 = -1;
+									var slt2=-1;
+									var radio2 = document.getElementsByName("category_02_id");
+									for(var i=0;i<radio2.length;i++){
+										if(radio2[i].checked==true){
+											value2=radio2[i].value;
+											break;
+										}
+									}
+									//如果2级受限
+									if(value2 == 1){
+										slt2 = document.getElementById("category_02_name").value;
+										if(slt2 <= 0){
+											alert("请选择二级分类");isok=0;return;
+										} else
+											isok=1; 
+									}
+									if(isok == 1){
+										add();
+									}
+								}
+									function add() {
+										document.getElementById("reject1").type="submit";
+										$("#form").attr("action","/admin/CouponManage/addCoupons");
+										return true;
+									}
+								</script>
+								
+									<button id="reject1" class="btn btn-lg btn-success" type="button" onclick="beforeadd();">
+										<i class="icon-ok"></i> 添加
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>		
+			</div>
+		</div>
+		</div> 
+		<!-- 受限 无限 -->
+		<script>
+		function first(evt,slt){
+			var e = evt || window.event;
+			var choose = e.srcElemennt || e.target;
+			if(choose.value == 1) {
+				//受限  如果是2级分类
+				if(choose.id == "category_02_id2"){
+						change();
+				 }
+				 document.getElementById(slt).style.display="inline";
+				 document.getElementById(slt).disabled=false;
+				  //如果是1级分类
+				  if(choose.name == "category_01_id") {
+					  document.getElementById("category_02_id2").disabled=false;
+				  }
+			  }else{
+				//如果是2级分类//无限
+				 if(choose.name == "category_02_id"){
+					document.getElementById("category_02_name").style.display="none";
+					document.getElementById("category_02_name").disabled=true;
+				}
+				if(choose.name == "category_01_id"){
+					//1级无限
+					  document.getElementById(slt).style.display="none";
+					  $("#category_01_name").attr("disabled","true");
+				      document.getElementById("category_02_id1").checked=true;
+					  document.getElementById("category_02_id2").disabled=true;
+					  document.getElementById("category_02_name").style.display="none";
+					  $("#category_02_name").attr("disabled","true");
+				 }
+			}	
+		}
+		</script>
+		<!-- 1级列表 -->
+		<script>
+		function change(){
+			//获得2级分类是否受限
+			  var second = document.getElementById("category_02_id2");
+			  if(second.checked==true)//2级也受限
+			  {
+				  //在这里能拿到1级选中的分类的id
+				  var one=document.getElementById("category_01_name");
+				  var id = one.options[one.selectedIndex].value;
+		  		  $("#category_02_name").empty();
+				  $.ajax({
+					  type: "POST",
+					  url: "/admin/CouponManage/selectCategory_02?sid="+id,
+					  success: function(msg){
+						  $.each(msg.category02s, function(i, item)
+									{
+					        		   $("#category_02_name").append( 
+											"<option value='"+item.category_02_id+"'>"+item.category_02_name+"</option>");
+					       			 }
+							);
+					  }
+				});
+			  }
+			  window.setTimeout("change2()",800);
+			  window.setTimeout("change3()",800);
+		}
+		</script>
+		<!-- 是否指定商家 -->
+		<script>
+		var y = 1,z=1;
+		function change2(){
+			var selectedIndex = $("#user_id1").val();
+			//不指定商家    课程不可用
+			if(selectedIndex == 0){
+				$("#title1").val("");
+				$("#title1").attr("disabled","disabled");
+				$("#title1").trigger("chosen:updated");
+			}else{
+				//可用
+				$("#title1").attr("disabled",false);
+				var url="/admin/CouponManage/selectTitle?";
+				var user_id = $("#user_id1").val();
+				if(user_id != 0){
+					url += "user_id="+user_id;
+				}
+				var name1 = $("#category_01_name").val();                           //一级分类
+				var id1 = $("input[name='category_01_id']:checked").val();    //一级分类1：受限    0：无限
+				var  name2 = $("#category_02_name").val();							//二级分类
+				var id2 = $("input[name='category_02_id']:checked").val();    //二级分类1：受限    0：无限
+				//受限且选择不为0
+				if(id1 == 1 && name1 != 0){	
+					url += "&category_01_id="+name1;
+				}
+				if(id2 == 1 && name2 != 0){
+					url += "&category_02_id="+name2;
+				}
+				$.ajax({
+					  type: "POST",
+					  url: url,
+					  success: function(msg){
+						   $("#title1").empty();
+							$.each(msg.courses, function(i, item) 
+								{
+									$("#title1").append("<option value='"+item.course_id+"'>"+item.title+"</option>");
+					        	}
+							);
+						   $("#title1").append("<option value='0'>无</option>");
+							$("#title1").trigger("chosen:updated");
+							y = y + 1;
+					  }
+					}); 
+			}
+		}
+		function change3(){
+			//可用
+			$("#title1").attr("disabled",false);
+			var url2="/admin/CouponManage/selectUser?";
+			var user_id = $("#user_id1").val();
+			var name1 = $("#category_01_name").val();                           //一级分类
+			var id1 = $("input[name='category_01_id']:checked").val();    //一级分类1：受限    0：无限
+			var  name2 = $("#category_02_name").val();							//二级分类
+			var id2 = $("input[name='category_02_id']:checked").val();    //二级分类1：受限    0：无限
+			//受限且选择不为0
+			if(id1 == 1 && name1 != 0){	
+				url2 += "&category_01_id="+name1;
+			}
+			if(id2 == 1 && name2 != 0){
+				url2 += "&category_02_id="+name2;
+			}
+			$.ajax({
+				  type: "POST",
+				  url: url2,
+				  success: function(msg){
+					   $("#user_id1").empty();
+						$.each(msg.usersList, function(i, item) 
+							{
+								$("#user_id1").append("<option id='product_"+item.user_id+"' value='"+item.user_id+"'>"+item.nickname+"-"+item.user_id+"</option>");
+				        	}
+						);
+					   $("#user_id1").append("<option value='0'>无</option>");
+						$("#user_id1").trigger("chosen:updated");
+						z = z + 1;
+						change2();
+				  }
+				});
+		}
+		</script>
+		<!-- end -->
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+
+	<!-- 	<script src="http://ajax.gdoogleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+		<![endif]
+
+		[if IE]>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<![endif] -->
+
+	<!--[if !IE]> -->
+
+	<script type="text/javascript">
+		window.jQuery
+				|| document
+						.write("<script src='/admin/assets/js/jquery-2.0.3.min.js'>"
+								+ "<"+"/script>");
+	</script>
+
+	<!-- <![endif]-->
+
+	<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='/admin/assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+
+	<script type="text/javascript">
+		if ("ontouchend" in document)
+			document
+					.write("<script src='/admin/assets/js/jquery.mobile.custom.min.js'>"
+							+ "<"+"/script>");
+	</script>
+	<script src="/admin/assets/js/bootstrap.min.js"></script>
+	<script src="/admin/assets/js/typeahead-bs2.min.js"></script>
+
+	<!-- page specific plugin scripts -->
+
+	<script src="/admin/assets/js/jquery.dataTables.min.js"></script>
+	<script src="/admin/assets/js/jquery.dataTables.bootstrap.js"></script>
+
+	<!-- ace scripts -->
+
+	<script src="/admin/assets/js/ace-elements.min.js"></script>
+	<script src="/admin/assets/js/ace.min.js"></script>
+
+	<!-- inline scripts related to this page -->
+
+	<script type="text/javascript">
+		jQuery(function($) {
+			var oTable1 = $('#sample-table-2').dataTable({
+				"aoColumns" : [ {
+					"bSortable" : false
+				}, null, null, null, null, null, {
+					"bSortable" : false
+				} ]
+			});
+
+			$('table th input:checkbox').on(
+					'click',
+					function() {
+						var that = this;
+						$(this).closest('table').find(
+								'tr > td:first-child input:checkbox').each(
+								function() {
+									this.checked = that.checked;
+									$(this).closest('tr').toggleClass(
+											'selected');
+								});
+
+					});
+			$('[data-rel="tooltip"]').tooltip({
+				placement : tooltip_placement
+			});
+			function tooltip_placement(context, source) {
+				var $source = $(source);
+				var $parent = $source.closest('table')
+				var off1 = $parent.offset();
+				var w1 = $parent.width();
+
+				var off2 = $source.offset();
+				var w2 = $source.width();
+
+				if (parseInt(off2.left) < parseInt(off1.left)
+						+ parseInt(w1 / 2))
+					return 'right';
+				return 'left';
+			}
+		})
+		</script>
+		
+		<!-- end -->
+	
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!-- <link href="/skillopedia/lib/css/account.css" rel="stylesheet"> -->
+<!-- header -->
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap">
+    <div class="section account-section">
+        <!-- sidebar -->
+        <div ng-include="'/skillopedia/templates/sidebar_1.html'" class="sidebar-wrap"></div>
+        <div class="content-wrap">
+            <div class="tabs clearfix">
+                <a class="tab-item pull-left active">Courses</a>
+                <a class="tab-item pull-left" ng-href="#/show_comments?user_id={{user_id}}">Comments</a>
+                <a class="tab-item pull-left" ng-href="#/show_steps?user_id={{user_id}}">Steps</a>
+            </div>
+            <a class="coach-item hover" ng-href="#/detail?course_id={{course.course_id}}" ng-repeat="course in courses">
+                <div class="coach-avatar">
+                    <imageview data-rate="1" center-only src="staticImageUrl + course.coach_image"></imageview>
+                    <span class="official-coach" ng-if="course.is_official"></span>
+                </div>
+                <div class="coach-info">
+                    <div class="long-title text-ellipsis">{{course.title}}</div>
+                    <div style="margin-bottom:10px;" class="text-transform">{{course.coach_name}}</div>
+                    <span class="pull-right text-primary text-big">{{course.session_rate|currency:"$"}}</span>
+                    <div class="star text-ellipsis">
+                        <i class="fa fa-star" ng-class="{'active':course.total_score >0}" aria-hidden="true"></i>
+                        <i class="fa fa-star" ng-class="{'active':course.total_score >1}" aria-hidden="true"></i>
+                        <i class="fa fa-star" ng-class="{'active':course.total_score >2}" aria-hidden="true"></i>
+                        <i class="fa fa-star" ng-class="{'active':course.total_score >3}" aria-hidden="true"></i>
+                        <i class="fa fa-star" ng-class="{'active':course.total_score >4}" aria-hidden="true"></i>
+                        <span>{{course.total_coment_num || "0"}} reviews</span>
+                        <!-- <span ng-if="course.total_coment_num ==0">暂无评价</span> -->
+                    </div>
+                    <div class="coach-meta">
+                        <span><i class="fa fa-bars" aria-hidden="true"></i>{{course.category_02_name}}</span>
+                        <!-- <span><i class="fa fa-user" aria-hidden="true"></i>by {{course.coach_name}}</span> -->
+                        <span><i class="fa fa-map-marker" aria-hidden="true"></i>{{course.area}}</span>
+                    </div>
+                </div>
+            </a>
+            <div class="section text-center">
+                <span class="btn btn-lg" ng-click="loadMore()">{{page.message}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

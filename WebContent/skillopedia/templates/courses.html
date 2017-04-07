@@ -1,0 +1,47 @@
+<!-- <link href="/skillopedia/lib/css/account.css" rel="stylesheet"> -->
+<!-- header -->
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="wrap">
+    <div class="section account-section">
+        <!-- sidebar -->
+        <sidebar active="" class="sidebar-wrap" user="user" go="go"></sidebar>
+        <div class="content-wrap">
+            <div class="tabs clearfix">
+                <a class="tab-item pull-left active">Courses</a>
+                <a class="tab-item pull-left" ng-href="#/comments">Comments</a>
+                <a class="tab-item pull-left" ng-href="#/steps">Steps</a>
+            </div>
+            <a class="coach-item hover" ng-href="#/detail?course_id={{course.course_id}}" ng-repeat="course in courses">
+                <div class="coach-avatar">
+                    <!-- <imageview data-rate="1" center-only src="staticImageUrl + course.coach_image"></imageview> -->
+                    <imageview data-rate="1" center-only src="staticImageUrl + course.coach_image"></imageview>
+                    <span class="official-coach" ng-if="course.is_official"></span>
+                </div>
+                <div class="coach-info">
+                    <div class="long-title text-ellipsis">{{course.title}}</div>
+                    <span class="pull-right text-primary text-big">{{course.session_rate|currency:"$"}}</span>
+                    <div style="margin-bottom:10px;" class="text-transform">{{course.coach_name}}</div>
+                    <div class="justified">
+                        <div>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <span>{{course.total_coment_num || "0"}} reviews</span>
+                        </div>
+                        <div>
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                            <span>{{course.category_02_name}}</span>
+                        </div>
+                        <div class="text-primary" ng-click="open_map(course,$event)">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                            <span>{{course.area}}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <div class="section text-center">
+                <span class="btn btn-lg" ng-click="loadMore()">{{page.message}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

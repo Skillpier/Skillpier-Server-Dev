@@ -1,0 +1,73 @@
+<!-- header -->
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<myresource cs-resource="{'account_css':'/skillopedia/lib/css/account.css','media_css':'/skillopedia/lib/css/media.css'}"></myresource>
+<div class="wrap">
+    <div class="section account-section">
+        <!-- sidebar -->
+        <sidebar active="'/orders'" class="sidebar-wrap" user="user" go="go"></sidebar>
+        <form class="content-wrap" name="commentForm" ng-submit="ajaxForm()">
+            <div class="tabs clearfix">
+                <a class="tab-item pull-left active">Comment</a>
+            </div>
+            <a class="coach-item" ng-href="#/detail?course_id={{order.Course.course_id}}">
+                <div class="coach-avatar">
+                    <img ng-src="{{staticImageUrl + order.Course.course_image_01}}" class="full-width full-height" alt="" err-src="/skillopedia/images/example_7.png">
+                    <span class="official-coach" ng-if="order.Course.is_official"></span>
+                </div>
+                <div class="coach-info">
+                    <div class="long-title text-ellipsis">{{order.Course.title}}</div>
+                    <span class="pull-right" style="margin-left:8px;">x{{order.buy_amount}}</span>
+                    <span class="pull-right text-primary text-big">{{order.Course.session_rate|currency:"$"}}</span>
+                    <div style="margin-bottom:10px;" class="text-transform">{{order.Course.course_nickname}}</div>
+                    <div class="justified">
+                        <div>
+                            <i class="fa fa-star" aria-hidden="true"></i>
+                            <span>{{order.Course.total_coment_num || "0"}} reviews</span>
+                        </div>
+                        <div>
+                            <i class="fa fa-bars" aria-hidden="true"></i>
+                            <span>{{order.Course.category_02_name}}</span>
+                        </div>
+                        <div>
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                            <span>{{order.Course.area}}</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <div class="wrap">
+                <p class="clearfix">
+                    <span style="display:inline-block;width:150px">speciality</span>
+                    <span class="fa fa-star-o" ng-class="{'text-primary':input.skill>0}" ng-mouseover="hover('skill','1')"></span>
+                    <span class="fa fa-star-o" ng-class="{'text-primary':input.skill>1}" ng-mouseover="hover('skill','2')"></span>
+                    <span class="fa fa-star-o" ng-class="{'text-primary':input.skill>2}" ng-mouseover="hover('skill','3')"></span>
+                    <span class="fa fa-star-o" ng-class="{'text-primary':input.skill>3}" ng-mouseover="hover('skill','4')"></span>
+                    <span class="fa fa-star-o" ng-class="{'text-primary':input.skill>4}" ng-mouseover="hover('skill','5')"></span>
+                </p>
+                <p class="clearfix">
+                    <span style="display:inline-block;width:150px">environment</span>
+                    <span class="fa fa-star-o" ng-class="{'text-primary':input.environment>0}" ng-mouseover="hover('environment','1')"></span>
+                    <span class="fa fa-star-o" ng-class="{'text-primary':input.environment>1}" ng-mouseover="hover('environment','2')"></span>
+                    <span class="fa fa-star-o" ng-class="{'text-primary':input.environment>2}" ng-mouseover="hover('environment','3')"></span>
+                    <span class="fa fa-star-o" ng-class="{'text-primary':input.environment>3}" ng-mouseover="hover('environment','4')"></span>
+                    <span class="fa fa-star-o" ng-class="{'text-primary':input.environment>4}" ng-mouseover="hover('environment','5')"></span>
+                </p>
+                <p class="clearfix">
+                    <span style="display:inline-block;width:150px">attitude</span>
+                    <span class="fa fa-star-o" ng-class="{'text-primary':input.attitude>0}" ng-mouseover="hover('attitude','1')"></span>
+                    <span class="fa fa-star-o" ng-class="{'text-primary':input.attitude>1}" ng-mouseover="hover('attitude','2')"></span>
+                    <span class="fa fa-star-o" ng-class="{'text-primary':input.attitude>2}" ng-mouseover="hover('attitude','3')"></span>
+                    <span class="fa fa-star-o" ng-class="{'text-primary':input.attitude>3}" ng-mouseover="hover('attitude','4')"></span>
+                    <span class="fa fa-star-o" ng-class="{'text-primary':input.attitude>4}" ng-mouseover="hover('attitude','5')"></span>
+                </p>
+                <p>Comment for this class</p>
+                <div class="input-group">
+                    <textarea rows="10" name="content" ng-model="input.content" ng-required="true" class="full-width form-control" placeholder="Comment..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg" ng-disabled="commentForm.$invalid">Comment</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>

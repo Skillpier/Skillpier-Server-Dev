@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<#include "header.html">
+
+	<SCRIPT LANGUAGE="JavaScript">
+			   $("document").ready(function(){
+				//装修程度
+				var fitment = '${(r.is_hot_recommand)!''}';
+				$("input[name=is_hot_recommand]:radio").each(function(){
+			    		if($(this).val()==fitment){
+			    			$(this).attr("checked","checked");
+			    		}
+				})
+			   })
+ 	 </SCRIPT>
+ 	 
+</head>
+<body>
+	<div class="navbar navbar-default" id="navbar">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('navbar', 'fixed')
+			} catch (e) {
+			}
+		</script>
+		<#include "navigate.html">
+	</div>
+
+	<div class="main-container" id="main-container">
+		<script type="text/javascript">
+			try {
+				ace.settings.check('main-container', 'fixed')
+			} catch (e) {
+			}
+		</script>
+
+		<div class="main-container-inner">
+			<a class="menu-toggler" id="menu-toggler" href="#"> <span
+				class="menu-text"></span>
+			</a>
+			<div class="sidebar" id="sidebar">
+				<script type="text/javascript">
+					try {
+						ace.settings.check('sidebar', 'fixed')
+					} catch (e) {
+					}
+				</script>
+
+				<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+					<div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+						<button class="btn btn-success">
+							<i class="icon-signal"></i>
+						</button>
+
+						<button class="btn btn-info">
+							<i class="icon-pencil"></i>
+						</button>
+
+						<button class="btn btn-warning">
+							<i class="icon-group"></i>
+						</button>
+
+						<button class="btn btn-danger">
+							<i class="icon-cogs"></i>
+						</button>
+					</div>
+
+					<div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+						<span class="btn btn-success"></span> <span class="btn btn-info"></span>
+
+						<span class="btn btn-warning"></span> <span class="btn btn-danger"></span>
+					</div>
+				</div>
+				<!-- #sidebar-shortcuts -->
+				<!-- .nav-list -->
+				<script type="text/javascript">
+					$(document).ready(function() {
+						$('#2').addClass("active open");
+						$('#23').addClass("open");
+					});
+				</script>
+				<#include "left_common.html">
+				<!-- /.nav-list -->
+
+				<div class="sidebar-collapse" id="sidebar-collapse">
+					<i class="icon-double-angle-left"
+						data-icon1="icon-double-angle-left"
+						data-icon2="icon-double-angle-right"></i>
+				</div>
+
+				<script type="text/javascript">
+					try {
+						ace.settings.check('sidebar', 'collapsed')
+					} catch (e) {
+					}
+				</script>
+			</div>
+
+			<div class="main-content">
+				<div class="breadcrumbs" id="breadcrumbs">
+					<script type="text/javascript">
+						try {
+							ace.settings.check('breadcrumbs', 'fixed')
+						} catch (e) {
+						}
+					</script>
+					<!-- #nav-search -->
+				</div>
+				 <br> 
+				 <div class="page-content">
+						<div class="page-header">
+							<h1>
+								推荐分类
+								<small>
+									<i class="icon-double-angle-right"></i>
+									修改
+								</small>
+							</h1>
+						</div><!-- /.page-header -->
+				<#if ok??>
+					<div style="font-size:16px; color: #ff0000;" class="success-tip" data-id="successTip">${(ok)!''}</div>
+				</#if>
+				<form id="form" action="" method="post"  enctype="multipart/form-data">
+				  <input type="hidden" name="catetory_id" value="${r.catetory_id}">
+					<table class="table table-striped table-bordered table-hover">
+						<thead></thead>
+						<tbody>
+							<tr>
+								<td>推荐类名称</td>
+								<td>
+									<div class="input-group">
+										<input id="name" name="name"  value="${r.name}" type="text" placeholder="名称" required="required" style="width: 230px; height: 30px;">
+									</div>
+								</td>
+							</tr> 
+							<tr>
+								<td>标题</td>
+								<td>
+									<div class="input-group">
+										<input id="sub_title" value="${r.sub_title}"  name="sub_title" type="text" placeholder="标题" required="required" style="width: 230px; height: 30px;">
+									</div>
+								</td>
+							</tr>
+							
+							<tr>
+								<td>排序【0-100，升序】</td>
+								<td>
+									<div class="input-group">
+										<input id="sort" name="sort" value="${r.sort}" onblur="checkInteger(this)" type="text" placeholder="整数" required="required" style="width: 230px; height: 30px;">
+									</div>
+								</td>
+							</tr>
+						
+						<tr>
+						  <td>热门推荐</td>
+							<td>
+							 <div class="input-group">
+								
+								<label>
+									<input name="is_hot_recommand" type="radio" class="ace" value="0" />
+									<span class="lbl"> 否</span>
+								</label>
+								<label>
+									<input name="is_hot_recommand"  type="radio" class="ace" value="1"/>
+									<span class="lbl"> 是</span>
+								</label>
+							</div>
+						</td>
+						</tr>
+						 	
+						 <tr>
+							<td>图片<br><span style="color:#ff0000">图片尺寸：168px*160px</span></td>
+								<td>
+										<span style="float:left;">
+											<input name="image_01" type="file" id="imgfile" class="file" size="40"/>
+										</span>
+								</td>
+							</tr>
+							<tr>
+							<!-- <td>PC端图片<br><span style="color:#ff0000">图片尺寸：452px*420px</span></td>
+								<td>
+										<span style="float:left;">
+											<input name="big_image_01" type="file" id="imgfile1" class="file" size="40"/>
+										</span>
+								</td>
+							</tr> -->
+							 <tr>
+								<td>
+								
+								<a class="btn btn-lg btn-danger" type="submit" href='javascript:history.go(-1)'>
+								<i class="icon-bolt bigger-110"></i>
+						         返回
+								<i class="icon-arrow-right icon-on-right"></i>
+								</a>
+								
+								
+								</td>
+								<td>
+								<script type="text/javascript">
+									function add() {
+										$("#form").attr("action","/admin/recommend/addModify");
+										return true;
+									}
+								</script>
+									<button id="reject1" class="btn btn-lg btn-success" type="submit" onclick="add();">
+										<i class="icon-ok"></i> 编辑
+									</button>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+				 
+						
+			</div>
+		</div>
+		</div>
+		
+		<!-- 上传图片JS -->
+		<!-- <script>
+		    $("#imgfile").fileinput({
+				showUpload: false,
+				showRemove:true
+			});
+		</script>   -->
+		<!-- end -->
+	<!-- basic scripts -->
+
+	<!--[if !IE]> -->
+
+	<!-- 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+		<![endif]
+
+		[if IE]>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<![endif] -->
+
+	<!--[if !IE]> -->
+
+	<script type="text/javascript">
+		window.jQuery
+				|| document
+						.write("<script src='/admin/assets/js/jquery-2.0.3.min.js'>"
+								+ "<"+"/script>");
+	</script>
+
+	<!-- <![endif]-->
+
+	<!--[if IE]>
+<script type="text/javascript">
+ window.jQuery || document.write("<script src='/admin/assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+</script>
+<![endif]-->
+
+	<script type="text/javascript">
+		if ("ontouchend" in document)
+			document
+					.write("<script src='/admin/assets/js/jquery.mobile.custom.min.js'>"
+							+ "<"+"/script>");
+	</script>
+	<script src="/admin/assets/js/bootstrap.min.js"></script>
+	<script src="/admin/assets/js/typeahead-bs2.min.js"></script>
+
+	<!-- page specific plugin scripts -->
+
+	<script src="/admin/assets/js/jquery.dataTables.min.js"></script>
+	<script src="/admin/assets/js/jquery.dataTables.bootstrap.js"></script>
+
+	<!-- ace scripts -->
+
+	<script src="/admin/assets/js/ace-elements.min.js"></script>
+	<script src="/admin/assets/js/ace.min.js"></script>
+
+	<!-- inline scripts related to this page -->
+
+	<script type="text/javascript">
+		jQuery(function($) {
+			var oTable1 = $('#sample-table-2').dataTable({
+				"aoColumns" : [ {
+					"bSortable" : false
+				}, null, null, null, null, null, {
+					"bSortable" : false
+				} ]
+			});
+
+			$('table th input:checkbox').on(
+					'click',
+					function() {
+						var that = this;
+						$(this).closest('table').find(
+								'tr > td:first-child input:checkbox').each(
+								function() {
+									this.checked = that.checked;
+									$(this).closest('tr').toggleClass(
+											'selected');
+								});
+
+					});
+
+			$('[data-rel="tooltip"]').tooltip({
+				placement : tooltip_placement
+			});
+			function tooltip_placement(context, source) {
+				var $source = $(source);
+				var $parent = $source.closest('table')
+				var off1 = $parent.offset();
+				var w1 = $parent.width();
+
+				var off2 = $source.offset();
+				var w2 = $source.width();
+
+				if (parseInt(off2.left) < parseInt(off1.left)
+						+ parseInt(w1 / 2))
+					return 'right';
+				return 'left';
+			}
+		})
+		</script>
+		<!-- 上传图片JS -->
+		<script>
+		    $("#imgfile").fileinput({
+				showUpload: false,
+				showRemove:false,
+				 initialPreview: [
+					"<img style='height:160px' src='/files/image?name=${(r.image_01)!''}'>"
+				]
+			});
+		</script>
+		<!-- end -->
+		<script>
+		    $("#imgfile1").fileinput({
+				showUpload: false,
+				showRemove:false,
+				 initialPreview: [
+					"<img style='height:160px' src='/files/image?name=${(r.big_image_01)!''}'>"
+				]
+			});
+		</script>
+	
+</body>
+</html>

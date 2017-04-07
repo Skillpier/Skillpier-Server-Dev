@@ -1,0 +1,73 @@
+/*footer*/
+.footer {
+	display: block;
+	height: 55px;
+	box-sizing: border-box;
+	background-color: white;
+	border-top: 1px solid #d4d4d4;
+	overflow: hidden;
+}
+.footer a.footer-nav {
+	display: block;
+	height: 55px;
+	margin: auto 16px;
+	text-decoration: none;
+	text-align: center;
+	color: #ccc;
+}
+.footer-icon img {
+	max-width: 30px;
+	margin: 0 auto;
+	padding:5px 0 2px;
+}
+.footer a.footer-nav span:first-child {
+	margin-top: 8px;
+}
+.nav-line {
+	width: 1px;
+	margin: 5px 0 2px;
+	background-color: #ccc;
+}
+.home-icon {
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	background-image: url("../img/home_normal.png");
+	background-repeat: no-repeat;
+}
+.active-true .home-icon {
+	background-image: url("../img/home_active.png");
+}
+.nearby-icon {
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	background-image: url("../img/nearby_normal.png");
+	background-repeat: no-repeat;
+}
+.active-true .nearby-icon {
+	background-image: url("../img/nearby_active.png");
+}
+.shopping-cart-icon {
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	background-image: url("../img/shopping_cart_normal.png");
+	background-repeat: no-repeat;
+}
+.active-true .shopping-cart-icon {
+	background-image: url("../img/shopping_cart_active.png");
+}
+.user-icon {
+	display: inline-block;
+	width: 40px;
+	height: 40px;
+	background-image: url("../img/user_normal.png");
+	background-repeat: no-repeat;
+}
+.active-true .user-icon {
+	background-image: url("../img/user_active.png");
+}
+.active-true span {
+	color: #e74951;
+}

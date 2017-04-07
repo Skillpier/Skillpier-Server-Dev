@@ -1,0 +1,37 @@
+<!-- header -->
+<myresource cs-resource="{'account_css':'/skillopedia/lib/css/account.css','media_css':'/skillopedia/lib/css/media.css'}"></myresource>
+<div ng-include="'/skillopedia/templates/header.html'"></div>
+<div class="section sm">
+    <div class="wrap bg-white">
+        <form name="createStepForm">
+            <div class="title-input">
+                <span>Experience Title</span>
+                <div class="course-input">
+                    <input type="text" name="title" ng-required="true" ng-model="input.title" placeholder="What about you experience" class="full-width" />
+                </div>
+            </div>
+            <div class="title-input">
+                <span>Experience Content</span>
+            </div>
+            <!-- <text-angular ng-model="input.content" class="text-angular"></text-angular> -->
+            <textarea rows="10" ng-model="input.content" placeholder="Experience content" class="full-width" style="padding:15px;border:1px solid #CCCCCC"></textarea>
+            <div class="title-input">
+                <span>cover</span>
+                <div class="open-img" ng-repeat="cover in input.covers track by $index" ng-form="coverForm">
+                    <img ng-src="{{staticImageUrl + cover}}" class="full-width full-height" err-src="/skillopedia/images/error.jpg" alt="">
+                    <input type="hidden" name="cover" ng-model="cover" required>
+                    <a ng-click="remove_cover(cover)" class="remove"><i class="fa fa-times"></i></a>
+                </div>
+                <div class="open-img" flow-init="{singleFile:true}" ng-controller="uploadCoversController" flow-btn>
+                    <img ng-src="/skillopedia/images/upload.png" class="full-width full-height" alt="">
+                </div>
+            </div>
+            <div class="create-step-btn">
+                <button type="button" class="btn btn-lg btn-default" ng-click="save_to_draft()" ng-disabled="createStepForm.$invalid">Save to draft</button>
+                <button type="submit" class="btn btn-publish btn-lg btn-primary" ng-click="ajaxForm()" ng-disabled="createStepForm.$invalid">Publish</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- footer -->
+<div ng-include="'/skillopedia/templates/footer.html'"></div>
